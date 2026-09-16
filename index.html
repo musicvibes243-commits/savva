@@ -361,9 +361,16 @@ header {
   line-height: 1.35;
 }
 @media (max-width: 560px) { .brand__sub { display: none; } }
+/* С 1160px в строку выходят семь пунктов меню, и по замеру в русской
+   версии на всё оставалось 8 пикселей. «SPECIALTY COFFEE» — подпись
+   к логотипу, а не он сам: она есть и в подвале, и на первом экране,
+   а здесь освобождает 93 пикселя. */
+@media (min-width: 1160px) { .brand__sub { display: none; } }
 
-.nav__links { display: none; gap: clamp(18px, 2.4vw, 32px); }
-@media (min-width: 1020px) { .nav__links { display: flex; } }
+.nav__links { display: none; gap: clamp(18px, 2.2vw, 28px); }
+/* 1160, а не 1020: на 1020 строка шапки ещё уже своей max-width,
+   и пункты меню вместе со значками в неё не помещаются */
+@media (min-width: 1160px) { .nav__links { display: flex; } }
 .nav__links a {
   position: relative;
   white-space: nowrap;
@@ -411,7 +418,7 @@ header {
 @media (min-width: 720px) { .nav__cta { display: inline-flex; padding: 11px 22px; } }
 
 .burger { display: grid; }
-@media (min-width: 1020px) { .burger { display: none; } }
+@media (min-width: 1160px) { .burger { display: none; } }
 .burger span {
   display: block; width: 17px; height: 1.5px;
   background: currentColor; border-radius: 2px;
@@ -483,11 +490,9 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
    и скрытый значок всё равно занимал бы место */
 .socials a[hidden] { display: none; }
 
-/* 1020–1300px: в строке уже видны пункты меню, и значки в неё не влезают —
-   там они остаются только под бургером */
-@media (min-width: 1020px) and (max-width: 1299px) {
-  .nav__side .socials { display: none; }
-}
+/* Шапка ограничена --maxw, и её содержимое должно укладываться в эту
+   ширину на любом экране: сама она шире не станет. Проверено замером
+   на всех трёх языках. */
 
 .mobile-menu .socials { display: flex; gap: 10px; margin-top: 20px; }
 .mobile-menu .socials a {
@@ -1461,6 +1466,10 @@ body > footer {
     <circle cx="12" cy="12" r="4"/>
     <circle cx="17.1" cy="6.9" r="1.15" fill="currentColor" stroke="none"/>
   </symbol>
+  <!-- нота TikTok — заливкой: контуром на 17 пикселях она слипается -->
+  <symbol id="i-tt" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M15.5 3.5c.4 2.2 2 3.9 4.2 4.2v3.1c-1.6 0-3.1-.5-4.4-1.4v6.2a5.9 5.9 0 1 1-5.9-5.9c.3 0 .6 0 .9.1v3.2a2.8 2.8 0 1 0 2 2.7V3.5h3.2Z"/>
+  </symbol>
 </defs></svg>
 
 <a class="visually-hidden" href="#menu" data-i18n="a11y.skip">Перейти к меню</a>
@@ -1490,6 +1499,9 @@ body > footer {
         </a>
         <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener" data-social="instagram" aria-label="Instagram">
           <svg aria-hidden="true"><use href="#i-ig"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@savva_cafe" target="_blank" rel="noopener" data-social="tiktok" aria-label="TikTok">
+          <svg aria-hidden="true"><use href="#i-tt"/></svg>
         </a>
         <a href="#" target="_blank" rel="noopener" data-social="vk" aria-label="ВКонтакте" hidden>VK</a>
       </div>
@@ -1535,6 +1547,9 @@ body > footer {
     </a>
     <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener" data-social="instagram" aria-label="Instagram">
       <svg aria-hidden="true"><use href="#i-ig"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@savva_cafe" target="_blank" rel="noopener" data-social="tiktok" aria-label="TikTok">
+      <svg aria-hidden="true"><use href="#i-tt"/></svg>
     </a>
     <a href="#" target="_blank" rel="noopener" data-social="vk" aria-label="ВКонтакте" hidden>VK</a>
   </div>
@@ -2151,6 +2166,7 @@ body > footer {
           <a href="tel:+966564370303"><span>+966 56 437 0303</span><span data-i18n="visit.call">позвонить</span></a>
           <a href="https://maps.app.goo.gl/geB2uSVz2UD7soM46" target="_blank" rel="noopener"><span data-i18n="visit.map">Открыть на карте</span><span>↗</span></a>
           <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener"><span>Instagram</span><span>↗</span></a>
+          <a href="https://www.tiktok.com/@savva_cafe" target="_blank" rel="noopener"><span>TikTok</span><span>↗</span></a>
         </div>
       </div>
     </div>
@@ -2171,6 +2187,7 @@ body > footer {
         <a href="#builder" data-i18n="nav.builder">Конструктор</a>
         <a href="#gallery" data-i18n="nav.place">Место</a>
         <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@savva_cafe" target="_blank" rel="noopener">TikTok</a>
         <a href="tel:+966564370303">+966 56 437 0303</a>
       </nav>
     </div>
