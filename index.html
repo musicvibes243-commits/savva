@@ -1141,40 +1141,7 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   color: var(--ink-soft);
 }
 
-/* --- 15. Доставка (шутка) --------------------------------------------- */
-.delivery {
-  position: relative;
-  min-height: clamp(420px, 66vh, 620px);
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  padding: 0;
-}
-.delivery img {
-  position: absolute;
-  inset: -12% 0;
-  width: 100%;
-  height: 124%;
-  object-fit: cover;
-  object-position: center 30%;
-  will-change: transform;
-}
-.delivery::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(transparent 35%, rgba(24, 19, 12, 0.82));
-}
-.delivery__cap {
-  position: relative;
-  z-index: 2;
-  padding-block: clamp(30px, 5vw, 52px);
-  color: #F6EEDF;
-}
-.delivery__cap h2 { font-size: clamp(1.8rem, 5vw, 3rem); }
-.delivery__cap p { margin-top: 10px; font-family: var(--mono); font-size: 0.8rem; opacity: 0.8; }
-
-/* --- 16. Адрес -------------------------------------------------------- */
+/* --- 15. Адрес -------------------------------------------------------- */
 .visit__grid {
   display: grid;
   gap: clamp(24px, 4vw, 40px);
@@ -1210,8 +1177,10 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
 .contact a:hover { color: var(--clay); padding-inline-start: 8px; }
 .contact a span:last-child { font-family: var(--mono); font-size: 0.72rem; opacity: 0.6; }
 
-/* --- 17. Подвал ------------------------------------------------------- */
-footer {
+/* --- 16. Подвал ------------------------------------------------------- */
+/* Именно подвал страницы: подписи в карточках отзывов — тоже <footer>,
+   и на голом селекторе они забирали себе фон, отступы и рамку подвала. */
+body > footer {
   background: var(--olive-deep);
   color: rgba(239, 231, 214, 0.8);
   padding-block: clamp(40px, 6vw, 64px) 26px;
@@ -1247,7 +1216,7 @@ footer {
   opacity: 0.78;
 }
 
-/* --- 18. Появление при прокрутке -------------------------------------- */
+/* --- 17. Появление при прокрутке -------------------------------------- */
 [data-reveal] {
   opacity: 0;
   transform: translateY(26px);
@@ -1256,7 +1225,7 @@ footer {
 }
 [data-reveal].in { opacity: 1; transform: none; }
 
-/* --- 19. Спокойный режим --------------------------------------------- */
+/* --- 18. Спокойный режим --------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html.is-ready { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -1903,15 +1872,6 @@ footer {
     </div>
   </section>
 
-  <!-- ДОСТАВКА (ШУТКА) -->
-  <section class="delivery">
-    <img src="images/delivery-joke.jpg" alt="Вертолёт несёт гигантскую банку SAVVA" data-parallax loading="lazy">
-    <div class="wrap delivery__cap">
-      <h2 data-i18n="del.h2">Доставляем быстро 😉</h2>
-      <p data-i18n="del.p">ну, почти так — на деле просто вынесем к машине</p>
-    </div>
-  </section>
-
   <!-- АДРЕС -->
   <section id="visit">
     <div class="wrap visit__grid">
@@ -2042,7 +2002,6 @@ footer {
       'rev.w2': 'Omar · 6 отзывов',
       'rev.t3': 'Кофе на V60 был безупречным: идеально заварен, чистый и яркий вкус. Прекрасный опыт во всех деталях.',
       'rev.w3': 'Hind Al · 13 отзывов',
-      'del.h2': 'Доставляем быстро 😉', 'del.p': 'ну, почти так — на деле просто вынесем к машине',
       'visit.eyebrow': 'Адрес', 'visit.h2': 'Как нас найти',
       'visit.p': 'Zubairah Al Roumiah, Bir Uthman, Madinah 42331, Саудовская Аравия — за книжным магазином «Джарир».',
       'visit.call': 'позвонить', 'visit.map': 'Открыть на карте',
@@ -2119,7 +2078,6 @@ footer {
       'rev.w2': 'Omar · 6 reviews',
       'rev.t3': 'The V60 was flawless — perfectly brewed, clean and bright. A lovely experience down to the last detail.',
       'rev.w3': 'Hind Al · 13 reviews',
-      'del.h2': 'We deliver fast 😉', 'del.p': 'well, almost — in practice we just walk it out to your car',
       'visit.eyebrow': 'Visit', 'visit.h2': 'How to find us',
       'visit.p': 'Zubairah Al Roumiah, Bir Uthman, Madinah 42331, Saudi Arabia — behind the Jarir bookstore.',
       'visit.call': 'call', 'visit.map': 'Open in maps',
@@ -2196,7 +2154,6 @@ footer {
       'rev.w2': 'عمر · ٦ مراجعات',
       'rev.t3': 'كانت قهوة V60 مثالية: تحضير متقن ومذاق نقي وواضح. تجربة رائعة بكل تفاصيلها.',
       'rev.w3': 'هند آل · ١٣ مراجعة',
-      'del.h2': 'نوصّل بسرعة 😉', 'del.p': 'تقريبًا — عمليًا نخرج بالطلب إلى سيارتك',
       'visit.eyebrow': 'الموقع', 'visit.h2': 'كيف تصل إلينا',
       'visit.p': 'زبيرة الرومية، بئر عثمان، المدينة المنورة ٤٢٣٣١، السعودية — خلف مكتبة جرير.',
       'visit.call': 'اتصل', 'visit.map': 'افتح في الخرائط',
@@ -2304,21 +2261,11 @@ footer {
      6. Прогресс прокрутки + плавное появление + активный пункт меню
      ================================================================== */
   var progress = document.querySelector('.progress');
-  var parallaxEls = document.querySelectorAll('[data-parallax]');
   var ticking = false;
 
   function onScroll() {
     var h = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
-
-    if (!reduced) {
-      parallaxEls.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight) return;
-        var shift = ((r.top + r.height / 2) - window.innerHeight / 2) * -0.09;
-        el.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
-      });
-    }
     ticking = false;
   }
   window.addEventListener('scroll', function () {
