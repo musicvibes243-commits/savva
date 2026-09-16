@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Reem+Kufi:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css"><title>Вариант 2 — Витрина</title>
+<style>
+body{background:#14110D;color:#F2EADB}
+.nav{position:absolute;inset-block-start:0;inset-inline:0;z-index:5;display:flex;align-items:center;
+  justify-content:space-between;height:82px}
+.nav .mark{width:104px;background:#F6EEDF}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:.88rem;color:#F2EADB}
+.nav .btn{background:rgba(246,238,223,.14);border:1px solid rgba(246,238,223,.4);color:#F6EEDF}
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(20,17,13,.62) 0%,rgba(20,17,13,.38) 45%,rgba(20,17,13,.88) 100%)}
+.hero .inner{position:relative;z-index:3;padding-block:120px 70px;max-width:900px}
+h1{font-size:clamp(2.8rem,8vw,6rem);color:#FBF6EC}
+h1 em{font-style:italic;color:var(--clay)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--clay);margin-bottom:20px}
+.lead{margin:24px auto 0;max-width:48ch;color:rgba(242,234,219,.8)}
+.cta{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta .btn-ghost{color:#F6EEDF;border-color:rgba(246,238,223,.45)}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:9px 16px;
+  border:1px solid rgba(246,238,223,.3);border-radius:999px;font-family:var(--mono);font-size:.72rem}
+.status i{width:8px;height:8px;border-radius:50%;background:#8FBF6B;display:block}
+.menu{padding-block:clamp(50px,7vw,90px);background:#14110D}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);color:#FBF6EC}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));margin-top:30px}
+.card .ph{aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#241E17}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;gap:8px}
+.card b{font-weight:600;font-size:.95rem}
+.card .price{font-family:var(--mono);font-size:.85rem;color:var(--clay)}
+</style></head><body>
+<span class="tag">Вариант 2 · «Витрина»</span>
+<section class="hero"><img src="../images/bar-counter.jpg" alt="">
+<header class="wrap nav"><span class="mark"></span>
+<ul><li>Ритуал</li><li>Меню</li><li>Место</li><li>О нас</li><li>Адрес</li></ul>
+<a class="btn" href="#">Найти нас</a></header>
+<div class="wrap inner"><p class="eyebrow"><span class="ar">قهوة مختصة</span> · Медина, Бир-Усман</p>
+<h1>Кофе, ради которого <em>стоит задержаться</em></h1>
+<p class="lead">Пуровер вручную на весах, арочные окна и тихий двор в тени деревьев. Каждая чашка — без спешки.</p>
+<p class="status"><i></i> Сейчас открыто · до 2:00</p>
+<div class="cta"><a class="btn" href="#">Смотреть меню →</a><a class="btn btn-ghost" href="#">Собрать свою чашку</a></div>
+</div></section>
+<section class="menu"><div class="wrap"><h2>Меню</h2><div class="cards">
+<div class="card"><div class="ph"><img src="../images/menu-latte-stone.jpg" alt=""></div><div class="row"><b>Latte</b><span class="price">16 ﷼</span></div></div>
+<div class="card"><div class="ph"><img src="../images/menu-matcha.jpg" alt=""></div><div class="row"><b>Savva Matcha</b><span class="price">22 ﷼</span></div></div>
+<div class="card"><div class="ph"><img src="../images/menu-cheesecake.jpg" alt=""></div><div class="row"><b>Cheesecake</b><span class="price">27 ﷼</span></div></div>
+<div class="card"><div class="ph"><img src="../images/menu-turkish.jpg" alt=""></div><div class="row"><b>Turkish Coffee</b><span class="price">11 ﷼</span></div></div>
+</div></div></section></body></html>

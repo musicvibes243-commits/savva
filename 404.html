@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#14110D">
+<title>404 — вы заблудились · SAVVA</title>
+<meta name="description" content="Такой страницы в SAVVA нет. Возвращайтесь на главную — кофе на месте.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Reem+Kufi:wght@400;500;600&family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ======================================================================
+   SAVVA · 404
+   Полноэкранное видео кафе, приглушённое почти до монохрома и накрытое
+   полиграфическим растром. Поверх — крупная антиква, мелкий моноширинный
+   подзаголовок и одна ссылка. Больше на странице ничего нет.
+
+   Файл лежит в двух местах: savva/404.html и 404.html в корне репозитория
+   (GitHub Pages отдаёт корневой для всех адресов сайта). Поэтому пути к
+   видео и ссылки считаются из адреса в JS, а не зашиты в разметку.
+   ====================================================================== */
+
+:root {
+  --ink:     #14110D;   /* почти чёрный, но тёплый — как у кофе */
+  --white:   #FFFCF4;
+  --dim:     rgba(255, 252, 244, 0.68);
+  --accent:  #E4703F;   /* терракота вывески, поднятая до плотности на чёрном */
+
+  --display: 'Prata', 'Times New Roman', Georgia, serif;
+  --sans:    'Manrope', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --gutter: clamp(22px, 7vw, 92px);
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Prata не знает арабского — там меняем пару шрифтов целиком */
+[lang="ar"] {
+  --display: 'Reem Kufi', 'Noto Kufi Arabic', Georgia, serif;
+  --sans:    'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+[lang="ar"] .title {
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: 0;
+  /* арабское слово не переносится: на девяти ремах строка уходит за экран */
+  font-size: clamp(2.4rem, 8.4vw, 6.6rem);
+  max-width: 12ch;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: clamp(15px, 0.35vw + 14px, 17px);
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+/* --- 1. Фон ----------------------------------------------------------- */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #0E0C09 url("images/hero-reel-poster.jpg") center / cover no-repeat;
+}
+.bg video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+/* Почти монохром, но тёплый: чистый grayscale выхолащивает и дерево,
+   и терракоту, ради которых всё это снималось.
+   Фильтр вешаем только на контейнер: если продублировать его на video,
+   к дочернему элементу он применится второй раз и кадр уйдёт в чёрное. */
+.bg { filter: grayscale(0.58) sepia(0.16) contrast(1.04) brightness(0.74); }
+
+/* затемнение с уклоном к той стороне, где стоит текст */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(20, 17, 13, 0.5) 0%, rgba(20, 17, 13, 0.16) 36%, rgba(20, 17, 13, 0.74) 100%),
+    linear-gradient(to var(--veil-side, right), rgba(20, 17, 13, 0.72) 0%, rgba(20, 17, 13, 0.1) 64%, rgba(20, 17, 13, 0.28) 100%);
+}
+[dir="rtl"] .veil { --veil-side: left; }
+
+/* Полиграфический растр. Это и даёт «напечатанный» характер:
+   без него затемнённое видео выглядит просто тёмным видео. */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.44;
+  background-image: radial-gradient(circle at center, #000 0.95px, transparent 1.15px);
+  background-size: 3.4px 3.4px;
+}
+@media (min-width: 900px) { .screen { background-size: 4px 4px; } }
+
+/* --- 2. Каркас -------------------------------------------------------- */
+
+.page {
+  position: relative;
+  z-index: 3;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 3.2vw, 34px) var(--gutter) 0;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+.brand__word {
+  font-family: 'Prata', Georgia, serif;
+  font-size: 1.24rem;
+  letter-spacing: 0.22em;
+  line-height: 1;
+}
+.brand__sub {
+  font-family: var(--mono);
+  font-size: 0.48rem;
+  line-height: 1.32;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid rgba(255, 252, 244, 0.25);
+}
+@media (max-width: 460px) { .brand__sub { display: none; } }
+
+.lang {
+  display: flex;
+  border: 1px solid rgba(255, 252, 244, 0.28);
+  border-radius: 999px;
+  overflow: hidden;
+  backdrop-filter: blur(3px);
+}
+.lang button {
+  padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.lang button:hover { color: var(--accent); }
+.lang button[aria-pressed="true"] { background: var(--accent); color: #14110D; }
+
+/* --- 3. Реплика ------------------------------------------------------- */
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: start;
+  padding-block: clamp(40px, 9vh, 120px);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.4rem, 11.8vw, 9rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-shadow: 0 6px 60px rgba(0, 0, 0, 0.6);
+  max-width: 14ch;
+}
+
+.kicker {
+  margin: clamp(18px, 2.6vw, 30px) 0 0;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.44em;
+  text-indent: 0.44em;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+}
+/* В JetBrains Mono нет арабского: посимвольный фолбэк ломает вязь,
+   поэтому здесь берём арабский гротеск. Трекинг тоже убираем — он
+   разрывает соединения букв. */
+[lang="ar"] .kicker {
+  font-family: var(--sans);
+  letter-spacing: 0;
+  text-indent: 0;
+  font-size: 0.78rem;
+}
+
+.back {
+  margin-top: clamp(26px, 3.6vw, 42px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(28px, 5vw, 64px);
+  min-width: 190px;
+  padding-bottom: 11px;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent);
+  transition: color 0.3s var(--ease);
+}
+.back > span { white-space: nowrap; }
+.back svg { width: 14px; height: 14px; flex: none; color: var(--accent); transition: transform 0.4s var(--ease); }
+[dir="rtl"] .back svg { transform: scaleX(-1); }
+.back:hover { color: var(--accent); }
+.back:hover svg { transform: translateX(6px); }
+[dir="rtl"] .back:hover svg { transform: scaleX(-1) translateX(6px); }
+
+/* --- 4. Бегущая строка, подрезанная нижним краем ---------------------- */
+
+.marquee {
+  position: relative;
+  z-index: 3;
+  margin-top: auto;
+  overflow: hidden;
+  height: 0.62em;
+  font-family: var(--display);
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 1;
+  color: rgba(255, 252, 244, 0.1);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  margin-inline: calc(var(--gutter) * -1);
+}
+.marquee__row {
+  display: inline-flex;
+  animation: slide 26s linear infinite;
+}
+[dir="rtl"] .marquee__row { animation-direction: reverse; }
+.marquee__row span { padding-inline-end: 0.35em; }
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* --- 5. Мелочи -------------------------------------------------------- */
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 3px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__row { animation: none; }
+  .back svg, .back { transition: none; }
+}
+
+/* Короткий экран в альбомной ориентации: заголовок съедает всё место */
+@media (max-height: 520px) {
+  .stage { padding-block: 20px; }
+  .title { font-size: clamp(2.2rem, 8vw, 4rem); }
+  .marquee { display: none; }
+}
+</style>
+
+<noscript><style>
+  /* Источник видео ставит JS (файл лежит в двух местах, путь считается
+     из адреса). Без JS элемент остаётся пустым, а пустой <video> Chromium
+     рисует чёрным прямоугольником поверх постера — и ещё показывает
+     полосу плеера. Поэтому здесь его просто нет. */
+  .bg video { display: none; }
+</style></noscript>
+</head>
+
+<body>
+
+<div class="bg" aria-hidden="true">
+  <video id="reel" playsinline muted loop preload="metadata"></video>
+</div>
+<div class="veil" aria-hidden="true"></div>
+<div class="screen" aria-hidden="true"></div>
+
+<div class="page">
+
+  <header class="top">
+    <a class="brand" id="brandLink" href="./">
+      <span class="brand__word">SAVVA</span>
+      <span class="visually-hidden">— на главную</span>
+      <span class="brand__sub">SPECIALTY<br>COFFEE</span>
+    </a>
+
+    <div class="lang" role="group" data-i18n-aria="a11y.lang" aria-label="Язык страницы">
+      <button type="button" data-lang="ru" aria-pressed="true">Ру</button>
+      <button type="button" data-lang="en" aria-pressed="false">En</button>
+      <button type="button" data-lang="ar" aria-pressed="false" lang="ar">ع</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <h1 class="title" data-i18n="e.title">Ой, мимо!</h1>
+    <p class="kicker" data-i18n="e.kicker">Вы заблудились…</p>
+
+    <a class="back" id="homeBtn" href="./">
+      <span data-i18n="e.back">На главную</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </main>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee__row" id="marquee"></div></div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+
+  /* ==================================================================
+     1. Словарь
+     ================================================================== */
+  var DICT = {
+    ru: {
+      'doc.title': '404 — вы заблудились · SAVVA',
+      'doc.desc':  'Такой страницы в SAVVA нет. Возвращайтесь на главную — кофе на месте.',
+      'e.title':   'Ой, мимо!',
+      'e.kicker':  'Вы заблудились…',
+      'e.back':    'На главную',
+      'a11y.lang': 'Язык страницы'
+    },
+    en: {
+      'doc.title': '404 — you are lost · SAVVA',
+      'doc.desc':  'This page is not on the menu. Head back to the front page — the coffee is still there.',
+      'e.title':   'Ooh, missed!',
+      'e.kicker':  "You're lost…",
+      'e.back':    'Back to homepage',
+      'a11y.lang': 'Page language'
+    },
+    ar: {
+      'doc.title': '404 — لقد تهت · SAVVA',
+      'doc.desc':  'هذه الصفحة غير موجودة لدينا. عد إلى الصفحة الرئيسية — القهوة ما زالت هنا.',
+      'e.title':   'أوه، الباب الخطأ!',
+      'e.kicker':  'لقد تهت…',
+      'e.back':    'العودة إلى الرئيسية',
+      'a11y.lang': 'لغة الصفحة'
+    }
+  };
+
+  var lang = 'ru';
+  function t(key) {
+    var d = DICT[lang] || DICT.ru;
+    return d[key] !== undefined ? d[key] : (DICT.ru[key] || '');
+  }
+
+  var langButtons = document.querySelectorAll('.lang button');
+  var metaDesc    = document.querySelector('meta[name="description"]');
+  var marquee     = document.getElementById('marquee');
+
+  function fillMarquee() {
+    /* Две одинаковые половины: анимация уезжает ровно на -50%,
+       поэтому стык не виден и строка идёт бесшовно. */
+    var line = t('e.title');
+    var half = '';
+    for (var i = 0; i < 6; i++) half += '<span>' + line + '</span>';
+    marquee.innerHTML = half + half;
+  }
+
+  function applyLang(next) {
+    lang = DICT[next] ? next : 'ru';
+    root.setAttribute('lang', lang);
+    root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n'));
+      if (v !== '') el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n-aria'));
+      if (v !== '') el.setAttribute('aria-label', v);
+    });
+
+    document.title = t('doc.title');
+    if (metaDesc) metaDesc.setAttribute('content', t('doc.desc'));
+
+    langButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+    });
+
+    fillMarquee();
+
+    try { localStorage.setItem('savva-lang', lang); } catch (e) {}
+  }
+
+  langButtons.forEach(function (b) {
+    b.addEventListener('click', function () { applyLang(b.dataset.lang); });
+  });
+
+  /* ==================================================================
+     2. Где лежит сайт.
+        Корневой 404.html Pages отдаёт по любому адресу, поэтому
+        относительные пути из разметки там указывали бы в никуда.
+     ================================================================== */
+  function savvaBase() {
+    var p = location.pathname;
+    var m = p.match(/^(.*\/savva\/)/);
+    if (m) return m[1];
+    if (/\.github\.io$/i.test(location.hostname)) {
+      var seg = p.split('/').filter(Boolean)[0];
+      return (seg ? '/' + seg + '/' : '/') + 'savva/';
+    }
+    return p.replace(/[^/]*$/, '') + 'savva/';
+  }
+
+  var base = savvaBase();
+  document.getElementById('homeBtn').href   = base;
+  document.getElementById('brandLink').href = base;
+
+  /* ==================================================================
+     3. Видео
+     ================================================================== */
+  var bg   = document.querySelector('.bg');
+  var reel = document.getElementById('reel');
+
+  bg.style.backgroundImage = 'url("' + base + 'images/hero-reel-poster.jpg")';
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced) {
+    /* WebM первым: сборки Chromium без проприетарных кодеков
+       не умеют H.264 и на MP4 показали бы чёрный прямоугольник. */
+    [['videos/hero-reel.webm', 'video/webm'], ['videos/hero-reel.mp4', 'video/mp4']]
+      .forEach(function (s) {
+        var el = document.createElement('source');
+        el.src = base + s[0];
+        el.type = s[1];
+        reel.appendChild(el);
+      });
+    reel.setAttribute('autoplay', '');
+    reel.load();
+    var go = reel.play();
+    if (go && go.catch) go.catch(function () {});
+  } else {
+    reel.remove();
+  }
+
+  /* ==================================================================
+     4. Старт
+     ================================================================== */
+  var savedLang = null;
+  try { savedLang = localStorage.getItem('savva-lang'); } catch (e) {}
+
+  if (savedLang && DICT[savedLang]) applyLang(savedLang);
+  else {
+    var nav = (navigator.language || 'ru').slice(0, 2).toLowerCase();
+    applyLang(DICT[nav] ? nav : 'ru');
+  }
+})();
+</script>
+</body>
+</html>

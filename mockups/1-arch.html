@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Reem+Kufi:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css"><title>Вариант 1 — Арка</title>
+<style>
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px;border-bottom:1px solid var(--line)}
+.nav .mark{width:104px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:.88rem}
+.hero{background:var(--travertine);padding-block:clamp(40px,6vw,72px);position:relative;overflow:hidden}
+.hero .watermark{position:absolute;inset-inline-end:-4%;top:50%;transform:translateY(-50%);
+  font-family:var(--arabic);font-size:clamp(9rem,30vw,26rem);opacity:.03;pointer-events:none;line-height:.8}
+.grid{display:grid;gap:clamp(30px,5vw,60px);grid-template-columns:1fr;align-items:center;position:relative;z-index:2}
+@media(min-width:960px){.grid{grid-template-columns:1fr .82fr}}
+h1{font-size:clamp(2.5rem,6.4vw,4.6rem);margin-block:18px 0}
+h1 em{font-style:italic;color:var(--rust)}
+.lead{margin-top:22px;max-width:46ch;color:var(--ink-soft)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rust-text);display:flex;gap:12px;align-items:center}
+.eyebrow::before{content:"";width:26px;height:1px;background:currentColor}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:9px 16px;border:1px solid var(--line);
+  border-radius:999px;background:rgba(255,253,246,.7);font-family:var(--mono);font-size:.72rem}
+.status i{width:8px;height:8px;border-radius:50%;background:#6E9A52;display:block}
+.cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.portal{position:relative;width:min(100%,430px);margin-inline:auto;aspect-ratio:3/4.15;
+  border:clamp(9px,1.5vw,15px) solid var(--wood);border-radius:999px 999px 14px 14px;overflow:hidden;
+  box-shadow:0 26px 64px -26px rgba(58,44,28,.38)}
+.portal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.portal .plate{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:62%;
+  background:#F6EEDF;-webkit-mask:url('../images/logo-savva.png') no-repeat center/contain;
+  mask:url('../images/logo-savva.png') no-repeat center/contain;aspect-ratio:800/355}
+.menu{padding-block:clamp(50px,7vw,90px);background:var(--cream)}
+.cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));margin-top:30px}
+.card .ph{aspect-ratio:3/4;border-radius:999px 999px 12px 12px;overflow:hidden;background:var(--travertine)}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .row{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;gap:8px}
+.card b{font-weight:600;font-size:.95rem}
+.card .price{font-family:var(--mono);font-size:.85rem;color:var(--rust-text)}
+h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+</style></head><body>
+<span class="tag">Вариант 1 · «Арка»</span>
+<header class="wrap nav"><span class="mark"></span>
+<ul><li>Ритуал</li><li>Меню</li><li>Место</li><li>О нас</li><li>Адрес</li></ul>
+<a class="btn" href="#">Найти нас</a></header>
+<section class="hero"><div class="watermark ar">سافا</div><div class="wrap grid">
+<div><p class="eyebrow"><span class="ar">قهوة مختصة</span> · Медина, Бир-Усман</p>
+<h1>Кофе, ради которого <em>стоит задержаться</em></h1>
+<p class="lead">Пуровер вручную на весах, арочные окна и тихий двор в тени деревьев. Каждая чашка — без спешки.</p>
+<p class="status"><i></i> Сейчас открыто · до 2:00</p>
+<div class="cta"><a class="btn" href="#">Смотреть меню →</a><a class="btn btn-ghost" href="#">Собрать свою чашку</a></div></div>
+<div><div class="portal"><img src="../images/barista-pourover.jpg" alt=""><span class="plate"></span></div></div>
+</div></section>
+<section class="menu"><div class="wrap"><h2>Меню</h2><div class="cards">
+<div class="card"><div class="ph"><img src="../images/menu-latte-stone.jpg" alt=""></div><div class="row"><b>Latte</b><span class="price">16 ﷼</span></div></div>
+<div class="card"><div class="ph"><img src="../images/menu-matcha.jpg" alt=""></div><div class="row"><b>Savva Matcha</b><span class="price">22 ﷼</span></div></div>
+<div class="card"><div class="ph"><img src="../images/menu-cheesecake.jpg" alt=""></div><div class="row"><b>Cheesecake</b><span class="price">27 ﷼</span></div></div>
+<div class="card"><div class="ph"><img src="../images/menu-turkish.jpg" alt=""></div><div class="row"><b>Turkish Coffee</b><span class="price">11 ﷼</span></div></div>
+</div></div></section></body></html>

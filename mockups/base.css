@@ -1,0 +1,33 @@
+/* Общая основа для всех трёх макетов: одинаковые цвета, шрифты, контент.
+   Различается только арт-дирекция — так сравнение честное. */
+:root{
+  --paper:#FAF6EC; --travertine:#EBE1CD; --cream:#F3ECDC; --panel:#FFFDF6;
+  --ink:#2B2720; --ink-soft:#605945; --rust:#B0603C; --rust-text:#965233; --clay:#CE8C68;
+  --olive:#6B6F52; --olive-deep:#434733; --wood:#7A4F32; --line:rgba(43,39,32,.15);
+  --display:'Prata','Times New Roman',Georgia,serif;
+  --sans:'Manrope',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  --arabic:'Reem Kufi','Noto Kufi Arabic',sans-serif;
+  --gutter:clamp(20px,5vw,44px); --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:clamp(15px,.35vw + 14px,17px);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;margin:0;letter-spacing:-.015em}
+p{margin:0}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:var(--gutter)}
+.mark{background:var(--rust);-webkit-mask:url('../images/logo-savva.png') no-repeat center/contain;
+  mask:url('../images/logo-savva.png') no-repeat center/contain;aspect-ratio:800/355}
+.ar{font-family:var(--arabic);direction:rtl;unicode-bidi:isolate}
+.mono{font-family:var(--mono)}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:999px;
+  background:#A05535;color:#FFF8EC;font-size:.9rem;font-weight:600;border:1px solid transparent;
+  cursor:pointer;transition:transform .35s var(--ease)}
+.btn:hover{transform:translateY(-3px)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+/* подпись варианта поверх макета */
+.tag{position:fixed;inset-block-start:0;inset-inline-start:0;z-index:99;background:var(--ink);
+  color:var(--paper);font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;
+  padding:8px 14px;text-transform:uppercase}

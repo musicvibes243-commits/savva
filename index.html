@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SAVVA — قهوة مختصة · спешелти-кофейня в Медине</title>
+<meta name="description" content="SAVVA — specialty coffee в Медине, квартал Бир-Усман. Пуровер V60 на весах, авторская латте-арт, сезонные чизкейки и тихий двор в тени деревьев. Меню, цены, часы работы и адрес.">
+<meta name="theme-color" content="#FAF6EC">
+<meta name="author" content="SAVVA Specialty Coffee">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SAVVA Specialty Coffee">
+<meta property="og:title" content="SAVVA — قهوة مختصة · спешелти-кофейня в Медине">
+<meta property="og:description" content="Пуровер на весах, арочные окна и тихий двор. Каждая чашка — вручную, без спешки.">
+<meta property="og:image" content="images/entrance.jpg">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23B0603C'/%3E%3Cpath d='M9 24V15a7 7 0 0 1 14 0v9' fill='none' stroke='%23FAF6EC' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   SAVVA — specialty coffee, Медина
+   Арт-дирекция «Арка»: арочная дверь и окно кофейни — главная форма сайта.
+   Материалы: травертин, тёплое дерево, терракота вывески, оливковая ткань.
+   ========================================================================== */
+
+/* --- 1. Токены -------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --paper:      #FAF6EC;  /* стена, основной фон */
+  --travertine: #EBE1CD;  /* каменная панель */
+  --cream:      #F3ECDC;  /* мягкая подложка */
+  --panel:      #FFFDF6;  /* карточка */
+  --ink:        #2B2720;  /* текст */
+  --ink-soft:   #605945;  /* вторичный текст */
+  --rust:       #B0603C;  /* терракота вывески — заливки и графика */
+  --rust-text:  #8A4B2F;  /* та же терракота, но пригодная для мелкого текста */
+  --btn-bg:     #A05535;  /* фон кнопки: 5.2:1 со светлой подписью */
+  --btn-fg:     #FFF8EC;
+  --clay-text:  #E3B08E;  /* акцент на тёмно-оливковом фоне */
+  --rust-deep:  #8E4830;
+  --clay:       #CE8C68;
+  --olive:      #6B6F52;  /* ткань диванов */
+  --olive-deep: #434733;
+  --wood:       #7A4F32;  /* рамы дверей */
+  --line:       rgba(43, 39, 32, 0.15);
+  --line-soft:  rgba(43, 39, 32, 0.07);
+
+  --shadow:     0 26px 64px -26px rgba(58, 44, 28, 0.38);
+  --shadow-sm:  0 12px 30px -16px rgba(58, 44, 28, 0.34);
+  --grain-op:   0.14;   /* плотнее — и мелкий текст перестаёт проходить WCAG */
+  --grain-mode: multiply;
+
+  --display: 'Prata', 'Times New Roman', Georgia, serif;
+  --sans:    'Manrope', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+  --arabic:  'Reem Kufi', 'Noto Kufi Arabic', 'Segoe UI', sans-serif;
+  --arabic-sans: 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+
+  --maxw:   1180px;
+  --gutter: clamp(20px, 5vw, 44px);
+  --sect:   clamp(76px, 10vw, 146px);
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* арка: верх — полукруг, низ — почти прямой */
+  --arch:      999px 999px 14px 14px;
+  --arch-soft: 50% 50% 16px 16px / 32% 32% 3% 3%;
+  /* органичная ниша со стены, в которой висят буквы SAVVA */
+  --niche: 47% 53% 42% 58% / 58% 54% 46% 42%;
+}
+
+/* Вечерний режим: SAVVA после заката */
+[data-theme="night"] {
+  color-scheme: dark;
+
+  --paper:      #16130F;
+  --travertine: #221D16;
+  --cream:      #1D1913;
+  --panel:      #211C15;
+  --ink:        #F1E8D8;
+  --ink-soft:   #A89B85;
+  --rust:       #DB8757;
+  --rust-text:  #DB8757;  /* на тёмном фоне светлая терракота уже читается */
+  --btn-bg:     #DB8757;
+  --btn-fg:     #16130F;  /* ночью подпись кнопки тёмная, иначе 2.6:1 */
+  --clay-text:  #E3B08E;
+  --rust-deep:  #C26E41;
+  --clay:       #E3A87F;
+  --olive:      #909774;
+  --olive-deep: #272B1E;
+  --wood:       #A9724C;
+  --line:       rgba(241, 232, 216, 0.17);
+  --line-soft:  rgba(241, 232, 216, 0.08);
+
+  --shadow:     0 26px 64px -26px rgba(0, 0, 0, 0.8);
+  --shadow-sm:  0 12px 30px -16px rgba(0, 0, 0, 0.7);
+  --grain-op:   0.16;
+  --grain-mode: soft-light;
+}
+
+/* Арабская версия: латинский Prata не содержит арабских глифов,
+   поэтому на [lang="ar"] подменяем всю пару шрифтов целиком. */
+[lang="ar"] {
+  --display: 'Reem Kufi', 'Noto Kufi Arabic', Georgia, serif;
+  --sans:    'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+[lang="ar"] h1, [lang="ar"] h2, [lang="ar"] h3, [lang="ar"] h4 {
+  font-weight: 600;
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+[lang="ar"] body { line-height: 1.85; }
+
+/* --- 2. База ---------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+html.is-ready { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: clamp(15px, 0.35vw + 14px, 17px);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.5s var(--ease), color 0.5s var(--ease);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+img, video { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--rust);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0); clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+section { padding-block: var(--sect); position: relative; }
+
+/* --- 3. Общие элементы ------------------------------------------------ */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rust-text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: "";
+  width: 26px; height: 1px;
+  background: currentColor;
+  flex: none;
+}
+
+.section-head {
+  display: grid;
+  gap: clamp(16px, 3vw, 40px);
+  grid-template-columns: 1fr;
+  align-items: end;
+  margin-bottom: clamp(36px, 5vw, 64px);
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 820px) {
+  .section-head { grid-template-columns: 1.4fr 1fr; }
+}
+.section-head h2 { font-size: clamp(2rem, 5.2vw, 3.4rem); margin-top: 14px; }
+.section-head .note {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  max-width: 38ch;
+}
+
+.ar { font-family: var(--arabic); direction: rtl; unicode-bidi: isolate; }
+
+.btn {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease), background 0.3s, box-shadow 0.35s var(--ease);
+  will-change: transform;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+.btn:active { transform: translateY(-1px); }
+.btn .arrow { transition: transform 0.35s var(--ease); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover { border-color: var(--rust); color: var(--rust-text); }
+
+.btn-light {
+  background: transparent;
+  color: #F6EEDF;
+  border-color: rgba(246, 238, 223, 0.45);
+}
+.btn-light:hover { background: rgba(246, 238, 223, 0.12); }
+
+/* --- 4. Плёнка зерна и курсор ----------------------------------------- */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 8;
+  pointer-events: none;
+  opacity: var(--grain-op);
+  mix-blend-mode: var(--grain-mode);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  transition: opacity 0.5s var(--ease);
+}
+
+.cursor, .cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 200;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s, width 0.3s var(--ease), height 0.3s var(--ease),
+              background 0.3s, border-color 0.3s;
+}
+.cursor { width: 7px; height: 7px; background: var(--rust); }
+.cursor-ring { width: 34px; height: 34px; border: 1px solid var(--rust); }
+body.cursor-on .cursor, body.cursor-on .cursor-ring { opacity: 1; }
+body.cursor-on.cursor-hot .cursor-ring { width: 58px; height: 58px; background: rgba(176, 96, 60, 0.1); }
+body.cursor-on.cursor-hot .cursor { width: 4px; height: 4px; }
+@media (hover: none), (pointer: coarse) {
+  .cursor, .cursor-ring { display: none; }
+}
+
+/* --- 5. Прелоадер: открывается дверь ---------------------------------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: var(--travertine);
+  transition: opacity 0.6s var(--ease), visibility 0.6s;
+}
+.preloader__door {
+  width: min(58vw, 230px);
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--wood);
+  border-radius: var(--arch);
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  transform: scale(0.94);
+  opacity: 0;
+  animation: doorIn 0.8s var(--ease) 0.05s forwards;
+}
+.preloader__logo {
+  width: 62%;
+  aspect-ratio: 800 / 355;
+  background: var(--rust);
+  -webkit-mask: url('images/logo-savva.png') no-repeat center / contain;
+  mask: url('images/logo-savva.png') no-repeat center / contain;
+  opacity: 0;
+  animation: fadeUp 0.7s var(--ease) 0.35s forwards;
+}
+@keyframes doorIn  { to { transform: scale(1); opacity: 1; } }
+@keyframes fadeUp  { from { transform: translateY(10px); } to { transform: none; opacity: 1; } }
+body.loaded .preloader { opacity: 0; visibility: hidden; }
+/* если скрипт не выполнился — заставка уйдёт сама */
+.preloader { animation: preloaderOut 0.6s var(--ease) 3s forwards; }
+@keyframes preloaderOut { to { opacity: 0; visibility: hidden; } }
+
+/* --- 6. Шапка --------------------------------------------------------- */
+.progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  height: 2px;
+  width: 0;
+  background: var(--rust);
+  z-index: 90;
+  transition: width 0.1s linear;
+}
+
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 70;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom: 1px solid var(--line-soft);
+  transition: background 0.4s, border-color 0.4s;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  height: clamp(62px, 8vw, 78px);
+}
+
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand__mark {
+  width: clamp(88px, 12vw, 112px);
+  aspect-ratio: 800 / 355;
+  background: var(--rust);
+  -webkit-mask: url('images/logo-savva.png') no-repeat center / contain;
+  mask: url('images/logo-savva.png') no-repeat center / contain;
+  transition: background 0.4s;
+}
+.brand:hover .brand__mark { background: var(--ink); }
+.brand__sub {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-soft);
+  border-inline-start: 1px solid var(--line);
+  padding-inline-start: 12px;
+  line-height: 1.35;
+}
+@media (max-width: 560px) { .brand__sub { display: none; } }
+
+.nav__links { display: none; gap: clamp(18px, 2.4vw, 32px); }
+@media (min-width: 1020px) { .nav__links { display: flex; } }
+.nav__links a {
+  position: relative;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding-block: 6px;
+}
+.nav__links a::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease);
+}
+.nav__links a:hover::after, .nav__links a[aria-current="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+[dir="rtl"] .nav__links a::after { transform-origin: left; }
+[dir="rtl"] .nav__links a:hover::after,
+[dir="rtl"] .nav__links a[aria-current="true"]::after { transform-origin: right; }
+
+.nav__side { display: flex; align-items: center; gap: 10px; }
+
+.icon-btn {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.icon-btn:hover { border-color: var(--rust); color: var(--rust); transform: rotate(-12deg); }
+.icon-btn svg { width: 19px; height: 19px; }
+.theme-toggle .moon { display: none; }
+[data-theme="night"] .theme-toggle .sun  { display: none; }
+[data-theme="night"] .theme-toggle .moon { display: block; }
+
+.nav__cta { display: none; }
+@media (min-width: 720px) { .nav__cta { display: inline-flex; padding: 11px 22px; } }
+
+.burger { display: grid; }
+@media (min-width: 1020px) { .burger { display: none; } }
+.burger span {
+  display: block; width: 17px; height: 1.5px;
+  background: currentColor; border-radius: 2px;
+  transition: transform 0.35s var(--ease), opacity 0.2s;
+}
+.burger span + span { margin-top: 4px; }
+body.menu-open .burger span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+body.menu-open .burger span:nth-child(2) { opacity: 0; }
+body.menu-open .burger span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+/* мобильное меню */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  background: var(--travertine);
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 20vh var(--gutter) 10vh;
+  clip-path: circle(0% at calc(100% - 44px) 40px);
+  transition: clip-path 0.7s var(--ease);
+  visibility: hidden;
+}
+[dir="rtl"] .mobile-menu { clip-path: circle(0% at 44px 40px); }
+body.menu-open .mobile-menu {
+  clip-path: circle(145% at calc(100% - 44px) 40px);
+  visibility: visible;
+}
+[dir="rtl"] body.menu-open .mobile-menu { clip-path: circle(145% at 44px 40px); }
+.mobile-menu a {
+  font-family: var(--display);
+  font-size: clamp(2rem, 9vw, 3rem);
+  text-decoration: none;
+  padding-block: 6px;
+  border-bottom: 1px solid var(--line-soft);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), color 0.3s;
+}
+.mobile-menu a:hover { color: var(--rust); }
+body.menu-open .mobile-menu a { opacity: 1; transform: none; }
+body.menu-open .mobile-menu a:nth-child(1) { transition-delay: 0.18s; }
+body.menu-open .mobile-menu a:nth-child(2) { transition-delay: 0.24s; }
+body.menu-open .mobile-menu a:nth-child(3) { transition-delay: 0.30s; }
+body.menu-open .mobile-menu a:nth-child(4) { transition-delay: 0.36s; }
+body.menu-open .mobile-menu a:nth-child(5) { transition-delay: 0.42s; }
+body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
+
+/* переключатель языка */
+.lang {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.lang button {
+  padding: 8px 11px;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.lang button:hover { color: var(--rust-text); }
+.lang button[aria-pressed="true"] { background: var(--rust); color: #FFF8EC; }
+@media (max-width: 400px) { .lang button { padding: 8px 8px; font-size: 0.6rem; } }
+
+/* --- 7. Герой: дверь SAVVA -------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  background: var(--travertine);
+  padding-block: clamp(34px, 6vw, 64px) clamp(56px, 8vw, 96px);
+}
+/* огромная арабская подпись как штукатурка на стене */
+.hero__watermark {
+  position: absolute;
+  inset-inline-end: -4%;
+  top: 46%;
+  transform: translateY(-50%);
+  font-family: var(--arabic);
+  font-size: clamp(9rem, 34vw, 30rem);
+  line-height: 0.8;
+  color: var(--ink);
+  opacity: 0.045;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.hero__grid {
+  display: grid;
+  gap: clamp(30px, 5vw, 60px);
+  grid-template-columns: 1fr;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+@media (min-width: 960px) {
+  .hero__grid { grid-template-columns: 1fr 0.82fr; }
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6.4vw, 4.6rem);
+  margin-block: clamp(16px, 2.4vw, 26px) 0;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--rust);
+}
+.hero__lead {
+  margin-top: clamp(16px, 2.4vw, 24px);
+  max-width: 46ch;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 0.4vw + 0.94rem, 1.1rem);
+}
+.hero__cta {
+  margin-top: clamp(24px, 3.4vw, 36px);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* индикатор «сейчас открыто», считается по реальному времени в Медине */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(22px, 3vw, 30px);
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+.status__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  flex: none;
+}
+.status.is-open  .status__dot { background: #6E9A52; animation: pulse 2.6s infinite; }
+.status.is-shut  .status__dot { background: var(--rust); }
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(110, 154, 82, 0.55); }
+  70%  { box-shadow: 0 0 0 9px rgba(110, 154, 82, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(110, 154, 82, 0); }
+}
+
+/* сам портал — арочная дверь с деревянной рамой */
+.portal {
+  position: relative;
+  width: min(100%, 430px);
+  margin-inline: auto;
+  aspect-ratio: 3 / 4.15;
+  border: clamp(9px, 1.5vw, 15px) solid var(--wood);
+  border-radius: var(--arch);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--olive-deep);
+  transform: scale(0.82);
+  opacity: 0;
+  animation: portalIn 1.2s var(--ease) 0.45s forwards;
+}
+@keyframes portalIn { to { transform: none; opacity: 1; } }
+.portal video, .portal img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.portal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(190deg, rgba(43, 39, 32, 0) 42%, rgba(30, 24, 16, 0.55) 100%);
+  pointer-events: none;
+}
+/* блик стекла */
+.portal::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset-block-start: -30%;
+  inset-inline-start: -60%;
+  width: 55%; height: 170%;
+  background: linear-gradient(90deg, rgba(255, 250, 240, 0) 0%, rgba(255, 250, 240, 0.22) 50%, rgba(255, 250, 240, 0) 100%);
+  transform: rotate(14deg);
+  animation: glint 7s ease-in-out 2s infinite;
+  pointer-events: none;
+}
+@keyframes glint {
+  0%, 68%  { inset-inline-start: -60%; }
+  88%, 100% { inset-inline-start: 130%; }
+}
+
+.portal__plate {
+  position: absolute;
+  z-index: 3;
+  inset-block-end: 18px;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  width: 62%;
+  aspect-ratio: 800 / 355;
+  background: #F6EEDF;
+  -webkit-mask: url('images/logo-savva.png') no-repeat center / contain;
+  mask: url('images/logo-savva.png') no-repeat center / contain;
+}
+[dir="rtl"] .portal__plate { transform: translateX(50%); }
+
+.scroll-cue {
+  position: absolute;
+  inset-block-end: clamp(18px, 3vw, 30px);
+  inset-inline-start: var(--gutter);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.scroll-cue__line {
+  width: 46px; height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  animation: cue 2.6s var(--ease) infinite;
+}
+[dir="rtl"] .scroll-cue__line { transform-origin: right; }
+@keyframes cue {
+  0%, 100% { transform: scaleX(0.3); opacity: 0.5; }
+  50%      { transform: scaleX(1);   opacity: 1; }
+}
+@media (max-width: 960px) { .scroll-cue { display: none; } }
+
+/* --- 8. Бегущая строка ------------------------------------------------ */
+.ticker {
+  background: var(--olive-deep);
+  color: #E8DFC9;
+  padding-block: 14px;
+  overflow: hidden;
+  border-block: 1px solid rgba(232, 223, 201, 0.12);
+}
+.ticker__track {
+  display: flex;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+}
+.ticker:hover .ticker__track { animation-play-state: paused; }
+.ticker__track span {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  padding-inline: 22px;
+}
+.ticker__track span i { color: var(--clay); font-style: normal; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+[dir="rtl"] .ticker__track { animation-name: marqueeRtl; }
+@keyframes marqueeRtl { to { transform: translateX(50%); } }
+
+/* --- 9. Ритуал -------------------------------------------------------- */
+.ritual__grid {
+  display: grid;
+  gap: clamp(30px, 5vw, 64px);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .ritual__grid { grid-template-columns: 0.82fr 1fr; align-items: start; }
+  .ritual__media { position: sticky; top: 104px; }
+}
+.ritual__media {
+  border-radius: var(--arch);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  box-shadow: var(--shadow);
+  background: var(--cream);
+}
+.ritual__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(14px, 3vw, 26px);
+  padding-block: clamp(22px, 3.4vw, 34px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.step:first-child { padding-top: 0; }
+.step__num {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--rust-text);
+  padding-top: 0.55em;
+}
+.step h3 { font-size: clamp(1.3rem, 2.8vw, 1.9rem); }
+.step p { margin-top: 10px; color: var(--ink-soft); max-width: 48ch; }
+
+/* --- 10. Меню --------------------------------------------------------- */
+.menu { background: var(--cream); }
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(26px, 4vw, 44px);
+}
+.tab {
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+}
+.tab:hover { border-color: var(--rust); color: var(--rust-text); }
+.tab[aria-pressed="true"] {
+  background: var(--olive);
+  border-color: var(--olive);
+  color: #F6EEDF;
+}
+
+.menu-grid {
+  display: grid;
+  gap: clamp(14px, 2.2vw, 24px);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 176px), 1fr));
+}
+.dish.is-out { display: none; }
+.dish { animation: dishIn 0.5s var(--ease) both; }
+@keyframes dishIn { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+
+.dish__ph {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--arch);
+  overflow: hidden;
+  background: var(--travertine);
+  box-shadow: var(--shadow-sm);
+}
+.dish__ph img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.dish:hover .dish__ph img { transform: scale(1.07); }
+.dish__body {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+.dish__name { font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+.dish__desc { color: var(--ink-soft); font-size: 0.78rem; margin-top: 3px; }
+.dish__price {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--rust-text);
+  white-space: nowrap;
+}
+.menu__note {
+  margin-top: clamp(26px, 4vw, 40px);
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+/* --- 11. Конструктор чашки ------------------------------------------- */
+.builder {
+  background: var(--olive-deep);
+  color: #EFE7D6;
+}
+.builder .section-head { border-color: rgba(239, 231, 214, 0.18); }
+.builder .section-head .note { color: rgba(239, 231, 214, 0.78); }
+.builder .eyebrow { color: var(--clay-text); }
+
+.builder__grid {
+  display: grid;
+  gap: clamp(30px, 5vw, 60px);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .builder__grid { grid-template-columns: 0.78fr 1fr; }
+}
+
+.cup-stage {
+  position: sticky;
+  top: 104px;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid rgba(239, 231, 214, 0.18);
+  border-radius: var(--arch-soft);
+  background: rgba(239, 231, 214, 0.05);
+}
+@media (max-width: 899px) { .cup-stage { position: static; } }
+.cup-stage svg { width: min(100%, 230px); height: auto; }
+
+.cup-name {
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 3.4vw, 1.75rem);
+  text-align: center;
+  line-height: 1.2;
+}
+.cup-sum {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  color: var(--clay-text);
+}
+.cup-hint {
+  font-size: 0.78rem;
+  color: rgba(239, 231, 214, 0.75);
+  text-align: center;
+  max-width: 28ch;
+}
+
+.opt + .opt { margin-top: clamp(20px, 3vw, 28px); }
+.opt__label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(239, 231, 214, 0.75);
+  margin-bottom: 12px;
+}
+.opt__row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 10px 18px;
+  border: 1px solid rgba(239, 231, 214, 0.26);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.83rem;
+  font-weight: 500;
+  transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.chip:hover { border-color: var(--clay); transform: translateY(-2px); }
+.chip[aria-pressed="true"] {
+  background: var(--rust);
+  border-color: var(--rust);
+  color: #FFF8EC;
+}
+.chip small {
+  font-family: var(--mono);
+  font-size: 0.72em;
+  opacity: 0.7;
+  margin-inline-start: 7px;
+}
+
+.builder__foot {
+  margin-top: clamp(26px, 4vw, 36px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.builder__foot .btn:not(.btn-light) { background: var(--clay); color: #241E14; }
+.copied {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--clay-text);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.copied.show { opacity: 1; }
+
+/* слои напитка и лёд меняются плавно */
+#lFoam, #lMilk, #lBase { transition: transform 0.6s var(--ease), fill 0.45s var(--ease); }
+#ice, #straw, #steam   { transition: opacity 0.45s var(--ease); }
+.status[hidden] { display: none; }
+
+/* Числа, диапазоны и цены всегда читаются слева направо — иначе в арабской
+   версии двунаправленный алгоритм переворачивает «10–13 ﷼» в «13–10 ﷼». */
+.dish__price, .cup-sum, .chip small, .hours__row span:last-child,
+.offer__seal, a[href^="tel:"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+
+/* --- 12. Галерея ------------------------------------------------------ */
+.gallery-grid {
+  display: grid;
+  gap: clamp(12px, 1.8vw, 20px);
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 760px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.shot {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: var(--travertine);
+  border-radius: var(--arch);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.shot--tall { grid-row: span 2; aspect-ratio: 3 / 8.1; }
+@media (max-width: 759px) { .shot--tall { grid-row: span 1; aspect-ratio: 3 / 4; } }
+.shot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 1s var(--ease), filter 0.5s;
+}
+.shot:hover img { transform: scale(1.06); }
+.shot__cap {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  padding: 26px 16px 14px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: #F6EEDF;
+  text-align: start;
+  background: linear-gradient(transparent, rgba(28, 22, 15, 0.8));
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+}
+.shot:hover .shot__cap, .shot:focus-visible .shot__cap { opacity: 1; transform: none; }
+
+/* просмотр фото */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  gap: 16px;
+  padding: 5vh 5vw;
+  background: rgba(20, 16, 11, 0.95);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease), visibility 0.4s;
+}
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox img {
+  max-width: min(92vw, 860px);
+  max-height: 84vh;
+  object-fit: contain;
+  border-radius: var(--arch);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+.lightbox__close {
+  position: absolute;
+  inset-block-start: max(18px, env(safe-area-inset-top, 0px));
+  inset-inline-end: 18px;
+  width: 46px; height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 238, 223, 0.35);
+  background: transparent;
+  color: #F6EEDF;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.lightbox__close:hover { background: rgba(246, 238, 223, 0.14); }
+.lightbox__nav {
+  display: flex;
+  gap: 10px;
+}
+.lightbox__nav button {
+  width: 46px; height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 238, 223, 0.35);
+  background: transparent;
+  color: #F6EEDF;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.lightbox__nav button:hover { background: rgba(246, 238, 223, 0.14); }
+
+/* --- 12a. Акции ------------------------------------------------------- */
+.offers { background: var(--travertine); }
+.offers__grid {
+  display: grid;
+  gap: clamp(18px, 3vw, 30px);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 780px) { .offers__grid { grid-template-columns: repeat(2, 1fr); } }
+
+.offer {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 2vw, 22px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.offer:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+
+.offer__ph {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  border-radius: var(--arch-soft);
+  overflow: hidden;
+  background: var(--travertine);
+}
+.offer__ph img { width: 100%; height: 100%; object-fit: cover; }
+
+/* печать с главным фактом предложения */
+.offer__seal {
+  position: absolute;
+  inset-block-end: 14px;
+  inset-inline-end: 14px;
+  width: 88px; height: 88px;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.15;
+  text-align: center;
+  box-shadow: 0 12px 26px -12px rgba(58, 44, 28, 0.6);
+}
+
+.offer__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  padding-top: 18px;
+}
+.offer h3 { font-size: clamp(1.25rem, 2.4vw, 1.6rem); }
+.offer p { color: var(--ink-soft); font-size: 0.94rem; max-width: 42ch; }
+.offer__foot {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+.offer__foot a { color: var(--rust-text); text-decoration: none; }
+.offer__foot a:hover { text-decoration: underline; }
+
+/* --- 13. О нас -------------------------------------------------------- */
+.about { background: var(--travertine); }
+.about__grid {
+  display: grid;
+  gap: clamp(30px, 5vw, 64px);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 880px) { .about__grid { grid-template-columns: 0.9fr 1fr; } }
+
+/* фото в форме ниши со стены кофейни, где висят буквы SAVVA */
+.niche {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--niche);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--cream);
+}
+.niche img { width: 100%; height: 100%; object-fit: cover; }
+.about h2 { font-size: clamp(2rem, 4.6vw, 3rem); margin-block: 14px 0; }
+.about p { margin-top: 18px; color: var(--ink-soft); max-width: 50ch; }
+
+.hours {
+  margin-top: clamp(24px, 3.4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  max-width: 400px;
+  background: color-mix(in srgb, var(--panel) 72%, transparent);
+}
+.hours__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 20px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.hours__row + .hours__row { border-top: 1px solid var(--line-soft); }
+.hours__row.is-today { background: color-mix(in srgb, var(--rust) 12%, transparent); color: var(--rust-deep); }
+[data-theme="night"] .hours__row.is-today { color: var(--clay); }
+
+/* --- 14. Отзывы ------------------------------------------------------- */
+.reviews-grid {
+  display: grid;
+  gap: clamp(16px, 2.4vw, 26px);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+.review {
+  padding: clamp(24px, 3.4vw, 34px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.review:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); }
+.review__stars { color: var(--rust-text); letter-spacing: 0.15em; font-size: 0.85rem; }
+.review__text { font-size: 0.97rem; }
+.review__who {
+  margin-top: auto;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+/* --- 15. Доставка (шутка) --------------------------------------------- */
+.delivery {
+  position: relative;
+  min-height: clamp(420px, 66vh, 620px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 0;
+}
+.delivery img {
+  position: absolute;
+  inset: -12% 0;
+  width: 100%;
+  height: 124%;
+  object-fit: cover;
+  object-position: center 30%;
+  will-change: transform;
+}
+.delivery::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 35%, rgba(24, 19, 12, 0.82));
+}
+.delivery__cap {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(30px, 5vw, 52px);
+  color: #F6EEDF;
+}
+.delivery__cap h2 { font-size: clamp(1.8rem, 5vw, 3rem); }
+.delivery__cap p { margin-top: 10px; font-family: var(--mono); font-size: 0.8rem; opacity: 0.8; }
+
+/* --- 16. Адрес -------------------------------------------------------- */
+.visit__grid {
+  display: grid;
+  gap: clamp(24px, 4vw, 40px);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 820px) { .visit__grid { grid-template-columns: 1fr 0.9fr; } }
+.visit__photo { border-radius: var(--arch); overflow: hidden; aspect-ratio: 4 / 5; box-shadow: var(--shadow); }
+.visit__photo img { width: 100%; height: 100%; object-fit: cover; }
+.visit__card {
+  background: var(--olive-deep);
+  color: #EFE7D6;
+  border-radius: 24px;
+  padding: clamp(28px, 4vw, 44px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-self: start;
+}
+.visit__card h2 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+.visit__card p { color: rgba(239, 231, 214, 0.74); }
+.contact { display: grid; gap: 2px; }
+.contact a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(239, 231, 214, 0.16);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: color 0.3s, padding-inline-start 0.3s var(--ease);
+}
+.contact a:hover { color: var(--clay); padding-inline-start: 8px; }
+.contact a span:last-child { font-family: var(--mono); font-size: 0.72rem; opacity: 0.6; }
+
+/* --- 17. Подвал ------------------------------------------------------- */
+footer {
+  background: var(--olive-deep);
+  color: rgba(239, 231, 214, 0.8);
+  padding-block: clamp(40px, 6vw, 64px) 26px;
+  border-top: 1px solid rgba(239, 231, 214, 0.12);
+}
+.foot__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(239, 231, 214, 0.14);
+}
+.foot__mark {
+  width: 130px;
+  aspect-ratio: 800 / 355;
+  background: #EFE7D6;
+  -webkit-mask: url('images/logo-savva.png') no-repeat center / contain;
+  mask: url('images/logo-savva.png') no-repeat center / contain;
+}
+.foot__links { display: flex; flex-wrap: wrap; gap: 20px; }
+.foot__links a { font-size: 0.86rem; text-decoration: none; transition: color 0.3s; }
+.foot__links a:hover { color: var(--clay); }
+.foot__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  padding-top: 18px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  opacity: 0.78;
+}
+
+/* --- 18. Появление при прокрутке -------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--d, 0s);
+}
+[data-reveal].in { opacity: 1; transform: none; }
+
+/* --- 19. Спокойный режим --------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.is-ready { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+}
+</style>
+
+<noscript><style>
+  [data-reveal] { opacity: 1; transform: none; }
+  .preloader { display: none; }
+  .portal { opacity: 1; transform: none; animation: none; }
+</style></noscript>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<div class="preloader" aria-hidden="true">
+  <div class="preloader__door"><div class="preloader__logo"></div></div>
+</div>
+
+<a class="visually-hidden" href="#menu" data-i18n="a11y.skip">Перейти к меню</a>
+
+<header>
+  <nav class="nav wrap" aria-label="Основная навигация">
+    <a class="brand" href="#top">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="visually-hidden">SAVVA</span>
+      <span class="brand__sub" data-i18n-html="brand.sub">SPECIALTY<br>COFFEE</span>
+    </a>
+
+    <div class="nav__links">
+      <a href="#ritual"  data-i18n="nav.ritual">Ритуал</a>
+      <a href="#menu"    data-i18n="nav.menu">Меню</a>
+      <a href="#offers"  data-i18n="nav.offers">Акции</a>
+      <a href="#builder" data-i18n="nav.builder">Конструктор</a>
+      <a href="#gallery" data-i18n="nav.place">Место</a>
+      <a href="#about"   data-i18n="nav.about">О нас</a>
+      <a href="#visit"   data-i18n="nav.visit">Адрес</a>
+    </div>
+
+    <div class="nav__side">
+      <div class="lang" role="group" aria-label="Язык сайта">
+        <button type="button" data-lang="ru" aria-pressed="true">Ру</button>
+        <button type="button" data-lang="en" aria-pressed="false">En</button>
+        <button type="button" data-lang="ar" aria-pressed="false" lang="ar">ع</button>
+      </div>
+
+      <button type="button" class="icon-btn theme-toggle" data-i18n-aria="a11y.theme" aria-label="Переключить вечерний режим">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2"/>
+          <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/>
+        </svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/>
+        </svg>
+      </button>
+
+      <a class="btn nav__cta" href="#visit" data-i18n="nav.cta">Найти нас</a>
+
+      <button type="button" class="icon-btn burger" data-i18n-aria="a11y.menu" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#ritual"  data-i18n="nav.ritual">Ритуал</a>
+  <a href="#menu"    data-i18n="nav.menu">Меню</a>
+  <a href="#offers"  data-i18n="nav.offers">Акции</a>
+  <a href="#builder" data-i18n="nav.builder">Конструктор</a>
+  <a href="#gallery" data-i18n="nav.place">Место</a>
+  <a href="#about"   data-i18n="nav.about">О нас</a>
+  <a href="#visit"   data-i18n="nav.visit">Адрес</a>
+</div>
+
+<main id="top">
+
+  <!-- ГЕРОЙ: арочная дверь кофейни -->
+  <section class="hero">
+    <div class="hero__watermark ar" aria-hidden="true">سافا</div>
+
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow"><span class="ar">قهوة مختصة</span> <span data-i18n="hero.place">· Медина, Бир-Усман</span></p>
+        <h1 data-i18n-html="hero.h1">Кофе, ради которого <em>стоит задержаться</em></h1>
+        <p class="hero__lead" data-i18n="hero.lead">Пуровер вручную на весах, арочные окна и тихий двор в тени деревьев. Каждая чашка — без спешки.</p>
+
+        <p class="status" id="status">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span class="status__text">—</span>
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn" href="#menu">
+            <span data-i18n="hero.cta1">Смотреть меню</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn-ghost" href="#builder" data-i18n="hero.cta2">Собрать свою чашку</a>
+        </div>
+      </div>
+
+      <div class="hero__portal">
+        <div class="portal">
+          <video autoplay muted loop playsinline poster="images/hero-reel-poster.jpg"
+                 data-i18n-aria="a11y.hero" aria-label="Кофейня SAVVA и её квартал">
+            <source src="videos/hero-reel.mp4" type="video/mp4">
+            <source src="videos/hero-reel.webm" type="video/webm">
+            <img src="images/hero-reel-poster.jpg" alt="Минарет над кварталом, где стоит кофейня SAVVA">
+          </video>
+          <span class="portal__plate" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__line"></span>
+      <span data-i18n="hero.cue">Листайте</span>
+    </div>
+  </section>
+
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>SAVVA MATCHA <i>·</i> SAVVA MELON <i>·</i> BLUEBERRY CHEESECAKE <i>·</i> TURKISH COFFEE <i>·</i> V60 POUR OVER <i>·</i> <span class="ar">قهوة مختصة</span> <i>·</i> </span>
+      <span>SAVVA MATCHA <i>·</i> SAVVA MELON <i>·</i> BLUEBERRY CHEESECAKE <i>·</i> TURKISH COFFEE <i>·</i> V60 POUR OVER <i>·</i> <span class="ar">قهوة مختصة</span> <i>·</i> </span>
+    </div>
+  </div>
+
+  <!-- РИТУАЛ -->
+  <section id="ritual">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="ritual.eyebrow">Ритуал</p>
+          <h2 data-i18n="ritual.h2">Четыре шага до вашей чашки</h2>
+        </div>
+        <p class="note" data-i18n="ritual.note">Мы не ускоряем кофе. Всё остальное — тоже.</p>
+      </div>
+
+      <div class="ritual__grid">
+        <div class="ritual__media" data-reveal>
+          <img src="images/barista-pourover.jpg" alt="Бариста заваривает кофе на V60" loading="lazy">
+        </div>
+
+        <div>
+          <article class="step" data-reveal>
+            <span class="step__num">01</span>
+            <div>
+              <h3 data-i18n="ritual.s1t">Зерно</h3>
+              <p data-i18n="ritual.s1d">Обжарка подбирается под каждый сорт: мы раскрываем ягодную кислотность, а не прячем её за горечью.</p>
+            </div>
+          </article>
+          <article class="step" data-reveal style="--d:.06s">
+            <span class="step__num">02</span>
+            <div>
+              <h3 data-i18n="ritual.s2t">Помол</h3>
+              <p data-i18n="ritual.s2d">Мелем прямо перед проливом. Аромат живёт считаные минуты — мы не даём ему уйти в воздух.</p>
+            </div>
+          </article>
+          <article class="step" data-reveal style="--d:.12s">
+            <span class="step__num">03</span>
+            <div>
+              <h3 data-i18n="ritual.s3t">Пролив</h3>
+              <p data-i18n="ritual.s3d">V60 на весах: вода 92°, три пролива по спирали, граммы и секунды. Одинаково — каждый раз.</p>
+            </div>
+          </article>
+          <article class="step" data-reveal style="--d:.18s">
+            <span class="step__num">04</span>
+            <div>
+              <h3 data-i18n="ritual.s4t">Пауза</h3>
+              <p data-i18n="ritual.s4d">Дальше — ваше дело: арочное окно, диван в тени и сорок минут, которые никуда не спешат.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- МЕНЮ -->
+  <section id="menu" class="menu">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="menu.eyebrow">Меню</p>
+          <h2 data-i18n="menu.h2">Горячее, холодное и немного сладкого</h2>
+        </div>
+        <p class="note" data-i18n="menu.note">Цены в саудовских риалах (﷼). Полное меню — по QR на столике.</p>
+      </div>
+
+      <div class="tabs" role="group" aria-label="Категории меню">
+        <button class="tab" aria-pressed="true"  data-cat="all"       data-i18n="tab.all">Всё</button>
+        <button class="tab" aria-pressed="false" data-cat="hot"       data-i18n="tab.hot">Горячее</button>
+        <button class="tab" aria-pressed="false" data-cat="cold"      data-i18n="tab.cold">Холодное</button>
+        <button class="tab" aria-pressed="false" data-cat="dessert"   data-i18n="tab.dessert">Десерты</button>
+        <button class="tab" aria-pressed="false" data-cat="breakfast" data-i18n="tab.breakfast">Завтраки</button>
+      </div>
+
+      <div class="menu-grid" id="menuGrid">
+
+        <article class="dish" data-cat="hot">
+          <div class="dish__ph"><img src="images/menu-latte-stone.jpg" alt="Latte" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Latte</p><p class="dish__desc" data-i18n="d.latte">эспрессо и молочная пенка</p></div>
+            <p class="dish__price">16 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="hot">
+          <div class="dish__ph"><img src="images/menu-cappuccino.jpg" alt="Cappuccino" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Cappuccino</p><p class="dish__desc" data-i18n="d.capp">эспрессо и плотная пенка</p></div>
+            <p class="dish__price">16 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="hot">
+          <div class="dish__ph"><img src="images/menu-americano.jpg" alt="Americano" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Americano</p><p class="dish__desc" data-i18n="d.amer">эспрессо и горячая вода</p></div>
+            <p class="dish__price">12 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="hot">
+          <div class="dish__ph"><img src="images/menu-turkish.jpg" alt="Turkish Coffee" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Turkish Coffee</p><p class="dish__desc" data-i18n="d.turk">по-турецки, на песке</p></div>
+            <p class="dish__price">11 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="hot">
+          <div class="dish__ph"><img src="images/menu-coffee-pour.jpg" alt="Coffee of the Day" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Coffee of the Day</p><p class="dish__desc" data-i18n="d.day">сорт меняется каждую неделю</p></div>
+            <p class="dish__price">10–13 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="hot">
+          <div class="dish__ph"><img src="images/menu-cocoa.jpg" alt="Hot Chocolate" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Hot Chocolate</p><p class="dish__desc" data-i18n="d.cocoa">какао с маршмеллоу</p></div>
+            <p class="dish__price">19 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="cold">
+          <div class="dish__ph"><img src="images/menu-melon.jpg" alt="Savva Melon" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Savva Melon</p><p class="dish__desc" data-i18n="d.melon">освежающий дынный напиток</p></div>
+            <p class="dish__price">16 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="cold">
+          <div class="dish__ph"><img src="images/menu-iced-americano.jpg" alt="Iced Americano" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Iced Americano</p><p class="dish__desc" data-i18n="d.iamer">эспрессо, вода, лёд</p></div>
+            <p class="dish__price">15 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="cold">
+          <div class="dish__ph"><img src="images/menu-iced-latte.jpg" alt="Iced Latte" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Iced Latte</p><p class="dish__desc" data-i18n="d.ilatte">эспрессо, молоко, лёд</p></div>
+            <p class="dish__price">17 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="cold">
+          <div class="dish__ph"><img src="images/menu-matcha.jpg" alt="Savva Matcha" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Savva Matcha</p><p class="dish__desc" data-i18n="d.matcha">матча на молоке, со льдом</p></div>
+            <p class="dish__price">22 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="cold">
+          <div class="dish__ph"><img src="images/menu-hibiscus.jpg" alt="Hibiscus Slush" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Hibiscus Slush</p><p class="dish__desc" data-i18n="d.hib">каркаде, лёд, ягодная нота</p></div>
+            <p class="dish__price">17 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="dessert">
+          <div class="dish__ph"><img src="images/menu-cheesecake.jpg" alt="Blueberry Cheesecake" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Blueberry Cheesecake</p><p class="dish__desc" data-i18n="d.cheese">чизкейк со свежими ягодами</p></div>
+            <p class="dish__price">27 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="dessert">
+          <div class="dish__ph"><img src="images/menu-mango-cheesecake.jpg" alt="Mango Cheesecake" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Mango Cheesecake</p><p class="dish__desc" data-i18n="d.mango">чизкейк со свежим манго</p></div>
+            <p class="dish__price">27 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="dessert">
+          <div class="dish__ph"><img src="images/menu-pecan.jpg" alt="Pecan Cake" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Pecan Cake</p><p class="dish__desc" data-i18n="d.pecan">карамель и пекан</p></div>
+            <p class="dish__price">21 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="dessert">
+          <div class="dish__ph"><img src="images/menu-danish.jpg" alt="Cinnamon Danish" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Cinnamon Danish</p><p class="dish__desc" data-i18n="d.dan">слоёная выпечка с корицей</p></div>
+            <p class="dish__price">19 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="dessert">
+          <div class="dish__ph"><img src="images/menu-chocolate-cake.jpg" alt="Chocolate Cake" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Chocolate Cake</p><p class="dish__desc" data-i18n="d.choco">влажный шоколадный бисквит</p></div>
+            <p class="dish__price">17 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="dessert">
+          <div class="dish__ph"><img src="images/menu-cookie.jpg" alt="Date and Cardamom Cookie" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Date &amp; Cardamom Cookie</p><p class="dish__desc" data-i18n="d.cookie">финики, фисташки, кардамон</p></div>
+            <p class="dish__price">12 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="breakfast">
+          <div class="dish__ph"><img src="images/coffee-sandwich.jpg" alt="Turkey Sandwich" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Turkey Sandwich</p><p class="dish__desc" data-i18n="d.turkey">индейка, сыр, зелень</p></div>
+            <p class="dish__price">19 ﷼</p>
+          </div>
+        </article>
+
+        <article class="dish" data-cat="breakfast">
+          <div class="dish__ph"><img src="images/menu-halloumi.jpg" alt="Halloumi Sandwich" loading="lazy"></div>
+          <div class="dish__body">
+            <div><p class="dish__name">Halloumi Sandwich</p><p class="dish__desc" data-i18n="d.hall">халуми, овощи, соус</p></div>
+            <p class="dish__price">18 ﷼</p>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="menu__note" data-i18n="menu.note2">Не нашли своё? Соберите чашку сами — ниже.</p>
+    </div>
+  </section>
+
+  <!-- АКЦИИ -->
+  <section id="offers" class="offers">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="offers.eyebrow">Акции</p>
+          <h2 data-i18n="offers.h2">Два повода заехать именно к нам</h2>
+        </div>
+        <p class="note" data-i18n="offers.note">Действующие предложения SAVVA — условия уточняйте у бариста.</p>
+      </div>
+
+      <div class="offers__grid">
+        <article class="offer" data-reveal>
+          <div class="offer__ph">
+            <img src="images/promo-combo.jpg" alt="Сэндвич и холодный кофе SAVVA на подносе" loading="lazy">
+            <span class="offer__seal" data-i18n="o1.seal">24 ﷼</span>
+          </div>
+          <div class="offer__body">
+            <p class="eyebrow" data-i18n="o1.label">Снек-комбо</p>
+            <h3 data-i18n="o1.title">Любой сэндвич и кофе</h3>
+            <p data-i18n="o1.desc">Берите любой сэндвич и любой кофе — горячий или холодный. Вместе они стоят 24 ﷼ вместо обычной суммы.</p>
+            <div class="offer__foot">
+              <span data-i18n="o1.foot">Пара на утро</span>
+              <a href="#menu" data-i18n="o1.cta">Смотреть меню →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="offer" data-reveal style="--d:.08s">
+          <div class="offer__ph">
+            <img src="images/promo-car.jpg" alt="Бариста подаёт кофе и сэндвич к окну машины" loading="lazy">
+            <span class="offer__seal" data-i18n="o2.seal">к машине</span>
+          </div>
+          <div class="offer__body">
+            <p class="eyebrow" data-i18n="o2.label">Заказ к машине</p>
+            <h3 data-i18n="o2.title">Не выходя из машины</h3>
+            <p data-i18n="o2.desc">Опаздываете на смену? Позвоните заранее — вынесем кофе и завтрак прямо к окну машины, без ожидания.</p>
+            <div class="offer__foot">
+              <span data-i18n="o2.foot">Звонок заранее</span>
+              <a href="tel:+966564370303">+966 56 437 0303</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- КОНСТРУКТОР ЧАШКИ -->
+  <section id="builder" class="builder">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="builder.eyebrow">Конструктор</p>
+          <h2 data-i18n="builder.h2">Соберите свою чашку</h2>
+        </div>
+        <p class="note" data-i18n="builder.note">Выберите основу, молоко и характер — мы посчитаем цену и придумаем имя.</p>
+      </div>
+
+      <div class="builder__grid">
+
+        <div class="cup-stage" data-reveal>
+          <svg viewBox="0 0 200 246" role="img" aria-labelledby="cupTitle">
+            <title id="cupTitle" data-i18n="builder.svgAlt">Предпросмотр напитка</title>
+            <defs>
+              <clipPath id="cupInner">
+                <path d="M61 46 L139 46 L128 192 Q126 200 118 200 L82 200 Q74 200 72 192 Z"/>
+              </clipPath>
+            </defs>
+
+            <!-- пар для горячего -->
+            <g id="steam" stroke="#EFE7D6" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.55">
+              <path d="M84 30 q7 -9 0 -18 q-7 -9 0 -18"><animate attributeName="opacity" values="0.15;0.6;0.15" dur="3.2s" repeatCount="indefinite"/></path>
+              <path d="M100 26 q7 -10 0 -20 q-7 -10 0 -20"><animate attributeName="opacity" values="0.5;0.12;0.5" dur="3.8s" repeatCount="indefinite"/></path>
+              <path d="M116 30 q7 -9 0 -18 q-7 -9 0 -18"><animate attributeName="opacity" values="0.25;0.55;0.25" dur="4.4s" repeatCount="indefinite"/></path>
+            </g>
+
+            <!-- напиток: слои рисуются сверху вниз, каждый следующий перекрывает предыдущий снизу -->
+            <g clip-path="url(#cupInner)">
+              <rect x="50" y="36" width="100" height="176" fill="#F6ECDC" id="lFoam"/>
+              <rect x="50" y="36" width="100" height="176" fill="#EADBC4" id="lMilk"/>
+              <rect x="50" y="36" width="100" height="176" fill="#4A2A18" id="lBase"/>
+
+              <g id="ice" opacity="0">
+                <rect x="72"  y="62"  width="26" height="26" rx="6" fill="#FFFFFF" opacity="0.5" transform="rotate(-16 85 75)"/>
+                <rect x="104" y="78"  width="22" height="22" rx="5" fill="#FFFFFF" opacity="0.42" transform="rotate(22 115 89)"/>
+                <rect x="78"  y="104" width="24" height="24" rx="6" fill="#FFFFFF" opacity="0.36" transform="rotate(9 90 116)"/>
+              </g>
+            </g>
+
+            <!-- трубочка -->
+            <g id="straw" opacity="0">
+              <path d="M124 22 L108 198" stroke="#CE8C68" stroke-width="9" stroke-linecap="round"/>
+              <path d="M124 22 L108 198" stroke="#EFE7D6" stroke-width="3" stroke-linecap="round" opacity="0.35" stroke-dasharray="10 12"/>
+            </g>
+
+            <!-- стекло -->
+            <path d="M55 40 L145 40 L133 196 Q131 206 121 206 L79 206 Q69 206 67 196 Z"
+                  fill="none" stroke="#EFE7D6" stroke-width="3" stroke-linejoin="round" opacity="0.85"/>
+            <path d="M68 58 L74 176" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.18"/>
+
+            <!-- блюдце -->
+            <ellipse cx="100" cy="216" rx="58" ry="9" fill="#EFE7D6" opacity="0.22"/>
+            <path d="M46 214 Q100 232 154 214" fill="none" stroke="#EFE7D6" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+
+          <p class="cup-name" id="cupName">Латте</p>
+          <p class="cup-sum"><span id="cupPrice">19</span> ﷼</p>
+          <p class="cup-hint" data-i18n="builder.hint">Покажите бариста — соберём точно так же.</p>
+        </div>
+
+        <div data-reveal style="--d:.08s">
+          <div class="opt">
+            <p class="opt__label" data-i18n="opt.base">Основа</p>
+            <div class="opt__row" data-group="base" role="group">
+              <button class="chip" type="button" data-val="esp"    data-price="12" aria-pressed="true"><span data-i18n="b.esp">Эспрессо</span><small>12 ﷼</small></button>
+              <button class="chip" type="button" data-val="filter" data-price="13" aria-pressed="false"><span data-i18n="b.filter">Фильтр V60</span><small>13 ﷼</small></button>
+              <button class="chip" type="button" data-val="matcha" data-price="20" aria-pressed="false"><span data-i18n="b.matcha">Матча</span><small>20 ﷼</small></button>
+              <button class="chip" type="button" data-val="hib"    data-price="15" aria-pressed="false"><span data-i18n="b.hib">Каркаде</span><small>15 ﷼</small></button>
+            </div>
+          </div>
+
+          <div class="opt">
+            <p class="opt__label" data-i18n="opt.milk">Молоко</p>
+            <div class="opt__row" data-group="milk" role="group">
+              <button class="chip" type="button" data-val="none" data-price="0" aria-pressed="false"><span data-i18n="m.none">Без молока</span></button>
+              <button class="chip" type="button" data-val="reg"  data-price="3" aria-pressed="true"><span data-i18n="m.reg">Обычное</span><small>+3</small></button>
+              <button class="chip" type="button" data-val="oat"  data-price="5" aria-pressed="false"><span data-i18n="m.oat">Овсяное</span><small>+5</small></button>
+              <button class="chip" type="button" data-val="cond" data-price="4" aria-pressed="false"><span data-i18n="m.cond">Сгущённое</span><small>+4</small></button>
+            </div>
+          </div>
+
+          <div class="opt">
+            <p class="opt__label" data-i18n="opt.temp">Характер</p>
+            <div class="opt__row" data-group="temp" role="group">
+              <button class="chip" type="button" data-val="hot"  data-price="0" aria-pressed="true"><span data-i18n="t.hot">Горячий</span></button>
+              <button class="chip" type="button" data-val="iced" data-price="2" aria-pressed="false"><span data-i18n="t.iced">Со льдом</span><small>+2</small></button>
+            </div>
+          </div>
+
+          <div class="opt">
+            <p class="opt__label" data-i18n="opt.size">Размер</p>
+            <div class="opt__row" data-group="size" role="group">
+              <button class="chip" type="button" data-val="S" data-price="0" aria-pressed="false">S <small>240 ml</small></button>
+              <button class="chip" type="button" data-val="M" data-price="3" aria-pressed="true">M <small>320 ml</small></button>
+              <button class="chip" type="button" data-val="L" data-price="6" aria-pressed="false">L <small>420 ml</small></button>
+            </div>
+          </div>
+
+          <div class="builder__foot">
+            <button class="btn" type="button" id="copyOrder">
+              <span data-i18n="builder.copy">Скопировать заказ</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="btn btn-light" type="button" id="shareCup" data-i18n="builder.share">Ссылка на чашку</button>
+            <span class="copied" id="copied" role="status" data-i18n="builder.copied">скопировано</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ГАЛЕРЕЯ -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="place.eyebrow">Место</p>
+          <h2 data-i18n="place.h2">Так выглядит SAVVA изнутри</h2>
+        </div>
+        <p class="note" data-i18n="place.note">Травертин, тёплое дерево и очень много живых растений. Вживую — лучше.</p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <button class="shot shot--tall" type="button" data-reveal>
+          <img src="images/lounge-arch-window.jpg" alt="Диван у арочного окна" loading="lazy">
+          <span class="shot__cap" data-i18n="g.1">Арочное окно</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.05s">
+          <img src="images/bar-counter.jpg" alt="Барная стойка из травертина" loading="lazy">
+          <span class="shot__cap" data-i18n="g.2">Стойка</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.10s">
+          <img src="images/street-sign.jpg" alt="Вывеска кофейни на улице" loading="lazy">
+          <span class="shot__cap" data-i18n="g.3">Вывеска</span>
+        </button>
+        <button class="shot shot--tall" type="button" data-reveal style="--d:.15s">
+          <img src="images/shelf-plants.jpg" alt="Полки с растениями" loading="lazy">
+          <span class="shot__cap" data-i18n="g.4">Растения</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.20s">
+          <img src="images/sofa-detail.jpg" alt="Диван и подушки на солнце" loading="lazy">
+          <span class="shot__cap" data-i18n="g.5">Солнце на подушках</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.25s">
+          <img src="images/patio-bench.jpg" alt="Терраса в тени деревьев" loading="lazy">
+          <span class="shot__cap" data-i18n="g.6">Терраса</span>
+        </button>
+        <button class="shot shot--tall" type="button" data-reveal>
+          <img src="images/shelf-books.jpg" alt="Стеллаж с книгами и растениями" loading="lazy">
+          <span class="shot__cap" data-i18n="g.7">Полки и книги</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.05s">
+          <img src="images/window-patio-view.jpg" alt="Вид из окна во двор" loading="lazy">
+          <span class="shot__cap" data-i18n="g.8">Вид во двор</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.10s">
+          <img src="images/facade-cups.jpg" alt="Фасад кофейни с подвесными стаканами" loading="lazy">
+          <span class="shot__cap" data-i18n="g.9">Чашки у входа</span>
+        </button>
+        <button class="shot shot--tall" type="button" data-reveal style="--d:.15s">
+          <img src="images/mirror-hallway.jpg" alt="Зеркальный коридор" loading="lazy">
+          <span class="shot__cap" data-i18n="g.10">Коридор</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.20s">
+          <img src="images/white-chairs.jpg" alt="Белые кресла у стены" loading="lazy">
+          <span class="shot__cap" data-i18n="g.11">Кресла</span>
+        </button>
+        <button class="shot" type="button" data-reveal style="--d:.25s">
+          <img src="images/cheesecake-latte.jpg" alt="Чизкейк с ягодами и латте" loading="lazy">
+          <span class="shot__cap" data-i18n="g.12">Чизкейк и латте</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- О НАС -->
+  <section id="about" class="about">
+    <div class="wrap about__grid">
+      <div class="niche" data-reveal>
+        <img src="images/lounge-sofas.jpg" alt="Зал кофейни с оливковыми диванами" loading="lazy">
+      </div>
+      <div data-reveal style="--d:.08s">
+        <p class="eyebrow" data-i18n="about.eyebrow">О нас</p>
+        <h2 data-i18n="about.h2">Кофейня в тени деревьев</h2>
+        <p data-i18n-html="about.p1">SAVVA — <span class="ar">قهوة مختصة</span> в Медине, в квартале Бир-Усман, за книжным «Джарир». Пуровер вручную на весах, авторская латте-арт и сезонные чизкейки с ягодами.</p>
+        <p data-i18n="about.p2">Интерьер держится на трёх материалах: тёплое дерево, травертин и много живых растений. Ничего лишнего — и очень тихо.</p>
+
+        <div class="hours" id="hours">
+          <div class="hours__row" data-day="2,3,4,6,0,1">
+            <span data-i18n="h.days1">Вт–Чт, Сб–Пн</span><span>6:30 — 2:00</span>
+          </div>
+          <div class="hours__row" data-day="5">
+            <span data-i18n="h.days2">Пятница</span><span>13:00 — 2:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ -->
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="rev.eyebrow">Отзывы</p>
+          <h2 data-i18n="rev.h2">Что говорят гости</h2>
+        </div>
+        <p class="note" data-i18n="rev.note">Оценки с Google Карт — без правок.</p>
+      </div>
+      <div class="reviews-grid">
+        <blockquote class="review" data-reveal>
+          <div class="review__stars" aria-label="5 из 5">★★★★★</div>
+          <p class="review__text" data-i18n="rev.t1">Зашёл случайно и был приятно удивлён: сервис, атмосфера, кофе и сахлаб — всё на высоте.</p>
+          <footer class="review__who"><span data-i18n="rev.w1">Funny · 23 отзыва</span></footer>
+        </blockquote>
+        <blockquote class="review" data-reveal style="--d:.07s">
+          <div class="review__stars" aria-label="5 из 5">★★★★★</div>
+          <p class="review__text" data-i18n="rev.t2">Давно искал в городе такую кофейню — с настоящей тишиной и спокойствием в атмосфере и в самом кофе.</p>
+          <footer class="review__who"><span data-i18n="rev.w2">Omar · 6 отзывов</span></footer>
+        </blockquote>
+        <blockquote class="review" data-reveal style="--d:.14s">
+          <div class="review__stars" aria-label="5 из 5">★★★★★</div>
+          <p class="review__text" data-i18n="rev.t3">Кофе на V60 был безупречным: идеально заварен, чистый и яркий вкус. Прекрасный опыт во всех деталях.</p>
+          <footer class="review__who"><span data-i18n="rev.w3">Hind Al · 13 отзывов</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДОСТАВКА (ШУТКА) -->
+  <section class="delivery">
+    <img src="images/delivery-joke.jpg" alt="Вертолёт несёт гигантскую банку SAVVA" data-parallax loading="lazy">
+    <div class="wrap delivery__cap">
+      <h2 data-i18n="del.h2">Доставляем быстро 😉</h2>
+      <p data-i18n="del.p">ну, почти так — на деле просто вынесем к машине</p>
+    </div>
+  </section>
+
+  <!-- АДРЕС -->
+  <section id="visit">
+    <div class="wrap visit__grid">
+      <div class="visit__photo" data-reveal>
+        <img src="images/entrance.jpg" alt="Вход в кофейню SAVVA" loading="lazy">
+      </div>
+      <div class="visit__card" data-reveal style="--d:.08s">
+        <p class="eyebrow" data-i18n="visit.eyebrow">Адрес</p>
+        <h2 data-i18n="visit.h2">Как нас найти</h2>
+        <p data-i18n="visit.p">Zubairah Al Roumiah, Bir Uthman, Madinah 42331, Саудовская Аравия — за книжным магазином «Джарир».</p>
+        <div class="contact">
+          <a href="tel:+966564370303"><span>+966 56 437 0303</span><span data-i18n="visit.call">позвонить</span></a>
+          <a href="https://maps.app.goo.gl/geB2uSVz2UD7soM46" target="_blank" rel="noopener"><span data-i18n="visit.map">Открыть на карте</span><span>↗</span></a>
+          <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener"><span>Instagram</span><span>↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot__top">
+      <div>
+        <span class="foot__mark" aria-hidden="true"></span>
+        <span class="visually-hidden">SAVVA</span>
+      </div>
+      <nav class="foot__links" aria-label="Подвал">
+        <a href="#menu"    data-i18n="nav.menu">Меню</a>
+        <a href="#offers"  data-i18n="nav.offers">Акции</a>
+        <a href="#builder" data-i18n="nav.builder">Конструктор</a>
+        <a href="#gallery" data-i18n="nav.place">Место</a>
+        <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener">Instagram</a>
+        <a href="tel:+966564370303">+966 56 437 0303</a>
+      </nav>
+    </div>
+    <div class="foot__bottom">
+      <span>© SAVVA · Specialty Coffee · <span class="ar">قهوة مختصة</span></span>
+      <span data-i18n="foot.edu">учебный проект</span>
+    </div>
+  </div>
+</footer>
+
+<!-- просмотр фотографий -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+  <button class="lightbox__close" type="button" id="lbClose" aria-label="Закрыть">✕</button>
+  <img id="lbImg" alt="">
+  <div class="lightbox__nav">
+    <button type="button" id="lbPrev" aria-label="Предыдущее фото">←</button>
+    <button type="button" id="lbNext" aria-label="Следующее фото">→</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var body = document.body;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ==================================================================
+     1. Словарь. В разметке лежит русский, поэтому ru тоже описан —
+        иначе не вернуться назад после переключения.
+     ================================================================== */
+  var DICT = {
+    ru: {
+      'doc.title': 'SAVVA — قهوة مختصة · спешелти-кофейня в Медине',
+      'doc.desc': 'SAVVA — specialty coffee в Медине. Пуровер V60, латте-арт, чизкейки и тихий двор. Меню, цены, часы работы и адрес.',
+      'brand.sub': 'SPECIALTY<br>COFFEE',
+      'nav.ritual': 'Ритуал', 'nav.menu': 'Меню', 'nav.builder': 'Конструктор',
+      'nav.place': 'Место', 'nav.about': 'О нас', 'nav.visit': 'Адрес', 'nav.cta': 'Найти нас',
+      'nav.offers': 'Акции',
+      'offers.eyebrow': 'Акции', 'offers.h2': 'Два повода заехать именно к нам',
+      'offers.note': 'Действующие предложения SAVVA — условия уточняйте у бариста.',
+      'o1.label': 'Снек-комбо', 'o1.title': 'Любой сэндвич и кофе',
+      'o1.desc': 'Берите любой сэндвич и любой кофе — горячий или холодный. Вместе они стоят 24 ﷼ вместо обычной суммы.',
+      'o1.seal': '24 ﷼', 'o1.foot': 'Пара на утро', 'o1.cta': 'Смотреть меню →',
+      'o2.label': 'Заказ к машине', 'o2.title': 'Не выходя из машины',
+      'o2.desc': 'Опаздываете на смену? Позвоните заранее — вынесем кофе и завтрак прямо к окну машины, без ожидания.',
+      'o2.seal': 'к машине', 'o2.foot': 'Звонок заранее',
+      'hero.place': '· Медина, Бир-Усман',
+      'hero.h1': 'Кофе, ради которого <em>стоит задержаться</em>',
+      'hero.lead': 'Пуровер вручную на весах, арочные окна и тихий двор в тени деревьев. Каждая чашка — без спешки.',
+      'hero.cta1': 'Смотреть меню', 'hero.cta2': 'Собрать свою чашку', 'hero.cue': 'Листайте',
+      'ritual.eyebrow': 'Ритуал', 'ritual.h2': 'Четыре шага до вашей чашки',
+      'ritual.note': 'Мы не ускоряем кофе. Всё остальное — тоже.',
+      'ritual.s1t': 'Зерно', 'ritual.s1d': 'Обжарка подбирается под каждый сорт: мы раскрываем ягодную кислотность, а не прячем её за горечью.',
+      'ritual.s2t': 'Помол', 'ritual.s2d': 'Мелем прямо перед проливом. Аромат живёт считаные минуты — мы не даём ему уйти в воздух.',
+      'ritual.s3t': 'Пролив', 'ritual.s3d': 'V60 на весах: вода 92°, три пролива по спирали, граммы и секунды. Одинаково — каждый раз.',
+      'ritual.s4t': 'Пауза', 'ritual.s4d': 'Дальше — ваше дело: арочное окно, диван в тени и сорок минут, которые никуда не спешат.',
+      'menu.eyebrow': 'Меню', 'menu.h2': 'Горячее, холодное и немного сладкого',
+      'menu.note': 'Цены в саудовских риалах (﷼). Полное меню — по QR на столике.',
+      'menu.note2': 'Не нашли своё? Соберите чашку сами — ниже.',
+      'tab.all': 'Всё', 'tab.hot': 'Горячее', 'tab.cold': 'Холодное', 'tab.dessert': 'Десерты', 'tab.breakfast': 'Завтраки',
+      'd.latte': 'эспрессо и молочная пенка', 'd.capp': 'эспрессо и плотная пенка',
+      'd.amer': 'эспрессо и горячая вода', 'd.turk': 'по-турецки, на песке', 'd.day': 'сорт меняется каждую неделю',
+      'd.melon': 'освежающий дынный напиток', 'd.iamer': 'эспрессо, вода, лёд',
+      'd.ilatte': 'эспрессо, молоко, лёд', 'd.matcha': 'матча на молоке, со льдом',
+      'd.hib': 'каркаде, лёд, ягодная нота', 'd.cheese': 'чизкейк со свежими ягодами',
+      'd.pecan': 'карамель и пекан', 'd.dan': 'слоёная выпечка с корицей',
+      'd.choco': 'влажный шоколадный бисквит', 'd.turkey': 'индейка, сыр, зелень', 'd.hall': 'халуми, овощи, соус',
+      'd.cocoa': 'какао с маршмеллоу', 'd.mango': 'чизкейк со свежим манго', 'd.cookie': 'финики, фисташки, кардамон',
+      'builder.eyebrow': 'Конструктор', 'builder.h2': 'Соберите свою чашку',
+      'builder.note': 'Выберите основу, молоко и характер — мы посчитаем цену и придумаем имя.',
+      'builder.hint': 'Покажите бариста — соберём точно так же.',
+      'builder.copy': 'Скопировать заказ', 'builder.copied': 'скопировано', 'builder.svgAlt': 'Предпросмотр напитка',
+      'opt.base': 'Основа', 'opt.milk': 'Молоко', 'opt.temp': 'Характер', 'opt.size': 'Размер',
+      'b.esp': 'Эспрессо', 'b.filter': 'Фильтр V60', 'b.matcha': 'Матча', 'b.hib': 'Каркаде',
+      'm.none': 'Без молока', 'm.reg': 'Обычное', 'm.oat': 'Овсяное', 'm.cond': 'Сгущённое',
+      't.hot': 'Горячий', 't.iced': 'Со льдом',
+      'nm.none': '', 'nm.reg': 'на молоке', 'nm.oat': 'на овсяном', 'nm.cond': 'со сгущёнкой',
+      'nt.iced': 'Айс',
+      'place.eyebrow': 'Место', 'place.h2': 'Так выглядит SAVVA изнутри',
+      'place.note': 'Травертин, тёплое дерево и очень много живых растений. Вживую — лучше.',
+      'g.1': 'Арочное окно', 'g.2': 'Стойка', 'g.3': 'Вывеска', 'g.4': 'Растения', 'g.5': 'Солнце на подушках',
+      'g.6': 'Терраса', 'g.7': 'Полки и книги', 'g.8': 'Вид во двор', 'g.9': 'Чашки у входа',
+      'g.10': 'Коридор', 'g.11': 'Кресла', 'g.12': 'Чизкейк и латте',
+      'about.eyebrow': 'О нас', 'about.h2': 'Кофейня в тени деревьев',
+      'about.p1': 'SAVVA — <span class="ar">قهوة مختصة</span> в Медине, в квартале Бир-Усман, за книжным «Джарир». Пуровер вручную на весах, авторская латте-арт и сезонные чизкейки с ягодами.',
+      'about.p2': 'Интерьер держится на трёх материалах: тёплое дерево, травертин и много живых растений. Ничего лишнего — и очень тихо.',
+      'h.days1': 'Вт–Чт, Сб–Пн', 'h.days2': 'Пятница',
+      'rev.eyebrow': 'Отзывы', 'rev.h2': 'Что говорят гости', 'rev.note': 'Оценки с Google Карт — без правок.',
+      'rev.t1': 'Зашёл случайно и был приятно удивлён: сервис, атмосфера, кофе и сахлаб — всё на высоте.',
+      'rev.w1': 'Funny · 23 отзыва',
+      'rev.t2': 'Давно искал в городе такую кофейню — с настоящей тишиной и спокойствием в атмосфере и в самом кофе.',
+      'rev.w2': 'Omar · 6 отзывов',
+      'rev.t3': 'Кофе на V60 был безупречным: идеально заварен, чистый и яркий вкус. Прекрасный опыт во всех деталях.',
+      'rev.w3': 'Hind Al · 13 отзывов',
+      'del.h2': 'Доставляем быстро 😉', 'del.p': 'ну, почти так — на деле просто вынесем к машине',
+      'visit.eyebrow': 'Адрес', 'visit.h2': 'Как нас найти',
+      'visit.p': 'Zubairah Al Roumiah, Bir Uthman, Madinah 42331, Саудовская Аравия — за книжным магазином «Джарир».',
+      'visit.call': 'позвонить', 'visit.map': 'Открыть на карте',
+      'foot.edu': 'учебный проект',
+      'a11y.skip': 'Перейти к меню', 'a11y.theme': 'Переключить вечерний режим', 'a11y.menu': 'Меню',
+      'a11y.hero': 'Кофейня SAVVA и её квартал',
+      'st.open': 'Сейчас открыто · до ', 'st.shut': 'Закрыто · откроемся в ',
+      'st.inCity': ' в Медине', 'st.openFor': 'открыто ещё ', 'st.opensIn': 'откроем через ',
+      'unit.h': ' ч ', 'unit.m': ' мин',
+      'builder.share': 'Ссылка на чашку', 'builder.linkCopied': 'ссылка скопирована',
+      'builder.fromLink': 'чашка из ссылки'
+    },
+
+    en: {
+      'doc.title': 'SAVVA — قهوة مختصة · specialty coffee in Madinah',
+      'doc.desc': 'SAVVA is specialty coffee in Madinah. V60 pour over, latte art, cheesecakes and a quiet courtyard. Menu, prices, hours and address.',
+      'brand.sub': 'SPECIALTY<br>COFFEE',
+      'nav.ritual': 'Ritual', 'nav.menu': 'Menu', 'nav.builder': 'Build a cup',
+      'nav.place': 'The place', 'nav.about': 'About', 'nav.visit': 'Visit', 'nav.cta': 'Find us',
+      'nav.offers': 'Offers',
+      'offers.eyebrow': 'Offers', 'offers.h2': 'Two reasons to pick this one',
+      'offers.note': 'Current SAVVA offers — check the terms with the barista.',
+      'o1.label': 'Snack combo', 'o1.title': 'Any sandwich and a coffee',
+      'o1.desc': 'Take any sandwich and any coffee, hot or iced. Together they are 24 ﷼ instead of the usual total.',
+      'o1.seal': '24 ﷼', 'o1.foot': 'Morning pairing', 'o1.cta': 'See the menu →',
+      'o2.label': 'Curbside', 'o2.title': 'Without leaving the car',
+      'o2.desc': 'Running late for your shift? Call ahead and we bring the coffee and breakfast straight to your car window, no waiting.',
+      'o2.seal': 'curbside', 'o2.foot': 'Call ahead',
+      'hero.place': '· Madinah, Bir Uthman',
+      'hero.h1': 'Coffee worth <em>staying for</em>',
+      'hero.lead': 'Hand-poured on the scales, arched windows and a quiet courtyard in the shade. Every cup, unhurried.',
+      'hero.cta1': 'See the menu', 'hero.cta2': 'Build your cup', 'hero.cue': 'Scroll',
+      'ritual.eyebrow': 'Ritual', 'ritual.h2': 'Four steps to your cup',
+      'ritual.note': "We don't rush the coffee. Or anything else.",
+      'ritual.s1t': 'The bean', 'ritual.s1d': 'The roast is matched to each origin: we open up the berry acidity instead of hiding it behind bitterness.',
+      'ritual.s2t': 'The grind', 'ritual.s2d': "We grind right before brewing. Aroma lives for minutes — we don't let it drift away.",
+      'ritual.s3t': 'The pour', 'ritual.s3d': 'V60 on the scales: water at 92°, three spiral pours, grams and seconds. The same every time.',
+      'ritual.s4t': 'The pause', 'ritual.s4d': 'The rest is yours: an arched window, a sofa in the shade and forty minutes in no hurry at all.',
+      'menu.eyebrow': 'Menu', 'menu.h2': 'Hot, cold and a little sweet',
+      'menu.note': 'Prices in Saudi riyals (﷼). Full menu via the QR code on your table.',
+      'menu.note2': "Didn't find yours? Build it yourself below.",
+      'tab.all': 'All', 'tab.hot': 'Hot', 'tab.cold': 'Cold', 'tab.dessert': 'Desserts', 'tab.breakfast': 'Breakfast',
+      'd.latte': 'espresso and milk foam', 'd.capp': 'espresso and dense foam',
+      'd.amer': 'espresso and hot water', 'd.turk': 'Turkish style, brewed on sand', 'd.day': 'a different origin every week',
+      'd.melon': 'a refreshing melon drink', 'd.iamer': 'espresso, water, ice',
+      'd.ilatte': 'espresso, milk, ice', 'd.matcha': 'matcha with milk, over ice',
+      'd.hib': 'hibiscus, ice, a berry note', 'd.cheese': 'cheesecake with fresh berries',
+      'd.pecan': 'caramel and pecan', 'd.dan': 'flaky pastry with cinnamon',
+      'd.choco': 'moist chocolate sponge', 'd.turkey': 'turkey, cheese, greens', 'd.hall': 'halloumi, vegetables, sauce',
+      'd.cocoa': 'cocoa with marshmallows', 'd.mango': 'cheesecake with fresh mango', 'd.cookie': 'dates, pistachio, cardamom',
+      'builder.eyebrow': 'Build a cup', 'builder.h2': 'Build your own cup',
+      'builder.note': "Pick a base, milk and character — we'll do the maths and the name.",
+      'builder.hint': "Show it to the barista — we'll make exactly this.",
+      'builder.copy': 'Copy the order', 'builder.copied': 'copied', 'builder.svgAlt': 'Drink preview',
+      'opt.base': 'Base', 'opt.milk': 'Milk', 'opt.temp': 'Character', 'opt.size': 'Size',
+      'b.esp': 'Espresso', 'b.filter': 'V60 filter', 'b.matcha': 'Matcha', 'b.hib': 'Hibiscus',
+      'm.none': 'No milk', 'm.reg': 'Regular', 'm.oat': 'Oat', 'm.cond': 'Condensed',
+      't.hot': 'Hot', 't.iced': 'Iced',
+      'nm.none': '', 'nm.reg': 'with milk', 'nm.oat': 'with oat milk', 'nm.cond': 'with condensed milk',
+      'nt.iced': 'Iced',
+      'place.eyebrow': 'The place', 'place.h2': 'This is SAVVA from the inside',
+      'place.note': 'Travertine, warm wood and a lot of living plants. Better in person.',
+      'g.1': 'Arched window', 'g.2': 'The bar', 'g.3': 'The sign', 'g.4': 'Plants', 'g.5': 'Sun on the cushions',
+      'g.6': 'The terrace', 'g.7': 'Shelves and books', 'g.8': 'Courtyard view', 'g.9': 'Cups at the door',
+      'g.10': 'The hallway', 'g.11': 'The chairs', 'g.12': 'Cheesecake and latte',
+      'about.eyebrow': 'About', 'about.h2': 'A coffee house in the shade',
+      'about.p1': 'SAVVA is <span class="ar">قهوة مختصة</span> — specialty coffee in Madinah, in the Bir Uthman district, behind the Jarir bookstore. Hand-poured brews on the scales, latte art and seasonal berry cheesecakes.',
+      'about.p2': 'The interior rests on three materials: warm wood, travertine and a lot of living plants. Nothing extra — and very quiet.',
+      'h.days1': 'Tue–Thu, Sat–Mon', 'h.days2': 'Friday',
+      'rev.eyebrow': 'Reviews', 'rev.h2': 'What guests say', 'rev.note': 'Straight from Google Maps, unedited.',
+      'rev.t1': 'I walked in by chance and was pleasantly surprised: the service, the room, the coffee and the sahlab were all excellent.',
+      'rev.w1': 'Funny · 23 reviews',
+      'rev.t2': "I'd been looking for a place like this for a long time — real quiet, both in the room and in the coffee itself.",
+      'rev.w2': 'Omar · 6 reviews',
+      'rev.t3': 'The V60 was flawless — perfectly brewed, clean and bright. A lovely experience down to the last detail.',
+      'rev.w3': 'Hind Al · 13 reviews',
+      'del.h2': 'We deliver fast 😉', 'del.p': 'well, almost — in practice we just walk it out to your car',
+      'visit.eyebrow': 'Visit', 'visit.h2': 'How to find us',
+      'visit.p': 'Zubairah Al Roumiah, Bir Uthman, Madinah 42331, Saudi Arabia — behind the Jarir bookstore.',
+      'visit.call': 'call', 'visit.map': 'Open in maps',
+      'foot.edu': 'student project',
+      'a11y.skip': 'Skip to the menu', 'a11y.theme': 'Toggle evening mode', 'a11y.menu': 'Menu',
+      'a11y.hero': 'SAVVA and the streets around it',
+      'st.open': 'Open now · until ', 'st.shut': 'Closed · opens at ',
+      'st.inCity': ' in Madinah', 'st.openFor': 'open for another ', 'st.opensIn': 'opens in ',
+      'unit.h': ' h ', 'unit.m': ' min',
+      'builder.share': 'Link to this cup', 'builder.linkCopied': 'link copied',
+      'builder.fromLink': 'cup from a link'
+    },
+
+    ar: {
+      'doc.title': 'سافا — قهوة مختصة في المدينة المنورة',
+      'doc.desc': 'سافا قهوة مختصة في المدينة المنورة. تحضير V60، فن اللاتيه، تشيز كيك وفناء هادئ. القائمة والأسعار وأوقات العمل والموقع.',
+      'brand.sub': 'قهوة<br>مختصة',
+      'nav.ritual': 'التحضير', 'nav.menu': 'القائمة', 'nav.builder': 'اصنع كوبك',
+      'nav.place': 'المكان', 'nav.about': 'من نحن', 'nav.visit': 'الموقع', 'nav.cta': 'كيف تصل',
+      'nav.offers': 'العروض',
+      'offers.eyebrow': 'العروض', 'offers.h2': 'سببان يجعلانك تختار سافا',
+      'offers.note': 'عروض سافا الحالية — تأكّد من الشروط مع الباريستا.',
+      'o1.label': 'كومبو الوجبة الخفيفة', 'o1.title': 'أي ساندويتش مع قهوة',
+      'o1.desc': 'اختر أي ساندويتش وأي قهوة، ساخنة أو مثلجة. معًا بـ 24 ﷼ بدل السعر المعتاد.',
+      'o1.seal': '24 ﷼', 'o1.foot': 'ثنائي الصباح', 'o1.cta': 'تصفّح القائمة ←',
+      'o2.label': 'الطلب للسيارة', 'o2.title': 'دون مغادرة سيارتك',
+      'o2.desc': 'متأخر على دوامك؟ اتصل مسبقًا ونخرج بالقهوة والفطور إلى نافذة سيارتك مباشرة، بلا انتظار.',
+      'o2.seal': 'للسيارة', 'o2.foot': 'اتصل مسبقًا',
+      'hero.place': '· المدينة المنورة، بئر عثمان',
+      'hero.h1': 'قهوة <em>تستحق أن تبقى لأجلها</em>',
+      'hero.lead': 'تحضير يدوي بالميزان، نوافذ مقوّسة وفناء هادئ في ظل الشجر. كل كوب على مهل.',
+      'hero.cta1': 'تصفّح القائمة', 'hero.cta2': 'اصنع كوبك', 'hero.cue': 'مرّر',
+      'ritual.eyebrow': 'التحضير', 'ritual.h2': 'أربع خطوات إلى كوبك',
+      'ritual.note': 'لا نستعجل القهوة، ولا أي شيء آخر.',
+      'ritual.s1t': 'الحبّة', 'ritual.s1d': 'نختار درجة التحميص لكل أصل على حدة: نُبرز الحموضة الفاكهية بدل إخفائها خلف المرارة.',
+      'ritual.s2t': 'الطحن', 'ritual.s2d': 'نطحن قبل التحضير مباشرة. العطر يعيش دقائق معدودة، ولا نتركه يتبدد.',
+      'ritual.s3t': 'السكب', 'ritual.s3d': 'V60 على الميزان: ماء بحرارة ٩٢°، ثلاث دفعات حلزونية، بالغرام والثانية. النتيجة ذاتها في كل مرة.',
+      'ritual.s4t': 'المهلة', 'ritual.s4d': 'الباقي لك: نافذة مقوّسة، أريكة في الظل، وأربعون دقيقة لا تستعجل أحدًا.',
+      'menu.eyebrow': 'القائمة', 'menu.h2': 'ساخن وبارد وقليل من الحلو',
+      'menu.note': 'الأسعار بالريال السعودي (﷼). القائمة الكاملة عبر رمز QR على الطاولة.',
+      'menu.note2': 'لم تجد ما تريد؟ اصنع كوبك بنفسك في الأسفل.',
+      'tab.all': 'الكل', 'tab.hot': 'ساخن', 'tab.cold': 'بارد', 'tab.dessert': 'حلويات', 'tab.breakfast': 'فطور',
+      'd.latte': 'إسبريسو ورغوة حليب', 'd.capp': 'إسبريسو ورغوة كثيفة',
+      'd.amer': 'إسبريسو وماء ساخن', 'd.turk': 'قهوة تركية على الرمل', 'd.day': 'أصل مختلف كل أسبوع',
+      'd.melon': 'مشروب شمّام منعش', 'd.iamer': 'إسبريسو وماء وثلج',
+      'd.ilatte': 'إسبريسو وحليب وثلج', 'd.matcha': 'ماتشا بالحليب مع الثلج',
+      'd.hib': 'كركديه وثلج بلمسة توت', 'd.cheese': 'تشيز كيك بالتوت الطازج',
+      'd.pecan': 'كراميل وجوز البيكان', 'd.dan': 'معجنات هشّة بالقرفة',
+      'd.choco': 'كيك شوكولاتة طري', 'd.turkey': 'ديك رومي وجبن وخضار', 'd.hall': 'حلوم وخضار وصلصة',
+      'd.cocoa': 'كاكاو مع المارشميلو', 'd.mango': 'تشيز كيك بالمانجو الطازج', 'd.cookie': 'تمر وفستق وهيل',
+      'builder.eyebrow': 'اصنع كوبك', 'builder.h2': 'اصنع كوبك بنفسك',
+      'builder.note': 'اختر الأساس والحليب والطابع، ونحن نحسب السعر ونختار الاسم.',
+      'builder.hint': 'أرِ الباريستا هذه الشاشة، وسنحضّرها تمامًا.',
+      'builder.copy': 'انسخ الطلب', 'builder.copied': 'تم النسخ', 'builder.svgAlt': 'معاينة المشروب',
+      'opt.base': 'الأساس', 'opt.milk': 'الحليب', 'opt.temp': 'الطابع', 'opt.size': 'الحجم',
+      'b.esp': 'إسبريسو', 'b.filter': 'فلتر V60', 'b.matcha': 'ماتشا', 'b.hib': 'كركديه',
+      'm.none': 'بدون حليب', 'm.reg': 'حليب عادي', 'm.oat': 'حليب شوفان', 'm.cond': 'حليب مكثّف',
+      't.hot': 'ساخن', 't.iced': 'مثلج',
+      'nm.none': '', 'nm.reg': 'بالحليب', 'nm.oat': 'بحليب الشوفان', 'nm.cond': 'بالحليب المكثّف',
+      'nt.iced': 'مثلج',
+      'place.eyebrow': 'المكان', 'place.h2': 'هكذا تبدو سافا من الداخل',
+      'place.note': 'رخام ترافرتين وخشب دافئ ونباتات كثيرة. على الطبيعة أجمل.',
+      'g.1': 'نافذة مقوّسة', 'g.2': 'البار', 'g.3': 'اللوحة', 'g.4': 'النباتات', 'g.5': 'الشمس على الوسائد',
+      'g.6': 'التراس', 'g.7': 'رفوف وكتب', 'g.8': 'إطلالة الفناء', 'g.9': 'أكواب عند الباب',
+      'g.10': 'الممر', 'g.11': 'المقاعد', 'g.12': 'تشيز كيك ولاتيه',
+      'about.eyebrow': 'من نحن', 'about.h2': 'مقهى في ظل الشجر',
+      'about.p1': 'سافا قهوة مختصة في المدينة المنورة، حي بئر عثمان، خلف مكتبة جرير. تحضير يدوي بالميزان، فن اللاتيه، وتشيز كيك موسمي بالتوت.',
+      'about.p2': 'يقوم التصميم على ثلاث مواد: الخشب الدافئ والترافرتين والنباتات. لا زوائد، وهدوء تام.',
+      'h.days1': 'الثلاثاء–الخميس، السبت–الاثنين', 'h.days2': 'الجمعة',
+      'rev.eyebrow': 'الآراء', 'rev.h2': 'ماذا يقول الضيوف', 'rev.note': 'من خرائط جوجل، كما هي.',
+      'rev.t1': 'دخلت مصادفة وفوجئت: الخدمة والأجواء والقهوة والسحلب، كلها ممتازة.',
+      'rev.w1': 'Funny · ٢٣ مراجعة',
+      'rev.t2': 'طالما بحثت عن مقهى كهذا: هدوء حقيقي في المكان وفي القهوة نفسها.',
+      'rev.w2': 'عمر · ٦ مراجعات',
+      'rev.t3': 'كانت قهوة V60 مثالية: تحضير متقن ومذاق نقي وواضح. تجربة رائعة بكل تفاصيلها.',
+      'rev.w3': 'هند آل · ١٣ مراجعة',
+      'del.h2': 'نوصّل بسرعة 😉', 'del.p': 'تقريبًا — عمليًا نخرج بالطلب إلى سيارتك',
+      'visit.eyebrow': 'الموقع', 'visit.h2': 'كيف تصل إلينا',
+      'visit.p': 'زبيرة الرومية، بئر عثمان، المدينة المنورة ٤٢٣٣١، السعودية — خلف مكتبة جرير.',
+      'visit.call': 'اتصل', 'visit.map': 'افتح في الخرائط',
+      'foot.edu': 'مشروع دراسي',
+      'a11y.skip': 'انتقل إلى القائمة', 'a11y.theme': 'تبديل الوضع المسائي', 'a11y.menu': 'القائمة',
+      'a11y.hero': 'سافا وحيّها',
+      'st.open': 'مفتوح الآن · حتى ', 'st.shut': 'مغلق · يفتح ',
+      'st.inCity': ' في المدينة', 'st.openFor': 'مفتوح لمدة ', 'st.opensIn': 'يفتح بعد ',
+      'unit.h': ' س ', 'unit.m': ' د',
+      'builder.share': 'رابط الكوب', 'builder.linkCopied': 'تم نسخ الرابط',
+      'builder.fromLink': 'كوب من رابط'
+    }
+  };
+
+  var lang = 'ru';
+  function t(key) {
+    var pack = DICT[lang] || DICT.ru;
+    return (key in pack) ? pack[key] : (DICT.ru[key] || '');
+  }
+
+  /* ==================================================================
+     2. Переключение языка (ru / en / ar + RTL)
+     ================================================================== */
+  var langButtons = document.querySelectorAll('.lang button');
+  var metaDesc = document.querySelector('meta[name="description"]');
+
+  function applyLang(next) {
+    lang = DICT[next] ? next : 'ru';
+    root.setAttribute('lang', lang);
+    root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n'));
+      if (v !== '') el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n-html'));
+      if (v !== '') el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var v = t(el.getAttribute('data-i18n-aria'));
+      if (v !== '') el.setAttribute('aria-label', v);
+    });
+
+    document.title = t('doc.title');
+    if (metaDesc) metaDesc.setAttribute('content', t('doc.desc'));
+
+    langButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+    });
+
+    try { localStorage.setItem('savva-lang', lang); } catch (e) {}
+
+    renderCup();
+    renderStatus();
+  }
+
+  langButtons.forEach(function (b) {
+    b.addEventListener('click', function () { applyLang(b.dataset.lang); });
+  });
+
+  /* ==================================================================
+     3. Тема: день / вечер
+     ================================================================== */
+  var themeBtn = document.querySelector('.theme-toggle');
+  function applyTheme(next) {
+    root.setAttribute('data-theme', next);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', next === 'night' ? '#16130F' : '#FAF6EC');
+    try { localStorage.setItem('savva-theme', next); } catch (e) {}
+  }
+  themeBtn.addEventListener('click', function () {
+    applyTheme(root.getAttribute('data-theme') === 'night' ? 'day' : 'night');
+  });
+
+  /* ==================================================================
+     4. Прелоадер и старт анимаций
+     ================================================================== */
+  function start() {
+    root.classList.add('is-ready');
+    body.classList.add('loaded');
+  }
+  if (document.readyState === 'complete') { setTimeout(start, 260); }
+  else { window.addEventListener('load', function () { setTimeout(start, 260); }); }
+  setTimeout(start, 2600); // страховка, если картинка или видео не догрузились
+
+  /* ==================================================================
+     5. Мобильное меню
+     ================================================================== */
+  var burger = document.querySelector('.burger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  function closeMenu() {
+    body.classList.remove('menu-open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+  burger.addEventListener('click', function () {
+    var open = body.classList.toggle('menu-open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  mobileMenu.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') closeMenu();
+  });
+
+  /* ==================================================================
+     6. Прогресс прокрутки + плавное появление + активный пункт меню
+     ================================================================== */
+  var progress = document.querySelector('.progress');
+  var parallaxEls = document.querySelectorAll('[data-parallax]');
+  var ticking = false;
+
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+
+    if (!reduced) {
+      parallaxEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        var shift = ((r.top + r.height / 2) - window.innerHeight / 2) * -0.09;
+        el.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
+      });
+    }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) { revealObserver.observe(el); });
+
+  var navLinks = document.querySelectorAll('.nav__links a');
+  var sectionObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach(function (a) {
+        a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + entry.target.id));
+      });
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  ['ritual', 'menu', 'offers', 'builder', 'gallery', 'about', 'visit'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  /* ==================================================================
+     7. Курсор (только для мыши)
+     ================================================================== */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reduced) {
+    var dot = document.querySelector('.cursor');
+    var ring = document.querySelector('.cursor-ring');
+    var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    var rx = mx, ry = my;
+
+    window.addEventListener('mousemove', function (e) {
+      mx = e.clientX; my = e.clientY;
+      body.classList.add('cursor-on');
+      dot.style.transform = 'translate(' + (mx - 3.5) + 'px,' + (my - 3.5) + 'px)';
+    }, { passive: true });
+
+    (function loop() {
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      ring.style.transform = 'translate(' + (rx - 17) + 'px,' + (ry - 17) + 'px)';
+      window.requestAnimationFrame(loop);
+    })();
+
+    document.addEventListener('mouseover', function (e) {
+      var hot = e.target.closest('a, button, .shot, .chip, .tab');
+      body.classList.toggle('cursor-hot', !!hot);
+    });
+  }
+
+  /* ==================================================================
+     8. Фильтр меню
+     ================================================================== */
+  var tabs = document.querySelectorAll('.tab');
+  var dishes = document.querySelectorAll('.dish');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      tab.setAttribute('aria-pressed', 'true');
+      var cat = tab.dataset.cat;
+      dishes.forEach(function (dish, i) {
+        var show = cat === 'all' || dish.dataset.cat === cat;
+        dish.classList.toggle('is-out', !show);
+        if (show) {
+          dish.style.animation = 'none';
+          void dish.offsetWidth;                       // перезапуск анимации
+          dish.style.animation = 'dishIn .5s var(--ease) both';
+          dish.style.animationDelay = Math.min(i * 0.03, 0.3) + 's';
+        }
+      });
+    });
+  });
+
+  /* ==================================================================
+     9. Конструктор чашки
+     ================================================================== */
+  var PRICE = {
+    base: { esp: 12, filter: 13, matcha: 20, hib: 15 },
+    milk: { none: 0, reg: 3, oat: 5, cond: 4 },
+    temp: { hot: 0, iced: 2 },
+    size: { S: 0, M: 3, L: 6 }
+  };
+  var BASE_COLOR = { esp: '#4A2A18', filter: '#7A4A28', matcha: '#7E9A4E', hib: '#A32C4C' };
+  var MILK_COLOR = { none: '#EADBC4', reg: '#EADBC4', oat: '#E0CDB0', cond: '#EBCD9A' };
+  var SURFACE = { S: 128, M: 106, L: 86 };   // уровень напитка в координатах SVG
+
+  var state = { base: 'esp', milk: 'reg', temp: 'hot', size: 'M' };
+
+  /* Собранная чашка кодируется в адрес страницы (?cup=esp-reg-hot-M),
+     поэтому ссылкой можно поделиться, а по ней чашка соберётся заново. */
+  var CUP_KEYS = ['base', 'milk', 'temp', 'size'];
+  var CUP_VALUES = {
+    base: ['esp', 'filter', 'matcha', 'hib'],
+    milk: ['none', 'reg', 'oat', 'cond'],
+    temp: ['hot', 'iced'],
+    size: ['S', 'M', 'L']
+  };
+
+  function cupCode() {
+    return CUP_KEYS.map(function (k) { return state[k]; }).join('-');
+  }
+
+  function applyCupCode(code) {
+    var parts = String(code || '').split('-');
+    if (parts.length !== CUP_KEYS.length) return false;
+    for (var i = 0; i < CUP_KEYS.length; i++) {
+      if (CUP_VALUES[CUP_KEYS[i]].indexOf(parts[i]) === -1) return false;   // чужой код игнорируем
+    }
+    CUP_KEYS.forEach(function (k, i) { state[k] = parts[i]; });
+    document.querySelectorAll('.opt__row').forEach(function (row) {
+      var group = row.dataset.group;
+      row.querySelectorAll('.chip').forEach(function (chip) {
+        chip.setAttribute('aria-pressed', String(chip.dataset.val === state[group]));
+      });
+    });
+    return true;
+  }
+
+  function cupUrl() {
+    try {
+      var u = new URL(window.location.href);
+      u.searchParams.set('cup', cupCode());
+      u.hash = '';
+      return u.toString();
+    } catch (e) {
+      return window.location.href;
+    }
+  }
+
+  function rememberCup() {
+    try { window.history.replaceState(null, '', cupUrl()); } catch (e) {}
+  }
+
+  var lFoam = document.getElementById('lFoam');
+  var lMilk = document.getElementById('lMilk');
+  var lBase = document.getElementById('lBase');
+  var iceG = document.getElementById('ice');
+  var strawG = document.getElementById('straw');
+  var steamG = document.getElementById('steam');
+  var cupName = document.getElementById('cupName');
+  var cupPrice = document.getElementById('cupPrice');
+
+  function orderName() {
+    var base = t('b.' + state.base);
+    var milk = t('nm.' + state.milk);
+    var iced = state.temp === 'iced';
+    var name;
+    if (lang === 'ar') {
+      name = base + (milk ? ' ' + milk : '') + (iced ? ' (' + t('nt.iced') + ')' : '');
+    } else {
+      name = (iced ? t('nt.iced') + ' ' : '') + base + (milk ? ' ' + milk : '');
+    }
+    return name + ' · ' + state.size;
+  }
+
+  function renderCup() {
+    var top = SURFACE[state.size];
+    var foamT = state.milk === 'none' ? 6 : 14;
+    var milkT = state.milk === 'none' ? 0 : 34;
+
+    // слои рисуются сверху вниз; каждый следующий перекрывает предыдущий
+    lFoam.style.transform = 'translateY(' + (top - 36) + 'px)';
+    lMilk.style.transform = 'translateY(' + (top + foamT - 36) + 'px)';
+    lBase.style.transform = 'translateY(' + (top + foamT + milkT - 36) + 'px)';
+
+    lBase.setAttribute('fill', BASE_COLOR[state.base]);
+    lMilk.setAttribute('fill', MILK_COLOR[state.milk]);
+    lFoam.setAttribute('fill', state.milk === 'none' ? '#C89A6B' : '#F7EEE0');
+
+    var iced = state.temp === 'iced';
+    iceG.style.opacity = iced ? '1' : '0';
+    strawG.style.opacity = iced ? '1' : '0';
+    steamG.style.opacity = iced ? '0' : '0.55';
+
+    cupName.textContent = orderName();
+    cupPrice.textContent = String(
+      PRICE.base[state.base] + PRICE.milk[state.milk] + PRICE.temp[state.temp] + PRICE.size[state.size]
+    );
+  }
+
+  document.querySelectorAll('.opt__row').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+      var chip = e.target.closest('.chip');
+      if (!chip || !row.contains(chip)) return;
+      row.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+      chip.setAttribute('aria-pressed', 'true');
+      state[row.dataset.group] = chip.dataset.val;
+      renderCup();
+      rememberCup();
+    });
+  });
+
+  var copyBtn = document.getElementById('copyOrder');
+  var shareBtn = document.getElementById('shareCup');
+  var copiedNote = document.getElementById('copied');
+
+  function flash(key) {
+    copiedNote.textContent = t(key);
+    copiedNote.classList.add('show');
+    clearTimeout(flash.timer);
+    flash.timer = setTimeout(function () { copiedNote.classList.remove('show'); }, 2400);
+  }
+
+  function copyText(text, key) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { flash(key); }, function () { flash(key); });
+    } else {
+      flash(key);
+    }
+  }
+
+  shareBtn.addEventListener('click', function () { copyText(cupUrl(), 'builder.linkCopied'); });
+  copyBtn.addEventListener('click', function () {
+    copyText('SAVVA · ' + orderName() + ' · ' + cupPrice.textContent + ' ﷼', 'builder.copied');
+  });
+
+  /* ==================================================================
+     10. Просмотр фотографий
+     ================================================================== */
+  var shots = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbClose = document.getElementById('lbClose');
+  var lbPrev = document.getElementById('lbPrev');
+  var lbNext = document.getElementById('lbNext');
+  var lbIndex = 0;
+  var lastFocused = null;
+
+  function showShot(i) {
+    lbIndex = (i + shots.length) % shots.length;
+    var img = shots[lbIndex].querySelector('img');
+    lbImg.src = img.getAttribute('src');
+    lbImg.alt = img.getAttribute('alt') || '';
+  }
+  function openLb(i) {
+    lastFocused = document.activeElement;
+    showShot(i);
+    lightbox.classList.add('open');
+    body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+  function closeLb() {
+    lightbox.classList.remove('open');
+    body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  shots.forEach(function (shot, i) {
+    shot.addEventListener('click', function () { openLb(i); });
+  });
+  lbClose.addEventListener('click', closeLb);
+  lbPrev.addEventListener('click', function () { showShot(lbIndex - 1); });
+  lbNext.addEventListener('click', function () { showShot(lbIndex + 1); });
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLb();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (lightbox.classList.contains('open')) closeLb();
+      if (body.classList.contains('menu-open')) closeMenu();
+    }
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'ArrowRight') showShot(lbIndex + 1);
+    if (e.key === 'ArrowLeft')  showShot(lbIndex - 1);
+  });
+
+  /* ==================================================================
+     11. «Сейчас открыто» — по реальному времени в Медине (UTC+3).
+         Кофейня работает каждый день и закрывается в 2:00 следующих суток;
+         в пятницу открывается позже.
+     ================================================================== */
+  var statusEl = document.getElementById('status');
+  var statusText = statusEl.querySelector('.status__text');
+  var CLOSE_MIN = 2 * 60;                       // 2:00
+  function openMin(day) { return day === 5 ? 13 * 60 : 6 * 60 + 30; }
+  function hhmm(min) {
+    return Math.floor(min / 60) + ':' + String(min % 60).padStart(2, '0');
+  }
+
+  function madinahNow() {
+    var parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Riyadh', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false
+    }).formatToParts(new Date());
+    var get = function (type) {
+      var p = parts.find(function (x) { return x.type === type; });
+      return p ? p.value : '0';
+    };
+    var days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    var h = parseInt(get('hour'), 10) % 24;
+    return { day: days[get('weekday')] || 0, min: h * 60 + parseInt(get('minute'), 10) };
+  }
+
+  // «4 ч 17 мин», а для короткого остатка просто «45 мин»
+  function human(mins) {
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return (h ? h + t('unit.h') : '') + m + t('unit.m');
+  }
+
+  function renderStatus() {
+    var now;
+    try { now = madinahNow(); } catch (e) { statusEl.hidden = true; return; }
+
+    var isOpen = now.min < CLOSE_MIN || now.min >= openMin(now.day);
+    statusEl.classList.toggle('is-open', isOpen);
+    statusEl.classList.toggle('is-shut', !isOpen);
+
+    // до закрытия: ночью остаток в тех же сутках, днём — через полночь
+    var left = isOpen
+      ? (now.min < CLOSE_MIN ? CLOSE_MIN - now.min : 24 * 60 - now.min + CLOSE_MIN)
+      : openMin(now.day) - now.min;
+
+    // <bdi> держит часы и остаток единым числом в любой раскладке, включая арабскую
+    statusText.innerHTML = '<bdi>' + hhmm(now.min) + '</bdi>' + t('st.inCity') + ' \u00b7 '
+      + (isOpen ? t('st.openFor') : t('st.opensIn')) + '<bdi>' + human(left) + '</bdi>';
+
+    // подсветка сегодняшней строки в расписании
+    document.querySelectorAll('.hours__row').forEach(function (row) {
+      var days = (row.dataset.day || '').split(',');
+      row.classList.toggle('is-today', days.indexOf(String(now.day)) !== -1);
+    });
+  }
+  setInterval(renderStatus, 30000);
+
+  /* ==================================================================
+     12. Старт
+     ================================================================== */
+  var savedTheme, savedLang;
+  try { savedTheme = localStorage.getItem('savva-theme'); } catch (e) {}
+  try { savedLang = localStorage.getItem('savva-lang'); } catch (e) {}
+
+  if (savedTheme === 'night' || savedTheme === 'day') {
+    applyTheme(savedTheme);
+  } else {
+    // выбора ещё не было — берём системную настройку
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark ? 'night' : 'day');
+  }
+
+  var sharedCup = false;
+  try {
+    sharedCup = applyCupCode(new URLSearchParams(window.location.search).get('cup'));
+  } catch (e) {}
+
+  if (savedLang && DICT[savedLang]) {
+    applyLang(savedLang);
+  } else {
+    var nav = (navigator.language || 'ru').slice(0, 2).toLowerCase();
+    applyLang(DICT[nav] ? nav : 'ru');
+  }
+
+  // пришли по ссылке на чашку — показываем её и отмечаем, откуда она
+  if (sharedCup) {
+    setTimeout(function () {
+      var builder = document.getElementById('builder');
+      if (builder) builder.scrollIntoView({ block: 'start' });
+      flash('builder.fromLink');
+    }, 900);
+  }
+})();
+</script>
+
+</body>
+</html>
