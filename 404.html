@@ -421,22 +421,30 @@ body {
   });
 
   /* ==================================================================
-     2. Где лежит сайт.
-        Корневой 404.html Pages отдаёт по любому адресу, поэтому
-        относительные пути из разметки там указывали бы в никуда.
+     2. Где корень сайта.
+
+        И GitHub Pages, и nginx с `error_page 404`, и Vercel отдают эту
+        страницу по ТОМУ адресу, который запросили. То есть location.pathname
+        здесь — чужой, несуществующий путь, и относительные ссылки из разметки
+        ушли бы в никуда. Поэтому корень вычисляем явно.
+
+        На github.io сайт живёт в подпапке с именем репозитория
+        (…github.io/savva/), на Vercel и на своём домене — прямо в корне.
      ================================================================== */
-  function savvaBase() {
-    var p = location.pathname;
-    var m = p.match(/^(.*\/savva\/)/);
-    if (m) return m[1];
+  function siteRoot() {
+    if (location.protocol === 'file:') return './';
+
     if (/\.github\.io$/i.test(location.hostname)) {
-      var seg = p.split('/').filter(Boolean)[0];
-      return (seg ? '/' + seg + '/' : '/') + 'savva/';
+      var seg = location.pathname.split('/').filter(Boolean)[0];
+      /* точка в сегменте — это файл, а не папка репозитория:
+         значит адрес уже в корне (user.github.io/qwerty.html) */
+      if (seg && seg.indexOf('.') === -1) return '/' + seg + '/';
     }
-    return p.replace(/[^/]*$/, '') + 'savva/';
+
+    return '/';
   }
 
-  var base = savvaBase();
+  var base = siteRoot();
   document.getElementById('homeBtn').href   = base;
   document.getElementById('brandLink').href = base;
 
