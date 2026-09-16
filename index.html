@@ -1173,6 +1173,45 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   color: var(--ink-soft);
 }
 
+/* --- 14b. Гость ------------------------------------------------------- */
+/* Кадр снят будто в дверной глазок, и вытянутый овал ложится ровно
+   в арку — ту же форму двери, на которой построен весь сайт. */
+.guest__grid {
+  display: grid;
+  gap: clamp(24px, 4vw, 52px);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 820px) {
+  /* колонка ровно по ширине арки, иначе она болтается в пустоте */
+  .guest__grid { grid-template-columns: 340px minmax(0, 1fr); }
+}
+
+.guest__arch {
+  width: 100%;
+  max-width: 340px;
+  margin-inline: auto;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--arch);
+  overflow: hidden;
+  background: var(--travertine);
+  box-shadow: var(--shadow);
+}
+.guest__arch video,
+.guest__arch img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.guest__text { display: flex; flex-direction: column; gap: 14px; }
+.guest__text h2 { font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
+.guest__text p  { color: var(--ink-soft); max-width: 44ch; }
+.guest__text .guest__note {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rust-text);
+}
+
 /* --- 14a. Окна: бронь стола и оплата --------------------------------- */
 .modal {
   position: fixed;
@@ -2077,6 +2116,27 @@ body > footer {
     </div>
   </section>
 
+  <!-- ГОСТЬ -->
+  <section class="guest">
+    <div class="wrap guest__grid">
+      <div class="guest__arch" data-reveal>
+        <video autoplay muted loop playsinline poster="images/cat-guest-poster.jpg"
+               data-i18n-aria="a11y.cat" aria-label="Рыжий кот с двумя стаканами SAVVA">
+          <source src="videos/cat-guest.mp4" type="video/mp4">
+          <source src="videos/cat-guest.webm" type="video/webm">
+          <img src="images/cat-guest-poster.jpg" alt="Рыжий кот держит подставку с двумя стаканами SAVVA">
+        </video>
+      </div>
+
+      <div class="guest__text" data-reveal style="--d:.08s">
+        <p class="eyebrow" data-i18n="guest.eyebrow">Не только люди</p>
+        <h2 data-i18n="guest.h2">Кто-то уже забрал свои два стакана</h2>
+        <p data-i18n="guest.p">Матча с ягодами и манговый. Имени не назвал, чаевых не оставил — но выглядел совершенно довольным.</p>
+        <p class="guest__note" data-i18n="guest.note">Кот сгенерирован. Стаканы настоящие.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- АДРЕС -->
   <section id="visit">
     <div class="wrap visit__grid">
@@ -2314,6 +2374,12 @@ body > footer {
       'st.inCity': ' в Медине', 'st.openFor': 'открыто ещё ', 'st.opensIn': 'откроем через ',
       'unit.h': ' ч ', 'unit.m': ' мин',
       'a11y.social': 'Мы в соцсетях', 'a11y.close': 'Закрыть',
+      'a11y.cat': 'Рыжий кот с двумя стаканами SAVVA',
+
+      'guest.eyebrow': 'Не только люди',
+      'guest.h2': 'Кто-то уже забрал свои два стакана',
+      'guest.p': 'Матча с ягодами и манговый. Имени не назвал, чаевых не оставил — но выглядел совершенно довольным.',
+      'guest.note': 'Кот сгенерирован. Стаканы настоящие.',
 
       'o3.seal': 'бронь', 'o3.label': 'Встречи и посиделки',
       'o3.title': 'Есть где сесть и поговорить',
@@ -2416,6 +2482,12 @@ body > footer {
       'st.inCity': ' in Madinah', 'st.openFor': 'open for another ', 'st.opensIn': 'opens in ',
       'unit.h': ' h ', 'unit.m': ' min',
       'a11y.social': 'Find us on social media', 'a11y.close': 'Close',
+      'a11y.cat': 'A ginger cat holding two SAVVA cups',
+
+      'guest.eyebrow': 'Not only people',
+      'guest.h2': 'Someone has already picked up their two cups',
+      'guest.p': 'Matcha with berries and mango. Left no name and no tip — but looked thoroughly pleased.',
+      'guest.note': 'The cat is generated. The cups are real.',
 
       'o3.seal': 'booking', 'o3.label': 'Meetings and long sits',
       'o3.title': 'Somewhere to sit and talk',
@@ -2518,6 +2590,12 @@ body > footer {
       'st.inCity': ' في المدينة', 'st.openFor': 'مفتوح لمدة ', 'st.opensIn': 'يفتح بعد ',
       'unit.h': ' س ', 'unit.m': ' د',
       'a11y.social': 'تابعنا على مواقع التواصل', 'a11y.close': 'إغلاق',
+      'a11y.cat': 'قط برتقالي يحمل كوبين من سافا',
+
+      'guest.eyebrow': 'ليس البشر وحدهم',
+      'guest.h2': 'أحدهم استلم كوبيه بالفعل',
+      'guest.p': 'ماتشا بالتوت ومانجو. لم يترك اسمًا ولا بقشيشًا، لكنه بدا راضيًا تمامًا.',
+      'guest.note': 'القط مولَّد بالذكاء الاصطناعي. الأكواب حقيقية.',
 
       'o3.seal': 'حجز', 'o3.label': 'لقاءات وجلسات',
       'o3.title': 'مكان للجلوس والحديث',
