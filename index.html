@@ -366,6 +366,7 @@ header {
 @media (min-width: 1020px) { .nav__links { display: flex; } }
 .nav__links a {
   position: relative;
+  white-space: nowrap;
   font-size: 0.88rem;
   font-weight: 500;
   text-decoration: none;
@@ -459,6 +460,44 @@ body.menu-open .mobile-menu a:nth-child(3) { transition-delay: 0.30s; }
 body.menu-open .mobile-menu a:nth-child(4) { transition-delay: 0.36s; }
 body.menu-open .mobile-menu a:nth-child(5) { transition-delay: 0.42s; }
 body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
+
+/* значки соцсетей: в шапке — с 620px, ниже уезжают в меню под бургером,
+   потому что на 390px строка шапки их уже не вмещает */
+.socials { display: none; gap: 6px; }
+@media (min-width: 620px) { .socials { display: flex; } }
+.socials a {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+.socials a:hover { border-color: var(--rust); color: var(--rust-text); transform: translateY(-2px); }
+.socials svg { width: 17px; height: 17px; }
+/* display: grid выше перебивает атрибут hidden из стилей браузера,
+   и скрытый значок всё равно занимал бы место */
+.socials a[hidden] { display: none; }
+
+/* 1020–1300px: в строке уже видны пункты меню, и значки в неё не влезают —
+   там они остаются только под бургером */
+@media (min-width: 1020px) and (max-width: 1299px) {
+  .nav__side .socials { display: none; }
+}
+
+.mobile-menu .socials { display: flex; gap: 10px; margin-top: 20px; }
+.mobile-menu .socials a {
+  width: 46px; height: 46px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0;
+  border-bottom: 1px solid var(--line);
+}
+.mobile-menu .socials svg { width: 20px; height: 20px; }
 
 /* переключатель языка */
 .lang {
@@ -880,14 +919,6 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   flex-wrap: wrap;
 }
 .builder__foot .btn:not(.btn-light) { background: var(--clay); color: #241E14; }
-.copied {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  color: var(--clay-text);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.copied.show { opacity: 1; }
 
 /* слои напитка и лёд меняются плавно */
 #lFoam, #lMilk, #lBase { transition: transform 0.6s var(--ease), fill 0.45s var(--ease); }
@@ -1008,6 +1039,7 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   grid-template-columns: 1fr;
 }
 @media (min-width: 780px) { .offers__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .offers__grid { grid-template-columns: repeat(3, 1fr); } }
 
 .offer {
   display: flex;
@@ -1141,6 +1173,110 @@ body.menu-open .mobile-menu a:nth-child(6) { transition-delay: 0.48s; }
   color: var(--ink-soft);
 }
 
+/* --- 14a. Окна: бронь стола и оплата --------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 4vw, 30px);
+  background: rgba(20, 17, 13, 0.62);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s var(--ease), visibility 0.35s;
+}
+.modal.is-open { opacity: 1; visibility: visible; }
+
+.modal__box {
+  position: relative;
+  width: min(520px, 100%);
+  max-height: 88svh;
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 36px);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.4s var(--ease);
+}
+.modal.is-open .modal__box { transform: none; }
+
+.modal__close {
+  position: absolute;
+  inset-block-start: 14px;
+  inset-inline-end: 14px;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s;
+}
+.modal__close:hover { border-color: var(--rust); color: var(--rust-text); }
+
+.modal__box h2 { font-size: clamp(1.5rem, 3.4vw, 2rem); margin-top: 6px; }
+.modal__note { color: var(--ink-soft); font-size: 0.92rem; margin-top: 10px; }
+
+/* форма */
+.form { display: grid; gap: 14px; margin-top: 20px; }
+.form__row { display: grid; gap: 14px; }
+@media (min-width: 440px) { .form__row { grid-template-columns: 1fr 1fr; } }
+
+.field { display: grid; gap: 6px; }
+.field > span {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.field input, .field select, .field textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+.field textarea { resize: vertical; min-height: 62px; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--rust); }
+.field input.is-bad, .field select.is-bad { border-color: #C0392B; }
+[data-theme="night"] .field input.is-bad, [data-theme="night"] .field select.is-bad { border-color: #E8705F; }
+
+.form__err {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #A3301F;
+}
+[data-theme="night"] .form__err { color: #F0897A; }
+.form__hint {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.form .btn { justify-content: center; }
+
+.pay__order {
+  margin-top: 18px;
+  padding: 16px 18px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+}
+.pay__actions { display: grid; gap: 10px; margin-top: 20px; }
+
 /* --- 15. Адрес -------------------------------------------------------- */
 .visit__grid {
   display: grid;
@@ -1235,6 +1371,28 @@ body > footer {
   }
   [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* --- 19. Арабский: разрядка ------------------------------------------ */
+/* Арабская вязь соединяет буквы, а трекинг, рассчитанный на латиницу,
+   эти соединения разрывает: «واتساب» читается как «وا تساب». Правило
+   стоит последним в файле намеренно — у отдельных классов специфичность
+   такая же, и побеждает тот, что ниже. Исключения ниже — места, где на
+   арабской версии текст всё равно остаётся латинским. */
+[lang="ar"] *, [lang="ar"] *::before, [lang="ar"] *::after { letter-spacing: 0; }
+[lang="ar"] .brand__sub    { letter-spacing: 0.16em; }
+[lang="ar"] .lang button   { letter-spacing: 0.08em; }
+[lang="ar"] .socials a     { letter-spacing: 0.04em; }
+[lang="ar"] .review__stars { letter-spacing: 0.15em; }
+
+/* у этих селекторов специфичность выше, чем у правила со звёздочкой,
+   поэтому их приходится называть отдельно */
+[lang="ar"] .field > span,
+[lang="ar"] .ticker__track span { letter-spacing: 0; }
+
+/* печать на карточке акции — круг узкий, арабское слово в него
+   не помещается на одной строке в общем кегле */
+[lang="ar"] .offer__seal { font-size: 0.72rem; line-height: 1.3; }
+
 </style>
 
 <noscript><style>
@@ -1253,6 +1411,18 @@ body > footer {
 <div class="preloader" aria-hidden="true">
   <div class="preloader__door"><div class="preloader__logo"></div></div>
 </div>
+
+<svg class="visually-hidden" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.5 11.7a8.4 8.4 0 0 1-12.4 7.4L3.5 20.5 5 16a8.4 8.4 0 1 1 15.5-4.3Z"/>
+    <path d="M9.1 8.7c.3-.1.6 0 .8.3l.8 1.3c.1.2.1.5 0 .7l-.4.6c-.1.2-.1.4 0 .6.5.8 1.2 1.5 2 2 .2.1.4.1.6 0l.6-.4c.2-.1.5-.1.7 0l1.3.8c.3.2.4.5.3.8-.2.6-.7 1-1.3 1.2-.5.1-1 0-1.5-.2a9.3 9.3 0 0 1-4.9-4.9c-.2-.5-.3-1-.2-1.5.2-.6.6-1.1 1.2-1.3Z"/>
+  </symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+    <rect x="3" y="3" width="18" height="18" rx="5.2"/>
+    <circle cx="12" cy="12" r="4"/>
+    <circle cx="17.1" cy="6.9" r="1.15" fill="currentColor" stroke="none"/>
+  </symbol>
+</defs></svg>
 
 <a class="visually-hidden" href="#menu" data-i18n="a11y.skip">Перейти к меню</a>
 
@@ -1275,6 +1445,16 @@ body > footer {
     </div>
 
     <div class="nav__side">
+      <div class="socials" data-i18n-aria="a11y.social" aria-label="Мы в соцсетях">
+        <a href="https://wa.me/966564370303" target="_blank" rel="noopener" data-social="whatsapp" aria-label="WhatsApp">
+          <svg aria-hidden="true"><use href="#i-wa"/></svg>
+        </a>
+        <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener" data-social="instagram" aria-label="Instagram">
+          <svg aria-hidden="true"><use href="#i-ig"/></svg>
+        </a>
+        <a href="#" target="_blank" rel="noopener" data-social="vk" aria-label="ВКонтакте" hidden>VK</a>
+      </div>
+
       <div class="lang" role="group" aria-label="Язык сайта">
         <button type="button" data-lang="ru" aria-pressed="true">Ру</button>
         <button type="button" data-lang="en" aria-pressed="false">En</button>
@@ -1291,7 +1471,7 @@ body > footer {
         </svg>
       </button>
 
-      <a class="btn nav__cta" href="#visit" data-i18n="nav.cta">Найти нас</a>
+      <button class="btn nav__cta" type="button" data-book data-i18n="nav.cta">Забронировать</button>
 
       <button type="button" class="icon-btn burger" data-i18n-aria="a11y.menu" aria-label="Меню" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -1308,6 +1488,17 @@ body > footer {
   <a href="#gallery" data-i18n="nav.place">Место</a>
   <a href="#about"   data-i18n="nav.about">О нас</a>
   <a href="#visit"   data-i18n="nav.visit">Адрес</a>
+  <a href="#" data-book data-i18n="nav.cta">Забронировать</a>
+
+  <div class="socials" data-i18n-aria="a11y.social" aria-label="Мы в соцсетях">
+    <a href="https://wa.me/966564370303" target="_blank" rel="noopener" data-social="whatsapp" aria-label="WhatsApp">
+      <svg aria-hidden="true"><use href="#i-wa"/></svg>
+    </a>
+    <a href="https://www.instagram.com/savva_cafe" target="_blank" rel="noopener" data-social="instagram" aria-label="Instagram">
+      <svg aria-hidden="true"><use href="#i-ig"/></svg>
+    </a>
+    <a href="#" target="_blank" rel="noopener" data-social="vk" aria-label="ВКонтакте" hidden>VK</a>
+  </div>
 </div>
 
 <main id="top">
@@ -1598,7 +1789,7 @@ body > footer {
       <div class="section-head" data-reveal>
         <div>
           <p class="eyebrow" data-i18n="offers.eyebrow">Акции</p>
-          <h2 data-i18n="offers.h2">Два повода заехать именно к нам</h2>
+          <h2 data-i18n="offers.h2">Три повода заехать именно к нам</h2>
         </div>
         <p class="note" data-i18n="offers.note">Действующие предложения SAVVA — условия уточняйте у бариста.</p>
       </div>
@@ -1632,6 +1823,22 @@ body > footer {
             <div class="offer__foot">
               <span data-i18n="o2.foot">Звонок заранее</span>
               <a href="tel:+966564370303">+966 56 437 0303</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="offer" data-reveal style="--d:.16s">
+          <div class="offer__ph">
+            <img src="images/lounge-sofas.jpg" alt="Диваны, столики и арочное окно в зале SAVVA" loading="lazy">
+            <span class="offer__seal" data-i18n="o3.seal">бронь</span>
+          </div>
+          <div class="offer__body">
+            <p class="eyebrow" data-i18n="o3.label">Встречи и посиделки</p>
+            <h3 data-i18n="o3.title">Есть где сесть и поговорить</h3>
+            <p data-i18n="o3.desc">Тихий зал, диваны у арочного окна и большой стол — под деловую встречу, работу за ноутбуком или долгие посиделки с друзьями. Стол можно занять заранее.</p>
+            <div class="offer__foot">
+              <span data-i18n="o3.foot">Ответим в WhatsApp</span>
+              <a href="#" data-book data-i18n="o3.cta">Забронировать стол →</a>
             </div>
           </div>
         </article>
@@ -1741,12 +1948,10 @@ body > footer {
           </div>
 
           <div class="builder__foot">
-            <button class="btn" type="button" id="copyOrder">
-              <span data-i18n="builder.copy">Скопировать заказ</span>
+            <button class="btn" type="button" id="payOrder">
+              <span data-i18n="builder.pay">Оплатить заказ</span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
-            <button class="btn btn-light" type="button" id="shareCup" data-i18n="builder.share">Ссылка на чашку</button>
-            <span class="copied" id="copied" role="status" data-i18n="builder.copied">скопировано</span>
           </div>
         </div>
 
@@ -1916,6 +2121,91 @@ body > footer {
   </div>
 </footer>
 
+<!-- БРОНЬ СТОЛА -->
+<div class="modal" id="bookModal" role="dialog" aria-modal="true" aria-labelledby="bookTitle" hidden>
+  <div class="modal__box">
+    <button class="modal__close" type="button" data-close data-i18n-aria="a11y.close" aria-label="Закрыть">✕</button>
+
+    <p class="eyebrow" data-i18n="book.eyebrow">Бронь стола</p>
+    <h2 id="bookTitle" data-i18n="book.h2">Займём вам стол</h2>
+    <p class="modal__note" data-i18n="book.note">Заполните — и бронь уйдёт бариста в WhatsApp. Подтвердим ответным сообщением.</p>
+
+    <form class="form" id="bookForm" novalidate>
+      <label class="field">
+        <span data-i18n="book.name">Имя</span>
+        <input type="text" id="bkName" autocomplete="name" required>
+      </label>
+
+      <div class="form__row">
+        <label class="field">
+          <span data-i18n="book.date">Дата</span>
+          <input type="date" id="bkDate" required>
+        </label>
+        <label class="field">
+          <span data-i18n="book.time">Время</span>
+          <input type="time" id="bkTime" required>
+        </label>
+      </div>
+
+      <div class="form__row">
+        <label class="field">
+          <span data-i18n="book.guests">Гостей</span>
+          <input type="number" id="bkGuests" min="1" max="20" step="1" value="2" required>
+        </label>
+        <label class="field">
+          <span data-i18n="book.phone">Телефон</span>
+          <input type="tel" id="bkPhone" autocomplete="tel">
+        </label>
+      </div>
+
+      <label class="field">
+        <span data-i18n="book.occasion">Повод</span>
+        <select id="bkOcc">
+          <option value="meeting" data-i18n="book.occMeeting">Деловая встреча</option>
+          <option value="friends" data-i18n="book.occFriends">Посиделки с друзьями</option>
+          <option value="work" data-i18n="book.occWork">Поработать за ноутбуком</option>
+          <option value="just" selected data-i18n="book.occJust">Просто кофе</option>
+        </select>
+      </label>
+
+      <label class="field">
+        <span data-i18n="book.comment">Комментарий</span>
+        <textarea id="bkNote" rows="2"></textarea>
+      </label>
+
+      <p class="form__err" id="bkErr" role="alert" hidden></p>
+
+      <button class="btn" type="submit">
+        <span data-i18n="book.send">Отправить в WhatsApp</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </button>
+      <p class="form__hint" data-i18n="book.hint">Откроется WhatsApp с готовым текстом — останется нажать «Отправить». Мы работаем с 6:30 до 2:00, по пятницам с 13:00.</p>
+    </form>
+  </div>
+</div>
+
+<!-- ОПЛАТА ЗАКАЗА -->
+<div class="modal" id="payModal" role="dialog" aria-modal="true" aria-labelledby="payTitle" hidden>
+  <div class="modal__box">
+    <button class="modal__close" type="button" data-close data-i18n-aria="a11y.close" aria-label="Закрыть">✕</button>
+
+    <p class="eyebrow" data-i18n="pay.eyebrow">Оплата</p>
+    <h2 id="payTitle" data-i18n="pay.h2">Ваш заказ</h2>
+
+    <p class="pay__order" id="payOrderLine"></p>
+
+    <p class="modal__note" id="payReq" hidden></p>
+    <p class="modal__note" id="paySoon" data-i18n="pay.soon">Оплата картой на сайте пока не подключена. Отправьте заказ бариста в WhatsApp — он подтвердит сумму и пришлёт реквизиты.</p>
+
+    <div class="pay__actions">
+      <a class="btn" id="payWa" href="#" target="_blank" rel="noopener">
+        <span data-i18n="pay.send">Отправить заказ в WhatsApp</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- просмотр фотографий -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
   <button class="lightbox__close" type="button" id="lbClose" aria-label="Закрыть">✕</button>
@@ -1934,6 +2224,18 @@ body > footer {
   var body = document.body;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ------------------------------------------------------------------
+     Куда уходят бронь и заказ. Всё, что нужно менять руками, — здесь;
+     в разметку за этим лезть не надо.
+     ------------------------------------------------------------------ */
+  var WA_PHONE = '966564370303';   // номер кофейни в WhatsApp, без плюса
+  var VK_URL   = '';               // ← адрес страницы ВКонтакте; пока пусто — значок скрыт
+  var PAY_REQ  = '';               // ← реквизиты для оплаты; пока пусто — заказ уходит в WhatsApp
+
+  function waLink(text) {
+    return 'https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent(text);
+  }
+
   /* ==================================================================
      1. Словарь. В разметке лежит русский, поэтому ru тоже описан —
         иначе не вернуться назад после переключения.
@@ -1944,9 +2246,9 @@ body > footer {
       'doc.desc': 'SAVVA — specialty coffee в Медине. Пуровер V60, латте-арт, чизкейки и тихий двор. Меню, цены, часы работы и адрес.',
       'brand.sub': 'SPECIALTY<br>COFFEE',
       'nav.ritual': 'Ритуал', 'nav.menu': 'Меню', 'nav.builder': 'Конструктор',
-      'nav.place': 'Место', 'nav.about': 'О нас', 'nav.visit': 'Адрес', 'nav.cta': 'Найти нас',
+      'nav.place': 'Место', 'nav.about': 'О нас', 'nav.visit': 'Адрес', 'nav.cta': 'Забронировать',
       'nav.offers': 'Акции',
-      'offers.eyebrow': 'Акции', 'offers.h2': 'Два повода заехать именно к нам',
+      'offers.eyebrow': 'Акции', 'offers.h2': 'Три повода заехать именно к нам',
       'offers.note': 'Действующие предложения SAVVA — условия уточняйте у бариста.',
       'o1.label': 'Снек-комбо', 'o1.title': 'Любой сэндвич и кофе',
       'o1.desc': 'Берите любой сэндвич и любой кофе — горячий или холодный. Вместе они стоят 24 ﷼ вместо обычной суммы.',
@@ -1979,7 +2281,7 @@ body > footer {
       'builder.eyebrow': 'Конструктор', 'builder.h2': 'Соберите свою чашку',
       'builder.note': 'Выберите основу, молоко и характер — мы посчитаем цену и придумаем имя.',
       'builder.hint': 'Покажите бариста — соберём точно так же.',
-      'builder.copy': 'Скопировать заказ', 'builder.copied': 'скопировано', 'builder.svgAlt': 'Предпросмотр напитка',
+      'builder.pay': 'Оплатить заказ', 'builder.svgAlt': 'Предпросмотр напитка',
       'opt.base': 'Основа', 'opt.milk': 'Молоко', 'opt.temp': 'Характер', 'opt.size': 'Размер',
       'b.esp': 'Эспрессо', 'b.filter': 'Фильтр V60', 'b.matcha': 'Матча', 'b.hib': 'Каркаде',
       'm.none': 'Без молока', 'm.reg': 'Обычное', 'm.oat': 'Овсяное', 'm.cond': 'Сгущённое',
@@ -2011,8 +2313,34 @@ body > footer {
       'st.open': 'Сейчас открыто · до ', 'st.shut': 'Закрыто · откроемся в ',
       'st.inCity': ' в Медине', 'st.openFor': 'открыто ещё ', 'st.opensIn': 'откроем через ',
       'unit.h': ' ч ', 'unit.m': ' мин',
-      'builder.share': 'Ссылка на чашку', 'builder.linkCopied': 'ссылка скопирована',
-      'builder.fromLink': 'чашка из ссылки'
+      'a11y.social': 'Мы в соцсетях', 'a11y.close': 'Закрыть',
+
+      'o3.seal': 'бронь', 'o3.label': 'Встречи и посиделки',
+      'o3.title': 'Есть где сесть и поговорить',
+      'o3.desc': 'Тихий зал, диваны у арочного окна и большой стол — под деловую встречу, работу за ноутбуком или долгие посиделки с друзьями. Стол можно занять заранее.',
+      'o3.foot': 'Ответим в WhatsApp', 'o3.cta': 'Забронировать стол →',
+
+      'book.eyebrow': 'Бронь стола', 'book.h2': 'Займём вам стол',
+      'book.note': 'Заполните — и бронь уйдёт бариста в WhatsApp. Подтвердим ответным сообщением.',
+      'book.name': 'Имя', 'book.date': 'Дата', 'book.time': 'Время', 'book.guests': 'Гостей',
+      'book.phone': 'Телефон', 'book.occasion': 'Повод', 'book.comment': 'Комментарий',
+      'book.occMeeting': 'Деловая встреча', 'book.occFriends': 'Посиделки с друзьями',
+      'book.occWork': 'Поработать за ноутбуком', 'book.occJust': 'Просто кофе',
+      'book.send': 'Отправить в WhatsApp',
+      'book.hint': 'Откроется WhatsApp с готовым текстом — останется нажать «Отправить». Мы работаем с 6:30 до 2:00, по пятницам с 13:00.',
+      'book.errName': 'Напишите, как к вам обращаться.',
+      'book.errDate': 'Выберите дату.',
+      'book.errPast': 'Эта дата уже прошла — выберите другую.',
+      'book.errTime': 'Выберите время.',
+      'book.errGuests': 'Гостей — от 1 до 20. На компанию больше напишите нам напрямую.',
+      'book.manual': 'Открыть WhatsApp вручную',
+      'book.msgHead': 'Бронь стола — SAVVA',
+
+      'pay.eyebrow': 'Оплата', 'pay.h2': 'Ваш заказ',
+      'pay.soon': 'Оплата картой на сайте пока не подключена. Отправьте заказ бариста в WhatsApp — он подтвердит сумму и пришлёт реквизиты.',
+      'pay.cardNote': 'Переведите сумму и пришлите чек в WhatsApp. Реквизиты:',
+      'pay.send': 'Отправить заказ в WhatsApp',
+      'pay.msgHead': 'Заказ с сайта — SAVVA'
     },
 
     en: {
@@ -2020,9 +2348,9 @@ body > footer {
       'doc.desc': 'SAVVA is specialty coffee in Madinah. V60 pour over, latte art, cheesecakes and a quiet courtyard. Menu, prices, hours and address.',
       'brand.sub': 'SPECIALTY<br>COFFEE',
       'nav.ritual': 'Ritual', 'nav.menu': 'Menu', 'nav.builder': 'Build a cup',
-      'nav.place': 'The place', 'nav.about': 'About', 'nav.visit': 'Visit', 'nav.cta': 'Find us',
+      'nav.place': 'The place', 'nav.about': 'About', 'nav.visit': 'Visit', 'nav.cta': 'Book a table',
       'nav.offers': 'Offers',
-      'offers.eyebrow': 'Offers', 'offers.h2': 'Two reasons to pick this one',
+      'offers.eyebrow': 'Offers', 'offers.h2': 'Three reasons to pick this one',
       'offers.note': 'Current SAVVA offers — check the terms with the barista.',
       'o1.label': 'Snack combo', 'o1.title': 'Any sandwich and a coffee',
       'o1.desc': 'Take any sandwich and any coffee, hot or iced. Together they are 24 ﷼ instead of the usual total.',
@@ -2055,7 +2383,7 @@ body > footer {
       'builder.eyebrow': 'Build a cup', 'builder.h2': 'Build your own cup',
       'builder.note': "Pick a base, milk and character — we'll do the maths and the name.",
       'builder.hint': "Show it to the barista — we'll make exactly this.",
-      'builder.copy': 'Copy the order', 'builder.copied': 'copied', 'builder.svgAlt': 'Drink preview',
+      'builder.pay': 'Pay for the order', 'builder.svgAlt': 'Drink preview',
       'opt.base': 'Base', 'opt.milk': 'Milk', 'opt.temp': 'Character', 'opt.size': 'Size',
       'b.esp': 'Espresso', 'b.filter': 'V60 filter', 'b.matcha': 'Matcha', 'b.hib': 'Hibiscus',
       'm.none': 'No milk', 'm.reg': 'Regular', 'm.oat': 'Oat', 'm.cond': 'Condensed',
@@ -2087,8 +2415,34 @@ body > footer {
       'st.open': 'Open now · until ', 'st.shut': 'Closed · opens at ',
       'st.inCity': ' in Madinah', 'st.openFor': 'open for another ', 'st.opensIn': 'opens in ',
       'unit.h': ' h ', 'unit.m': ' min',
-      'builder.share': 'Link to this cup', 'builder.linkCopied': 'link copied',
-      'builder.fromLink': 'cup from a link'
+      'a11y.social': 'Find us on social media', 'a11y.close': 'Close',
+
+      'o3.seal': 'booking', 'o3.label': 'Meetings and long sits',
+      'o3.title': 'Somewhere to sit and talk',
+      'o3.desc': 'A quiet room, sofas by the arched window and one big table — for a business meeting, a laptop afternoon or a long sit with friends. The table can be held for you.',
+      'o3.foot': 'We reply on WhatsApp', 'o3.cta': 'Book a table →',
+
+      'book.eyebrow': 'Table booking', 'book.h2': "We'll hold a table",
+      'book.note': 'Fill this in and the booking goes to the barista on WhatsApp. We confirm by reply.',
+      'book.name': 'Name', 'book.date': 'Date', 'book.time': 'Time', 'book.guests': 'Guests',
+      'book.phone': 'Phone', 'book.occasion': 'Occasion', 'book.comment': 'Note',
+      'book.occMeeting': 'Business meeting', 'book.occFriends': 'Sitting with friends',
+      'book.occWork': 'Working on a laptop', 'book.occJust': 'Just coffee',
+      'book.send': 'Send on WhatsApp',
+      'book.hint': "WhatsApp opens with the text ready — you only press Send. We're open 6:30 to 2:00, Fridays from 13:00.",
+      'book.errName': 'Tell us what to call you.',
+      'book.errDate': 'Pick a date.',
+      'book.errPast': 'That date has passed — pick another.',
+      'book.errTime': 'Pick a time.',
+      'book.errGuests': 'Guests: 1 to 20. For a bigger party, message us directly.',
+      'book.manual': 'Open WhatsApp manually',
+      'book.msgHead': 'Table booking — SAVVA',
+
+      'pay.eyebrow': 'Payment', 'pay.h2': 'Your order',
+      'pay.soon': 'Card payment on the site is not wired up yet. Send the order to the barista on WhatsApp — they will confirm the total and send the details.',
+      'pay.cardNote': 'Transfer the amount and send the receipt on WhatsApp. Details:',
+      'pay.send': 'Send the order on WhatsApp',
+      'pay.msgHead': 'Order from the site — SAVVA'
     },
 
     ar: {
@@ -2096,9 +2450,9 @@ body > footer {
       'doc.desc': 'سافا قهوة مختصة في المدينة المنورة. تحضير V60، فن اللاتيه، تشيز كيك وفناء هادئ. القائمة والأسعار وأوقات العمل والموقع.',
       'brand.sub': 'قهوة<br>مختصة',
       'nav.ritual': 'التحضير', 'nav.menu': 'القائمة', 'nav.builder': 'اصنع كوبك',
-      'nav.place': 'المكان', 'nav.about': 'من نحن', 'nav.visit': 'الموقع', 'nav.cta': 'كيف تصل',
+      'nav.place': 'المكان', 'nav.about': 'من نحن', 'nav.visit': 'الموقع', 'nav.cta': 'احجز طاولة',
       'nav.offers': 'العروض',
-      'offers.eyebrow': 'العروض', 'offers.h2': 'سببان يجعلانك تختار سافا',
+      'offers.eyebrow': 'العروض', 'offers.h2': 'ثلاثة أسباب تجعلك تختار سافا',
       'offers.note': 'عروض سافا الحالية — تأكّد من الشروط مع الباريستا.',
       'o1.label': 'كومبو الوجبة الخفيفة', 'o1.title': 'أي ساندويتش مع قهوة',
       'o1.desc': 'اختر أي ساندويتش وأي قهوة، ساخنة أو مثلجة. معًا بـ 24 ﷼ بدل السعر المعتاد.',
@@ -2131,7 +2485,7 @@ body > footer {
       'builder.eyebrow': 'اصنع كوبك', 'builder.h2': 'اصنع كوبك بنفسك',
       'builder.note': 'اختر الأساس والحليب والطابع، ونحن نحسب السعر ونختار الاسم.',
       'builder.hint': 'أرِ الباريستا هذه الشاشة، وسنحضّرها تمامًا.',
-      'builder.copy': 'انسخ الطلب', 'builder.copied': 'تم النسخ', 'builder.svgAlt': 'معاينة المشروب',
+      'builder.pay': 'ادفع الطلب', 'builder.svgAlt': 'معاينة المشروب',
       'opt.base': 'الأساس', 'opt.milk': 'الحليب', 'opt.temp': 'الطابع', 'opt.size': 'الحجم',
       'b.esp': 'إسبريسو', 'b.filter': 'فلتر V60', 'b.matcha': 'ماتشا', 'b.hib': 'كركديه',
       'm.none': 'بدون حليب', 'm.reg': 'حليب عادي', 'm.oat': 'حليب شوفان', 'm.cond': 'حليب مكثّف',
@@ -2163,8 +2517,34 @@ body > footer {
       'st.open': 'مفتوح الآن · حتى ', 'st.shut': 'مغلق · يفتح ',
       'st.inCity': ' في المدينة', 'st.openFor': 'مفتوح لمدة ', 'st.opensIn': 'يفتح بعد ',
       'unit.h': ' س ', 'unit.m': ' د',
-      'builder.share': 'رابط الكوب', 'builder.linkCopied': 'تم نسخ الرابط',
-      'builder.fromLink': 'كوب من رابط'
+      'a11y.social': 'تابعنا على مواقع التواصل', 'a11y.close': 'إغلاق',
+
+      'o3.seal': 'حجز', 'o3.label': 'لقاءات وجلسات',
+      'o3.title': 'مكان للجلوس والحديث',
+      'o3.desc': 'صالة هادئة وكنب عند النافذة المقوسة وطاولة كبيرة — لاجتماع عمل أو للعمل على اللابتوب أو لجلسة طويلة مع الأصدقاء. ويمكن حجز الطاولة مسبقًا.',
+      'o3.foot': 'نرد عبر واتساب', 'o3.cta': 'احجز طاولة ←',
+
+      'book.eyebrow': 'حجز طاولة', 'book.h2': 'نحجز لك الطاولة',
+      'book.note': 'املأ الحقول، ويصل الحجز إلى الباريستا عبر واتساب. نؤكّده برسالة ردّ.',
+      'book.name': 'الاسم', 'book.date': 'التاريخ', 'book.time': 'الوقت', 'book.guests': 'عدد الضيوف',
+      'book.phone': 'الهاتف', 'book.occasion': 'المناسبة', 'book.comment': 'ملاحظة',
+      'book.occMeeting': 'اجتماع عمل', 'book.occFriends': 'جلسة مع الأصدقاء',
+      'book.occWork': 'العمل على اللابتوب', 'book.occJust': 'قهوة فقط',
+      'book.send': 'أرسل عبر واتساب',
+      'book.hint': 'سيفتح واتساب والنص جاهز — يكفي الضغط على «إرسال». نعمل من 6:30 حتى 2:00، والجمعة من 13:00.',
+      'book.errName': 'اكتب اسمك من فضلك.',
+      'book.errDate': 'اختر التاريخ.',
+      'book.errPast': 'هذا التاريخ مضى — اختر تاريخًا آخر.',
+      'book.errTime': 'اختر الوقت.',
+      'book.errGuests': 'عدد الضيوف من 1 إلى 20. لمجموعة أكبر راسلنا مباشرة.',
+      'book.manual': 'افتح واتساب يدويًا',
+      'book.msgHead': 'حجز طاولة — SAVVA',
+
+      'pay.eyebrow': 'الدفع', 'pay.h2': 'طلبك',
+      'pay.soon': 'الدفع بالبطاقة عبر الموقع غير مفعّل بعد. أرسل الطلب إلى الباريستا عبر واتساب، وسيؤكّد المبلغ ويرسل التفاصيل.',
+      'pay.cardNote': 'حوّل المبلغ وأرسل الإيصال عبر واتساب. التفاصيل:',
+      'pay.send': 'أرسل الطلب عبر واتساب',
+      'pay.msgHead': 'طلب من الموقع — SAVVA'
     }
   };
 
@@ -2365,49 +2745,6 @@ body > footer {
 
   /* Собранная чашка кодируется в адрес страницы (?cup=esp-reg-hot-M),
      поэтому ссылкой можно поделиться, а по ней чашка соберётся заново. */
-  var CUP_KEYS = ['base', 'milk', 'temp', 'size'];
-  var CUP_VALUES = {
-    base: ['esp', 'filter', 'matcha', 'hib'],
-    milk: ['none', 'reg', 'oat', 'cond'],
-    temp: ['hot', 'iced'],
-    size: ['S', 'M', 'L']
-  };
-
-  function cupCode() {
-    return CUP_KEYS.map(function (k) { return state[k]; }).join('-');
-  }
-
-  function applyCupCode(code) {
-    var parts = String(code || '').split('-');
-    if (parts.length !== CUP_KEYS.length) return false;
-    for (var i = 0; i < CUP_KEYS.length; i++) {
-      if (CUP_VALUES[CUP_KEYS[i]].indexOf(parts[i]) === -1) return false;   // чужой код игнорируем
-    }
-    CUP_KEYS.forEach(function (k, i) { state[k] = parts[i]; });
-    document.querySelectorAll('.opt__row').forEach(function (row) {
-      var group = row.dataset.group;
-      row.querySelectorAll('.chip').forEach(function (chip) {
-        chip.setAttribute('aria-pressed', String(chip.dataset.val === state[group]));
-      });
-    });
-    return true;
-  }
-
-  function cupUrl() {
-    try {
-      var u = new URL(window.location.href);
-      u.searchParams.set('cup', cupCode());
-      u.hash = '';
-      return u.toString();
-    } catch (e) {
-      return window.location.href;
-    }
-  }
-
-  function rememberCup() {
-    try { window.history.replaceState(null, '', cupUrl()); } catch (e) {}
-  }
-
   var lFoam = document.getElementById('lFoam');
   var lMilk = document.getElementById('lMilk');
   var lBase = document.getElementById('lBase');
@@ -2463,33 +2800,12 @@ body > footer {
       chip.setAttribute('aria-pressed', 'true');
       state[row.dataset.group] = chip.dataset.val;
       renderCup();
-      rememberCup();
     });
   });
 
-  var copyBtn = document.getElementById('copyOrder');
-  var shareBtn = document.getElementById('shareCup');
-  var copiedNote = document.getElementById('copied');
-
-  function flash(key) {
-    copiedNote.textContent = t(key);
-    copiedNote.classList.add('show');
-    clearTimeout(flash.timer);
-    flash.timer = setTimeout(function () { copiedNote.classList.remove('show'); }, 2400);
+  function orderLine() {
+    return 'SAVVA · ' + orderName() + ' · ' + cupPrice.textContent + ' ﷼';
   }
-
-  function copyText(text, key) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { flash(key); }, function () { flash(key); });
-    } else {
-      flash(key);
-    }
-  }
-
-  shareBtn.addEventListener('click', function () { copyText(cupUrl(), 'builder.linkCopied'); });
-  copyBtn.addEventListener('click', function () {
-    copyText('SAVVA · ' + orderName() + ' · ' + cupPrice.textContent + ' ﷼', 'builder.copied');
-  });
 
   /* ==================================================================
      10. Просмотр фотографий
@@ -2540,6 +2856,178 @@ body > footer {
     if (e.key === 'ArrowRight') showShot(lbIndex + 1);
     if (e.key === 'ArrowLeft')  showShot(lbIndex - 1);
   });
+
+  /* ==================================================================
+     10a. Окна: бронь стола и оплата заказа.
+          Бэкенда у сайта нет, поэтому и бронь, и заказ уходят готовым
+          текстом в WhatsApp кофейни — человек только жмёт «Отправить».
+     ================================================================== */
+  var bookModal = document.getElementById('bookModal');
+  var payModal  = document.getElementById('payModal');
+  var modalBack = null;
+
+  function focusables(el) {
+    return Array.prototype.filter.call(
+      el.querySelectorAll('button, [href], input, select, textarea'),
+      function (n) { return !n.disabled && n.offsetParent !== null; }
+    );
+  }
+
+  function openModal(el) {
+    modalBack = document.activeElement;
+    el.hidden = false;
+    // кадр на раскладку, иначе переход от opacity 0 не проиграет
+    requestAnimationFrame(function () { el.classList.add('is-open'); });
+    body.style.overflow = 'hidden';
+    var f = focusables(el);
+    if (f.length) setTimeout(function () { f[0].focus(); }, 80);
+  }
+
+  function closeModal(el) {
+    el.classList.remove('is-open');
+    body.style.overflow = '';
+    setTimeout(function () { el.hidden = true; }, 360);
+    if (modalBack && modalBack.focus) modalBack.focus();
+  }
+
+  function openModals() {
+    return [bookModal, payModal].filter(function (m) { return m.classList.contains('is-open'); });
+  }
+
+  [bookModal, payModal].forEach(function (m) {
+    m.addEventListener('click', function (e) {
+      if (e.target === m || e.target.hasAttribute('data-close')) closeModal(m);
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    var open = openModals()[0];
+    if (!open) return;
+    if (e.key === 'Escape') { closeModal(open); return; }
+    if (e.key !== 'Tab') return;
+    var f = focusables(open);
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* --- бронь ------------------------------------------------------- */
+  var bkName   = document.getElementById('bkName');
+  var bkDate   = document.getElementById('bkDate');
+  var bkTime   = document.getElementById('bkTime');
+  var bkGuests = document.getElementById('bkGuests');
+  var bkPhone  = document.getElementById('bkPhone');
+  var bkOcc    = document.getElementById('bkOcc');
+  var bkNote   = document.getElementById('bkNote');
+  var bkErr    = document.getElementById('bkErr');
+
+  function today() {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+           String(d.getMonth() + 1).padStart(2, '0') + '-' +
+           String(d.getDate()).padStart(2, '0');
+  }
+
+  function prettyDate(iso) {
+    var p = String(iso).split('-');
+    return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : iso;
+  }
+
+  document.querySelectorAll('[data-book]').forEach(function (b) {
+    b.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (body.classList.contains('menu-open')) closeMenu();
+      bkDate.min = today();
+      if (!bkDate.value) bkDate.value = today();
+      openModal(bookModal);
+    });
+  });
+
+  function bookingError() {
+    [bkName, bkDate, bkTime, bkGuests].forEach(function (f) { f.classList.remove('is-bad'); });
+
+    if (!bkName.value.trim())  { bkName.classList.add('is-bad');  return ['book.errName', bkName]; }
+    if (!bkDate.value)         { bkDate.classList.add('is-bad');  return ['book.errDate', bkDate]; }
+    if (bkDate.value < today()){ bkDate.classList.add('is-bad');  return ['book.errPast', bkDate]; }
+    if (!bkTime.value)         { bkTime.classList.add('is-bad');  return ['book.errTime', bkTime]; }
+
+    var g = parseInt(bkGuests.value, 10);
+    if (!(g >= 1 && g <= 20))  { bkGuests.classList.add('is-bad'); return ['book.errGuests', bkGuests]; }
+    return null;
+  }
+
+  function bookingText() {
+    var lines = [
+      t('book.msgHead'),
+      t('book.name')     + ': ' + bkName.value.trim(),
+      t('book.date')     + ': ' + prettyDate(bkDate.value),
+      t('book.time')     + ': ' + bkTime.value,
+      t('book.guests')   + ': ' + bkGuests.value,
+      t('book.occasion') + ': ' + bkOcc.options[bkOcc.selectedIndex].textContent
+    ];
+    if (bkPhone.value.trim()) lines.push(t('book.phone')   + ': ' + bkPhone.value.trim());
+    if (bkNote.value.trim())  lines.push(t('book.comment') + ': ' + bkNote.value.trim());
+    return lines.join('\n');
+  }
+
+  document.getElementById('bookForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = bookingError();
+    if (bad) {
+      bkErr.textContent = t(bad[0]);
+      bkErr.hidden = false;
+      bad[1].focus();
+      return;
+    }
+    bkErr.hidden = true;
+
+    var url = waLink(bookingText());
+    var w = window.open(url, '_blank', 'noopener');
+    if (w) {
+      closeModal(bookModal);
+    } else {
+      // всплывающее окно заблокировано — даём ссылку руками, а не молчим
+      bkErr.textContent = '';
+      var a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = t('book.manual');
+      bkErr.appendChild(a);
+      bkErr.hidden = false;
+    }
+  });
+
+  /* --- оплата ------------------------------------------------------ */
+  var payOrderLine = document.getElementById('payOrderLine');
+  var payReq  = document.getElementById('payReq');
+  var paySoon = document.getElementById('paySoon');
+  var payWa   = document.getElementById('payWa');
+
+  document.getElementById('payOrder').addEventListener('click', function () {
+    var line = orderLine();
+    payOrderLine.textContent = line;
+    payWa.href = waLink(t('pay.msgHead') + '\n' + line);
+
+    if (PAY_REQ) {
+      payReq.textContent = t('pay.cardNote') + ' ' + PAY_REQ;
+      payReq.hidden = false;
+      paySoon.hidden = true;
+    } else {
+      payReq.hidden = true;
+      paySoon.hidden = false;
+    }
+    openModal(payModal);
+  });
+
+  /* --- ВКонтакте: значок появляется, только когда задан адрес ------- */
+  if (VK_URL) {
+    document.querySelectorAll('[data-social="vk"]').forEach(function (a) {
+      a.href = VK_URL;
+      a.hidden = false;
+    });
+  }
 
   /* ==================================================================
      11. «Сейчас открыто» — по реальному времени в Медине (UTC+3).
@@ -2613,25 +3101,11 @@ body > footer {
     applyTheme(prefersDark ? 'night' : 'day');
   }
 
-  var sharedCup = false;
-  try {
-    sharedCup = applyCupCode(new URLSearchParams(window.location.search).get('cup'));
-  } catch (e) {}
-
   if (savedLang && DICT[savedLang]) {
     applyLang(savedLang);
   } else {
     var nav = (navigator.language || 'ru').slice(0, 2).toLowerCase();
     applyLang(DICT[nav] ? nav : 'ru');
-  }
-
-  // пришли по ссылке на чашку — показываем её и отмечаем, откуда она
-  if (sharedCup) {
-    setTimeout(function () {
-      var builder = document.getElementById('builder');
-      if (builder) builder.scrollIntoView({ block: 'start' });
-      flash('builder.fromLink');
-    }, 900);
   }
 })();
 </script>
