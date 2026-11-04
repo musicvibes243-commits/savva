@@ -138,7 +138,7 @@ section{position:relative}
 .row__top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
 .row p{max-width:460px}
 .row .label{color:var(--color-slate-deep)}
-.map{border-radius:var(--radius-cards);background:var(--color-liquid-deep);position:relative;min-height:540px;overflow:hidden}
+.map{border-radius:var(--radius-cards);background:var(--color-liquid-deep);position:sticky;top:100px;align-self:start;height:min(680px,calc(100svh - 130px));min-height:520px;overflow:hidden}
 .map svg{position:absolute;inset:0;width:100%;height:100%}
 .map>.label{position:absolute;left:28px;top:28px}
 .map>.label+.label{left:auto;right:28px}
@@ -151,7 +151,7 @@ section{position:relative}
 .m-text.dim{fill:var(--color-slate-deep)}
 .map.is-in .m-text{opacity:1}
 .m-pulse{fill:var(--color-lavender-phosphor)}
-@media (max-width:960px){.explore{grid-template-columns:1fr}.map{min-height:460px}}
+@media (max-width:960px){.explore{grid-template-columns:1fr}.map{position:relative;top:auto;height:auto;min-height:460px}}
 
 /* kinetic */
 .kinetic{overflow:hidden;padding:clamp(80px,10vw,140px) 0;position:relative;isolation:isolate}
@@ -454,6 +454,22 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         </a>
         <a href="#contact" class="row rv" data-d="2">
           <div class="row__top">
+            <h3 class="h-md">Бишкек → Ош → Манас</h3>
+            <span class="arrow-btn" aria-hidden="true"><svg width="10" height="10"><use href="#arr"/></svg></span>
+          </div>
+          <p>Перевозка автомобилей автовозом по Кыргызстану: между Бишкеком, Ошем и Манасом.</p>
+          <span class="label label--xs">Бишкек · Ош · Манас — в обе стороны</span>
+        </a>
+        <a href="#contact" class="row rv" data-d="3">
+          <div class="row__top">
+            <h3 class="h-md">Москва → Санкт‑Петербург → Минск</h3>
+            <span class="arrow-btn" aria-hidden="true"><svg width="10" height="10"><use href="#arr"/></svg></span>
+          </div>
+          <p>Доставка автомобилей между Москвой, Санкт‑Петербургом и Минском.</p>
+          <span class="label label--xs">Москва · Санкт‑Петербург · Минск — в обе стороны</span>
+        </a>
+        <a href="#contact" class="row rv" data-d="4">
+          <div class="row__top">
             <h3 class="h-md">Обратные направления</h3>
             <span class="arrow-btn" aria-hidden="true"><svg width="10" height="10"><use href="#arr"/></svg></span>
           </div>
@@ -474,7 +490,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
 <section class="kinetic" aria-label="Москва, Бишкек, Ош">
   <canvas id="orb2" aria-hidden="true"></canvas>
   <div class="kin-line" data-kin="-1">Москва&nbsp;·&nbsp;Бишкек&nbsp;·&nbsp;Ош&nbsp;·&nbsp;Москва</div>
-  <div class="kin-line ghost" data-kin="1">Беларусь&nbsp;·&nbsp;Санкт‑Петербург&nbsp;·&nbsp;Беларусь</div>
+  <div class="kin-line ghost" data-kin="1">Минск&nbsp;·&nbsp;Санкт‑Петербург&nbsp;·&nbsp;Манас&nbsp;·&nbsp;Минск</div>
   <div class="wrap kin-cap">
     <span class="label rv">03 — Подход</span>
     <p class="rv" data-d="1">Особое отношение к каждому клиенту и полное сопровождение от погрузки до выдачи автомобиля — на всём маршруте.</p>
@@ -634,7 +650,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         </a>
         <p style="margin-top:20px;max-width:360px">Перевозка автомобилей автовозами по Кыргызстану, России, Беларуси и ближнему зарубежью — более 10 лет.</p>
       </div>
-      <div><span class="label">Направления</span><ul><li>Москва → Бишкек, Ош</li><li>Санкт‑Петербург → Бишкек, Ош</li><li>Беларусь → Кыргызстан</li><li>Обратные направления</li></ul></div>
+      <div><span class="label">Направления</span><ul><li>Москва → Бишкек, Ош</li><li>Санкт‑Петербург → Бишкек, Ош</li><li>Беларусь → Кыргызстан</li><li>Бишкек → Ош → Манас</li><li>Москва → Санкт‑Петербург → Минск</li><li>Обратные направления</li></ul></div>
       <div><span class="label">Разделы</span><ul><li><a href="#about">О компании</a></li><li><a href="#fleet">Автопарк</a></li><li><a href="#guarantees">Гарантии</a></li><li><a href="#tasks">Наши задачи</a></li></ul></div>
       <div><span class="label">Контакты</span><ul><li><a href="tel:+996777777737">+996 777 777 737</a></li><li><a href="https://wa.me/996777777737" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:damka-1984@mail.ru">damka-1984@mail.ru</a></li></ul></div>
     </div>
@@ -707,7 +723,7 @@ $$('.row').forEach(r => r.addEventListener('pointermove', e => {
 }));
 
 /* ticker */
-const ticks = [['Москва → Бишкек','В обе стороны'],['Санкт‑Петербург → Бишкек','В обе стороны'],['Москва → Ош','В обе стороны'],['Беларусь → Кыргызстан','В обе стороны'],['Пакет Drive','Включён'],['Договор на перевозку','Гарантия'],['Фото и видео фиксация','По желанию'],['MAN · DAF · VOLVO','Тягачи'],['LOHR · ROLFO BLIZZARD','Установки']];
+const ticks = [['Москва → Бишкек','В обе стороны'],['Санкт‑Петербург → Бишкек','В обе стороны'],['Москва → Ош','В обе стороны'],['Беларусь → Кыргызстан','В обе стороны'],['Бишкек → Ош → Манас','По Кыргызстану'],['Москва → Санкт‑Петербург → Минск','Россия · Беларусь'],['Пакет Drive','Включён'],['Договор на перевозку','Гарантия'],['Фото и видео фиксация','По желанию'],['MAN · DAF · VOLVO','Тягачи'],['LOHR · ROLFO BLIZZARD','Установки']];
 const th = ticks.map(([a, b]) => `<div class="tick"><b>${a}</b><em>${b}</em></div>`).join('');
 $('#ticker').innerHTML = th + th;
 
@@ -736,11 +752,11 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
   const cities = {
     msk: { n: 'Москва', p: geo(55.75, 37.62), dx: 12, dy: 4, a: 'left' },
     spb: { n: 'Санкт‑Петербург', p: geo(59.93, 30.34), dx: 12, dy: -6, a: 'left' },
-    by:  { n: 'Беларусь', p: geo(53.9, 27.56), dx: -12, dy: 14, a: 'right' },
+    by:  { n: 'Минск', p: geo(53.9, 27.56), dx: -12, dy: 14, a: 'right' },
     bsk: { n: 'Бишкек', p: geo(42.87, 74.59), dx: 12, dy: -4, a: 'left' },
     osh: { n: 'Ош', p: geo(40.51, 72.80), dx: -12, dy: 4, a: 'right' },
   };
-  const routes = [['msk','bsk'],['spb','bsk'],['by','bsk'],['msk','osh'],['bsk','osh']].map(([a, b]) => {
+  const routes = [['msk','bsk'],['spb','bsk'],['by','bsk'],['msk','osh'],['bsk','osh'],['msk','spb'],['spb','by']].map(([a, b]) => {
     const p = cities[a].p, q = cities[b].p;
     const dot = p[0]*q[0] + p[1]*q[1] + p[2]*q[2], w = Math.acos(Math.min(1, dot)), s = Math.sin(w);
     const pts = [];
@@ -863,11 +879,11 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
 (function map() {
   const svg = $('#mapSvg');
   const nodes = {
-    spb: [120, 110, 9, 1, 'Санкт‑Петербург', 'r'], msk: [230, 170, 14, 1, 'Москва', 'r'], by: [80, 230, 10, 1, 'Беларусь', 'l'],
+    spb: [120, 110, 9, 1, 'Санкт‑Петербург', 'r'], msk: [230, 170, 14, 1, 'Москва', 'r'], by: [80, 230, 10, 1, 'Минск', 'l'], mns: [425, 518, 9, 1, 'Манас', 'r'],
     tr1: [270, 300, 5, 0, 'Транзит', 'r'], tr2: [340, 370, 5, 0, '', ''],
     bsk: [400, 430, 16, 1, 'Бишкек', 'r'], osh: [330, 500, 10, 1, 'Ош', 'l'],
   };
-  const edges = [['spb','msk'],['msk','tr1'],['by','tr1'],['by','msk'],['tr1','tr2'],['tr2','bsk'],['tr2','osh'],['bsk','osh'],['spb','by']];
+  const edges = [['spb','msk'],['msk','tr1'],['by','tr1'],['by','msk'],['tr1','tr2'],['tr2','bsk'],['tr2','osh'],['bsk','osh'],['spb','by'],['osh','mns'],['bsk','mns']];
   edges.forEach(([a, b], i) => {
     const [x1, y1] = nodes[a], [x2, y2] = nodes[b];
     const l = el('line', { x1, y1, x2, y2, class: 'm-line' }, svg);
