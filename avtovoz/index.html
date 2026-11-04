@@ -245,6 +245,53 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
 .foot__big{font-size:clamp(56px,13vw,200px);line-height:.9;letter-spacing:-.05em;font-weight:500;color:var(--color-liquid-kelp);margin-top:80px;user-select:none;white-space:nowrap}
 @media (max-width:860px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}
 
+/* ---------- video films ---------- */
+.film{margin:0 0 clamp(96px,12vw,var(--spacing-164))}
+.film__frame{position:relative;height:min(92svh,860px);min-height:520px;overflow:hidden;isolation:isolate;
+  clip-path:inset(var(--cy,5%) var(--cx,6%) round var(--radius-cards));background:var(--color-liquid-deep)}
+.film__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(var(--vs,1.15));z-index:-2;will-change:transform}
+.film__shade{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(0deg,rgba(1,29,28,.92) 0%,rgba(1,29,28,.35) 45%,rgba(1,29,28,.15) 70%,rgba(1,29,28,.55) 100%),
+             linear-gradient(90deg,rgba(0,55,52,.55),transparent 60%)}
+.film__shade::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(0,130,124,.25),transparent 55%);mix-blend-mode:screen}
+.vf{position:absolute;inset:clamp(20px,3vw,40px);pointer-events:none}
+.vf i{position:absolute;width:32px;height:32px;border:0 solid var(--color-liquid-mist);opacity:0;transform:scale(1.6);transition:opacity .8s var(--ease),transform 1s var(--ease)}
+.vf i:nth-child(1){left:0;top:0;border-width:1px 0 0 1px}
+.vf i:nth-child(2){right:0;top:0;border-width:1px 1px 0 0}
+.vf i:nth-child(3){left:0;bottom:0;border-width:0 0 1px 1px}
+.vf i:nth-child(4){right:0;bottom:0;border-width:0 1px 1px 0}
+.film.is-in .vf i{opacity:.8;transform:none}
+.vf .cross{position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px;opacity:0;transition:opacity 1s .6s}
+.vf .cross::before,.vf .cross::after{content:"";position:absolute;background:rgba(237,255,254,.5)}
+.vf .cross::before{left:50%;top:0;bottom:0;width:1px}.vf .cross::after{top:50%;left:0;right:0;height:1px}
+.film.is-in .vf .cross{opacity:1}
+.film__top{position:absolute;top:clamp(36px,4.5vw,64px);left:clamp(36px,4.5vw,64px);right:clamp(36px,4.5vw,64px);display:flex;justify-content:space-between;gap:16px;font-variant-numeric:tabular-nums}
+.rec{display:inline-flex;align-items:center;gap:8px;color:var(--color-platinum)}
+.rec i{width:8px;height:8px;border-radius:50%;background:var(--color-lavender-phosphor);box-shadow:0 0 12px var(--color-lavender-phosphor);animation:blink 1.2s steps(2) infinite}
+.film__content{position:absolute;left:clamp(36px,4.5vw,64px);right:clamp(36px,4.5vw,64px);bottom:clamp(44px,6vw,88px);display:flex;flex-direction:column;gap:24px;max-width:980px}
+.film__content--center{left:0;right:0;margin:0 auto;align-items:center;text-align:center;padding:0 var(--gutter)}
+.ch-w{display:inline-block;white-space:nowrap}
+.ch{display:inline-block;opacity:0;transform:translateY(.4em) rotate(4deg);filter:blur(12px);transition:opacity .9s var(--ease),transform 1.1s var(--ease),filter 1s var(--ease)}
+[data-chars].is-in .ch{opacity:1;transform:none;filter:none}
+.rotator{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.rot{position:relative;display:inline-block;height:1.3em;min-width:16ch;overflow:hidden;font-size:var(--text-subheading);line-height:1.3;letter-spacing:var(--tracking-subheading);color:var(--color-platinum);font-weight:500}
+.rot b{position:absolute;left:0;top:0;white-space:nowrap;font-weight:500;transform:translateY(110%);opacity:0;transition:transform .8s var(--ease),opacity .8s var(--ease)}
+.rot b.on{transform:none;opacity:1}
+.rot b.off{transform:translateY(-110%);opacity:0}
+.film__marquee{position:absolute;top:clamp(80px,12vw,150px);left:0;right:0;overflow:hidden;pointer-events:none}
+.film__marquee .mq{display:flex;width:max-content;animation:marquee 28s linear infinite}
+.film__marquee span{font-size:clamp(72px,13vw,200px);line-height:1;letter-spacing:-.03em;font-weight:500;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(237,255,254,.5);padding-right:.3em}
+.film__marquee .mq.rev{animation-direction:reverse;animation-duration:36s}
+.film__marquee .mq.rev span{-webkit-text-stroke:0;color:rgba(237,255,254,.08)}
+@media (max-width:700px){
+  .film__frame{height:82svh}
+  .film__top{top:36px;left:32px;right:32px}
+  .film__content{left:24px;right:24px;bottom:36px;gap:18px}
+  .film__content--center{left:0;right:0}
+  .rot{min-width:0;flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){.ch{opacity:1;transform:none;filter:none}.vf i{opacity:.8;transform:none}}
+
 .cursor{position:fixed;left:0;top:0;width:340px;height:340px;margin:-170px 0 0 -170px;border-radius:50%;pointer-events:none;z-index:1;
   background:radial-gradient(circle,rgba(0,130,124,.12),transparent 60%);opacity:0;transition:opacity .4s;mix-blend-mode:screen}
 @media (hover:none){.cursor{display:none}}
@@ -354,6 +401,27 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         <div class="stat__num" data-count="100" data-suffix="%">0</div>
         <div class="stat__lbl">Перевозок по договору</div>
         <p class="stat__sub">В договоре указываем, что везём, куда и в какой срок.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILM: loading -->
+<section class="film" id="film" aria-label="Видео погрузки">
+  <div class="film__frame" data-clip>
+    <video class="film__video" src="videos/loading-1.mp4" poster="videos/loading-1.jpg" muted loop playsinline preload="metadata" data-auto aria-hidden="true"></video>
+    <div class="film__shade"></div>
+    <div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="cross"></span></div>
+    <div class="film__top" aria-hidden="true">
+      <span class="rec label label--xs"><i></i>REC · Погрузка</span>
+      <span class="label label--xs" id="tc">00:00:00:00</span>
+    </div>
+    <div class="film__content">
+      <span class="label label--lg">Фото и видео фиксация</span>
+      <h2 class="h-hero" data-chars>Погрузка под контролем</h2>
+      <div class="rotator">
+        <span class="label">Каждый автомобиль —</span>
+        <span class="rot" id="rot"><b class="on">надёжно закреплён</b><b>снят на фото и видео</b><b>перевозится по договору</b><b>под сопровождением</b><b>уже в пути к вам</b></span>
       </div>
     </div>
   </div>
@@ -521,6 +589,23 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
   </div>
 </section>
 
+<!-- FILM: delivery -->
+<section class="film film--b" aria-label="Видео автовоза">
+  <div class="film__frame" data-clip>
+    <video class="film__video" src="videos/loading-2.mp4" poster="videos/loading-2.jpg" muted loop playsinline preload="metadata" data-auto aria-hidden="true"></video>
+    <div class="film__shade"></div>
+    <div class="film__marquee" aria-hidden="true">
+      <div class="mq"><span>Быстро · Недорого · Пакет Drive включён ·</span><span>Быстро · Недорого · Пакет Drive включён ·</span></div>
+      <div class="mq rev"><span>Москва · Бишкек · Ош · Беларусь · Санкт‑Петербург ·</span><span>Москва · Бишкек · Ош · Беларусь · Санкт‑Петербург ·</span></div>
+    </div>
+    <div class="film__content film__content--center">
+      <span class="label label--lg">Россия · Беларусь · Кыргызстан</span>
+      <h2 class="h-hero" data-chars>Доставим бережно и в срок</h2>
+      <a href="#contact" class="btn">Рассчитать перевозку <svg width="12" height="12"><use href="#arr"/></svg></a>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section id="contact">
   <div class="wrap">
@@ -569,6 +654,14 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const NS = 'http://www.w3.org/2000/svg';
 const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent && parent.appendChild(n); return n; };
 
+/* split headings into characters (video overlays) */
+$$('[data-chars]').forEach(h => {
+  const text = h.textContent.trim(); let i = 0;
+  h.innerHTML = text.split(/\s+/).map(w =>
+    `<span class="ch-w">${[...w].map(c => `<span class="ch" style="transition-delay:${(i++ * .035).toFixed(3)}s">${c}</span>`).join('')}</span>`).join(' ');
+  h.setAttribute('aria-label', text);
+});
+
 /* split headings */
 $$('[data-split]').forEach(h => {
   h.innerHTML = h.innerHTML.split(/\s+/).map((w, i) => `<span class="w"><span style="transition-delay:${i * .07}s">${w}</span></span>`).join(' ');
@@ -582,7 +675,7 @@ const io = new IntersectionObserver(es => es.forEach(e => {
   $$('.meter i', e.target).forEach(m => m.style.width = m.dataset.w + '%');
   io.unobserve(e.target);
 }), { threshold: .2, rootMargin: '0px 0px -40px 0px' });
-$$('.rv, [data-split], .step, #map, #truckWrap').forEach(n => io.observe(n));
+$$('.rv, [data-split], [data-chars], .step, #map, #truckWrap, .film').forEach(n => io.observe(n));
 
 function countUp(n) {
   if (n._done) return; n._done = true;
@@ -800,6 +893,46 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
     });
     if (!reduce) requestAnimationFrame(loop);
   })();
+})();
+
+/* ---------- video films ---------- */
+(function films() {
+  const frames = $$('[data-clip]');
+  function clip() {
+    frames.forEach(f => {
+      const r = f.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, (innerHeight - r.top) / (innerHeight * .85)));
+      const e = reduce ? 1 : 1 - Math.pow(1 - p, 3);
+      f.style.setProperty('--cx', ((1 - e) * 8).toFixed(2) + '%');
+      f.style.setProperty('--cy', ((1 - e) * 6).toFixed(2) + '%');
+      f.style.setProperty('--vs', (1.18 - e * .18).toFixed(3));
+    });
+  }
+  addEventListener('scroll', clip, { passive: true }); addEventListener('resize', clip); clip();
+  // play only while on screen
+  $$('video[data-auto]').forEach(v => {
+    if (reduce) return;
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); }, { threshold: .2 }).observe(v);
+  });
+  // timecode
+  const tc = $('#tc'), v1 = $('#film video'); let base = 0, last = 0;
+  const pad = n => String(Math.floor(n)).padStart(2, '0');
+  (function tick() {
+    if (v1 && !v1.paused) {
+      const t = v1.currentTime; if (t < last) base += v1.duration || 0; last = t;
+      const all = base + t;
+      tc.textContent = pad(all / 3600) + ':' + pad(all / 60 % 60) + ':' + pad(all % 60) + ':' + pad(all * 30 % 30);
+    }
+    requestAnimationFrame(tick);
+  })();
+  // rotating phrases
+  const items = $$('#rot b'); let k = 0;
+  if (!reduce) setInterval(() => {
+    const cur = items[k]; cur.classList.remove('on'); cur.classList.add('off');
+    k = (k + 1) % items.length; const nx = items[k];
+    nx.classList.remove('off'); void nx.offsetWidth; nx.classList.add('on');
+    setTimeout(() => cur.classList.remove('off'), 800);
+  }, 2400);
 })();
 
 /* ---------- truck: wheels + cars ---------- */
