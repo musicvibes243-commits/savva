@@ -130,7 +130,8 @@ section{position:relative}
 .about{display:grid;grid-template-columns:1fr 1fr;gap:var(--element-gap);margin-bottom:clamp(64px,8vw,120px)}
 .about p{max-width:560px}
 .about p+p{margin-top:16px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--element-gap)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--element-gap)}
+@media (max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}}
 .stat{padding:40px 36px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:18px}
 .stat__num{font-size:clamp(52px,6vw,86px);line-height:1;letter-spacing:-.046em;font-weight:500;color:var(--color-lavender-phosphor);font-variant-numeric:tabular-nums;text-shadow:0 0 40px rgba(250,209,255,.25)}
 .stat__lbl{font-size:13px;line-height:1.5;letter-spacing:.055em;text-transform:uppercase;color:var(--color-liquid-mist)}
@@ -414,6 +415,11 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         <div class="stat__lbl">Перевозок по договору</div>
         <p class="stat__sub">В договоре указываем, что везём, куда и в какой срок.</p>
       </div>
+      <div class="stat rv" data-d="3">
+        <div class="stat__num" data-count="8" data-prefix="до ">0</div>
+        <div class="stat__lbl">Автомобилей за один рейс</div>
+        <p class="stat__sub">Многоярусный автовоз: два яруса и место над кабиной.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -520,7 +526,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
     <div class="fleet">
       <div class="card rv">
         <div class="card__head">
-          <span class="label">Многоярусный автотранспортёр</span>
+          <span class="label">Многоярусный автотранспортёр · до 8 авто</span>
           <span class="live label label--xs"><i></i>В пути</span>
         </div>
         <div class="truck-wrap" id="truckWrap">
@@ -530,7 +536,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
             <g class="rig"><g class="bob">
               <!-- trailer frame -->
               <path class="body" d="M30 232 H700 M30 200 H690 M30 120 H700 M700 88 H880"/>
-              <path class="body thin" d="M40 120 V232 M215 120 V200 M390 120 V200 M565 120 V232 M690 120 V200 M700 88 V120 M840 88 V100 M30 200 L30 232"/>
+              <path class="body thin" d="M34 120 V232 M196 120 V200 M358 120 V200 M520 120 V232 M684 120 V200 M700 88 V120 M840 88 V100 M30 200 L30 232"/>
               <!-- tractor -->
               <path class="body" d="M712 252 V128 Q712 104 736 104 H836 Q848 104 854 116 L878 170 Q882 178 882 190 V252"/>
               <path class="glass" d="M770 116 H834 L862 172 H770 Z"/>
@@ -563,7 +569,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
       </div>
       <div class="minis">
         <div class="mini rv"><span class="label label--xs">Груз</span><span class="mini__v">Легковые автомобили</span><div class="meter"><i data-w="100"></i></div></div>
-        <div class="mini rv" data-d="1"><span class="label label--xs">Объём</span><span class="mini__v">Один или несколько авто</span><div class="meter"><i data-w="80"></i></div></div>
+        <div class="mini rv" data-d="1"><span class="label label--xs">Вместимость</span><span class="mini__v">До 8 авто за&nbsp;рейс</span><div class="meter"><i data-w="80"></i></div></div>
         <div class="mini rv" data-d="2"><span class="label label--xs">Стоимость</span><span class="mini__v">Быстро и&nbsp;недорого</span><div class="meter"><i data-w="65"></i></div></div>
         <div class="mini rv" data-d="3"><span class="label label--xs">Бонус</span><span class="mini__v">Пакет Drive включён</span><div class="meter"><i data-w="90"></i></div></div>
       </div>
@@ -708,7 +714,7 @@ $$('.rv, [data-split], [data-chars], .step, #map, #truckWrap, .film').forEach(n 
 function countUp(n) {
   if (n._done) return; n._done = true;
   const to = +n.dataset.count, suf = n.dataset.suffix || '', dur = reduce ? 0 : 2000, t0 = performance.now();
-  const f = t => { const p = dur ? Math.min(1, (t - t0) / dur) : 1; n.textContent = Math.round(to * (1 - Math.pow(1 - p, 4))) + suf; if (p < 1) requestAnimationFrame(f); };
+  const f = t => { const p = dur ? Math.min(1, (t - t0) / dur) : 1; n.textContent = (n.dataset.prefix || '') + Math.round(to * (1 - Math.pow(1 - p, 4))) + suf; if (p < 1) requestAnimationFrame(f); };
   requestAnimationFrame(f);
 }
 
@@ -735,7 +741,7 @@ $$('.row').forEach(r => r.addEventListener('pointermove', e => {
 }));
 
 /* ticker */
-const ticks = [['Москва → Бишкек','В обе стороны'],['Санкт‑Петербург → Бишкек','В обе стороны'],['Москва → Ош','В обе стороны'],['Беларусь → Кыргызстан','В обе стороны'],['Бишкек → Ош → Манас','По Кыргызстану'],['Москва → Санкт‑Петербург → Минск','Россия · Беларусь'],['Пакет Drive','Включён'],['Договор на перевозку','Гарантия'],['Фото и видео фиксация','По желанию'],['MAN · DAF · VOLVO','Тягачи'],['LOHR · ROLFO BLIZZARD','Установки']];
+const ticks = [['Москва → Бишкек','В обе стороны'],['Санкт‑Петербург → Бишкек','В обе стороны'],['Москва → Ош','В обе стороны'],['Беларусь → Кыргызстан','В обе стороны'],['Бишкек → Ош → Манас','По Кыргызстану'],['Москва → Санкт‑Петербург → Минск','Россия · Беларусь'],['Пакет Drive','Включён'],['Договор на перевозку','Гарантия'],['Фото и видео фиксация','По желанию'],['До 8 автомобилей','За один рейс'],['MAN · DAF · VOLVO','Тягачи'],['LOHR · ROLFO BLIZZARD','Установки']];
 const th = ticks.map(([a, b]) => `<div class="tick"><b>${a}</b><em>${b}</em></div>`).join('');
 $('#ticker').innerHTML = th + th;
 
@@ -976,7 +982,7 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
   // car silhouette, origin = bottom-left, width 150
   const carPath = 'M4 -6 V-16 Q6 -22 18 -24 L46 -27 L68 -42 Q76 -46 92 -46 H112 Q124 -46 132 -38 L142 -26 Q150 -23 150 -14 V-6 Z';
   const winPath = 'M54 -27 L72 -39 Q78 -42 90 -42 H96 V-27 Z M100 -42 H111 Q120 -42 127 -35 L134 -27 H100 Z';
-  const slots = [[50, 120], [225, 120], [400, 120], [50, 200], [225, 200], [400, 200], [705, 88]];
+  const slots = [[38, 120], [200, 120], [362, 120], [524, 120], [38, 200], [200, 200], [362, 200], [705, 88]]; // 8 cars
   const cg = $('#cars');
   slots.forEach(([x, y], i) => {
     const outer = el('g', { class: 'rig' }, cg);           // follows rig drive-in
