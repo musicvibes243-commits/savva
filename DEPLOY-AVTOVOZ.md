@@ -18,8 +18,8 @@
    `netlify.toml` (Publish directory — `avtovoz`, Build command — пусто).
 5. **Deploy**. Через минуту сайт откроется по адресу вида
    `something.netlify.app` — проверить, что это автовоз, а не кофейня.
-6. **Site configuration → Change site name** → например `avtovoz312`
-   → адрес станет `avtovoz312.netlify.app`.
+6. **Site configuration → Change site name** → например `avtovoz`
+   → адрес станет `avtovoz.netlify.app`.
 
 ## 3. Привязать домен
 
@@ -34,9 +34,9 @@ Netlify предложит добавить и `www.avtovoz312.ru` — согл�
 | Тип   | Имя (поддомен) | Значение                  |
 |-------|----------------|---------------------------|
 | A     | `@`            | `75.2.60.5`               |
-| CNAME | `www`          | `avtovoz312.netlify.app`  |
+| CNAME | `www`          | `avtovoz.netlify.app`  |
 
-(`avtovoz312.netlify.app` — заменить на свой адрес из шага 2.6, если имя другое.)
+(`avtovoz.netlify.app` — заменить на свой адрес из шага 2.6, если имя другое.)
 
 Записи расходятся от нескольких минут до суток.
 
