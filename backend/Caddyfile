@@ -1,0 +1,12 @@
+api.avtovoz312.ru {
+	tls {
+		issuer acme {
+			disable_http_challenge
+		}
+	}
+	encode gzip
+	request_body {
+		max_size 60MB
+	}
+	reverse_proxy api:3000
+}

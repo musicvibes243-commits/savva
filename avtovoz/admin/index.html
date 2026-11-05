@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Кабинет — Автовоз-312</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='6' fill='%23012624'/%3E%3Cpath d='M5 18h18M5 11h13l5 7' stroke='%23fff' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='9' cy='21' r='2' fill='%23fde9ff'/%3E%3Ccircle cx='19' cy='21' r='2' fill='%23fde9ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<script src="../config.js"></script>
+<style>
+:root{--font-matter:'Matter','Inter',ui-sans-serif,system-ui,sans-serif;--line:rgba(255,255,255,.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--color-liquid-abyss);color:var(--color-silver-mist);font:400 16px/1.4 var(--font-matter);min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--color-liquid-mist)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(1,38,36,.92);backdrop-filter:blur(10px);z-index:10}
+header .wrap{height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{color:#fff;font-weight:500;font-size:17px;text-decoration:none}
+.logo small{font-size:11px;letter-spacing:.12em;color:var(--color-silver-mist);font-weight:400;margin-left:6px;text-transform:uppercase}
+h1,h2{color:#fff;font-weight:500;letter-spacing:-.02em}
+h1{font-size:28px;line-height:1.1}
+h2{font-size:22px}
+.label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-silver-mist)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border:0;border-radius:6px;cursor:pointer;
+  font:500 14px/1 var(--font-matter);color:#222;background:var(--gradient-bioluminescent-gradient);text-decoration:none}
+.btn:disabled{opacity:.5;cursor:wait}
+.btn--ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px var(--line)}
+.btn--danger{background:transparent;color:#fad1ff;box-shadow:inset 0 0 0 1px rgba(250,209,255,.35)}
+.btn--sm{padding:9px 12px;font-size:13px}
+.card{background:var(--color-liquid-kelp);border-radius:16px;padding:24px}
+.hidden{display:none!important}
+/* login */
+.login{min-height:calc(100vh - 64px);display:grid;place-items:center;padding:24px 16px}
+.login form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:16px}
+/* form */
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--color-liquid-mist)}
+input,select,textarea{width:100%;background:var(--color-liquid-deep);border:1px solid var(--line);border-radius:6px;color:#fff;
+  font:400 16px/1.3 var(--font-matter);padding:12px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#00827c}
+textarea{min-height:110px;resize:vertical}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid .span2{grid-column:span 2}.grid .span3{grid-column:1/-1}
+.row2{display:grid;grid-template-columns:1fr 110px;gap:8px}
+@media (max-width:720px){.grid{grid-template-columns:1fr 1fr}.grid .span2{grid-column:1/-1}}
+@media (max-width:440px){.grid{grid-template-columns:1fr}}
+.err{color:#fad1ff;font-size:14px;min-height:1.2em}
+.ok{color:#cbfffc}
+/* photos */
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.ph{position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;background:var(--color-liquid-deep)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .x,.ph .main{position:absolute;top:6px;border:0;border-radius:6px;cursor:pointer;font:500 12px/1 var(--font-matter);padding:6px 8px}
+.ph .x{right:6px;background:rgba(1,29,28,.85);color:#fff}
+.ph .main{left:6px;background:rgba(1,29,28,.85);color:#cbfffc}
+.ph.first::after{content:"Главное";position:absolute;left:6px;bottom:6px;font-size:11px;background:#cbfffc;color:#012624;border-radius:4px;padding:3px 6px}
+.ph.first .main{display:none}
+.add-ph{aspect-ratio:4/3;border:1px dashed var(--line);border-radius:6px;display:grid;place-items:center;text-align:center;cursor:pointer;color:var(--color-liquid-mist);font-size:13px;padding:8px}
+/* list */
+.list{display:flex;flex-direction:column;gap:10px}
+.item{display:grid;grid-template-columns:96px 1fr auto;gap:14px;align-items:center;background:var(--color-liquid-kelp);border-radius:12px;padding:10px}
+.item img,.item .noimg{width:96px;height:72px;object-fit:cover;border-radius:6px;background:var(--color-liquid-deep)}
+.item b{color:#fff;font-weight:500}
+.item .meta{font-size:13px}
+.item .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.badge{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:4px;background:var(--color-liquid-deep);color:var(--color-liquid-mist);margin-left:6px}
+.badge.sold{color:#fad1ff}
+@media (max-width:560px){.item{grid-template-columns:72px 1fr}.item img,.item .noimg{width:72px;height:56px}.item .acts{grid-column:1/-1;justify-content:flex-start}}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:28px 0 16px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#cbfffc;color:#012624;padding:12px 18px;border-radius:8px;font-weight:500;z-index:50;transition:opacity .3s}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="../">Автовоз-312 <small>Кабинет</small></a>
+    <div>
+      <a class="btn btn--ghost btn--sm" href="../#cars" target="_blank" rel="noopener">Сайт</a>
+      <button class="btn btn--ghost btn--sm hidden" id="logoutBtn">Выйти</button>
+    </div>
+  </div>
+</header>
+
+<!-- ВХОД -->
+<section class="login" id="loginView">
+  <form id="loginForm" class="card">
+    <h1>Вход в кабинет</h1>
+    <p>Здесь вы добавляете автомобили в раздел «Авто в наличии».</p>
+    <label class="f">Логин<input name="login" autocomplete="username" required></label>
+    <label class="f">Пароль<input name="password" type="password" autocomplete="current-password" required></label>
+    <div class="err" id="loginErr"></div>
+    <button class="btn" type="submit">Войти</button>
+  </form>
+</section>
+
+<!-- КАБИНЕТ -->
+<main class="wrap hidden" id="appView">
+  <div class="toolbar">
+    <div><span class="label">Авто в наличии</span><h1 id="countTitle">Машины</h1></div>
+    <button class="btn" id="newBtn">+ Добавить машину</button>
+  </div>
+
+  <form id="carForm" class="card hidden" style="margin-bottom:28px">
+    <h2 id="formTitle" style="margin-bottom:18px">Новая машина</h2>
+    <div class="grid">
+      <label class="f">Марка *<input name="brand" required placeholder="Chery"></label>
+      <label class="f">Модель *<input name="model" required placeholder="Tiggo 7 Pro"></label>
+      <label class="f">Год<input name="year" inputmode="numeric" placeholder="2024"></label>
+      <label class="f">Цена<span class="row2"><input name="price" inputmode="numeric" placeholder="25000">
+        <select name="currency"><option value="USD">$</option><option value="RUB">₽</option><option value="KGS">сом</option></select></span></label>
+      <label class="f">Пробег, км<input name="mileage" inputmode="numeric" placeholder="0"></label>
+      <label class="f">Статус<select name="status">
+        <option value="in_stock">В наличии</option><option value="on_way">В пути</option>
+        <option value="reserved">Забронирован</option><option value="sold">Продан</option></select></label>
+      <label class="f">Двигатель<input name="engine" placeholder="1.6 турбо, 186 л.с."></label>
+      <label class="f">Топливо<select name="fuel"><option value="">—</option><option>Бензин</option><option>Дизель</option><option>Гибрид</option><option>Электро</option><option>Газ / бензин</option></select></label>
+      <label class="f">Коробка<select name="transmission"><option value="">—</option><option>Автомат</option><option>Робот</option><option>Вариатор</option><option>Механика</option></select></label>
+      <label class="f">Привод<select name="drive"><option value="">—</option><option>Передний</option><option>Задний</option><option>Полный</option></select></label>
+      <label class="f">Страна<select name="country"><option value="">—</option><option>Китай</option><option>Корея</option><option>Япония</option><option>Европа</option><option>США</option><option>Россия</option></select></label>
+      <label class="f">Цвет<input name="color" placeholder="Белый"></label>
+      <label class="f span3">Где находится<input name="location" placeholder="Бишкек"></label>
+      <label class="f span3">Описание<textarea name="description" placeholder="Комплектация, состояние, что входит в цену…"></textarea></label>
+      <div class="span3">
+        <div class="label" style="margin-bottom:8px">Фото (первое — главное, до 20 шт.)</div>
+        <div class="photos" id="photoGrid"></div>
+        <input type="file" id="photoInput" accept="image/*" multiple class="hidden">
+      </div>
+    </div>
+    <div class="err" id="formErr" style="margin-top:14px"></div>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn" type="submit" id="saveBtn">Сохранить</button>
+      <button class="btn btn--ghost" type="button" id="cancelBtn">Отмена</button>
+    </div>
+  </form>
+
+  <div class="list" id="list"></div>
+  <p id="empty" class="hidden" style="padding:40px 0;text-align:center">Пока нет ни одной машины. Нажмите «Добавить машину».</p>
+</main>
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+(() => {
+const API = window.AVTOVOZ_API;
+const $ = s => document.querySelector(s);
+const STATUS = { in_stock: 'В наличии', on_way: 'В пути', reserved: 'Забронирован', sold: 'Продан' };
+const CUR = { USD: '$', RUB: '₽', KGS: 'сом' };
+let token = null;
+try { token = localStorage.getItem('avtovoz_token'); } catch {}
+let cars = [];
+let editing = null;      // id машины или null
+let photos = [];         // [{ name } | { dataUrl }]
+
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.remove('hidden');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.add('hidden'), 2600);
+}
+
+async function api(path, opts = {}) {
+  const res = await fetch(API + path, {
+    ...opts,
+    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) },
+  });
+  let data = {};
+  try { data = await res.json(); } catch {}
+  if (res.status === 401 && path !== '/api/login') { logout(); throw new Error('Войдите снова'); }
+  if (!res.ok) throw new Error(data.error || 'Ошибка ' + res.status);
+  return data;
+}
+
+function show(view) {
+  $('#loginView').classList.toggle('hidden', view !== 'login');
+  $('#appView').classList.toggle('hidden', view !== 'app');
+  $('#logoutBtn').classList.toggle('hidden', view !== 'app');
+}
+
+function logout() {
+  if (token) fetch(API + '/api/logout', { method: 'POST', headers: { Authorization: 'Bearer ' + token } }).catch(() => {});
+  token = null; try { localStorage.removeItem('avtovoz_token'); } catch {}
+  show('login');
+}
+$('#logoutBtn').onclick = logout;
+
+$('#loginForm').onsubmit = async e => {
+  e.preventDefault();
+  const f = e.target, btn = f.querySelector('button');
+  $('#loginErr').textContent = ''; btn.disabled = true;
+  try {
+    const r = await api('/api/login', { method: 'POST', body: JSON.stringify({ login: f.login.value.trim(), password: f.password.value }) });
+    token = r.token; try { localStorage.setItem('avtovoz_token', token); } catch {}
+    f.reset(); show('app'); load();
+  } catch (err) {
+    $('#loginErr').textContent = err.message === 'Failed to fetch' ? 'Нет связи с сервером. Проверьте интернет.' : err.message;
+  } finally { btn.disabled = false; }
+};
+
+const fmtPrice = c => c.price ? c.price.toLocaleString('ru-RU') + ' ' + CUR[c.currency] : 'Цена по запросу';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+
+async function load() {
+  try { cars = (await api('/api/cars')).cars; render(); }
+  catch (err) { toast(err.message); }
+}
+
+function render() {
+  $('#countTitle').textContent = cars.length ? `Машины · ${cars.length}` : 'Машины';
+  $('#empty').classList.toggle('hidden', cars.length > 0);
+  $('#list').innerHTML = cars.map(c => `
+    <div class="item">
+      ${c.photos && c.photos[0] ? `<img src="${API}/photos/${c.photos[0]}" alt="">` : '<div class="noimg"></div>'}
+      <div>
+        <b>${esc(c.brand)} ${esc(c.model)}</b>${c.year ? ', ' + c.year : ''}
+        <span class="badge ${c.status === 'sold' ? 'sold' : ''}">${STATUS[c.status]}</span>
+        <div class="meta">${fmtPrice(c)}${c.mileage ? ' · ' + c.mileage.toLocaleString('ru-RU') + ' км' : ''}${c.location ? ' · ' + esc(c.location) : ''}</div>
+      </div>
+      <div class="acts">
+        <button class="btn btn--ghost btn--sm" data-edit="${c.id}">Изменить</button>
+        <button class="btn btn--danger btn--sm" data-del="${c.id}">Удалить</button>
+      </div>
+    </div>`).join('');
+}
+
+$('#list').onclick = async e => {
+  const ed = e.target.closest('[data-edit]'), del = e.target.closest('[data-del]');
+  if (ed) openForm(cars.find(c => c.id === ed.dataset.edit));
+  if (del) {
+    const c = cars.find(x => x.id === del.dataset.del);
+    if (!confirm(`Удалить ${c.brand} ${c.model}? Фото тоже удалятся.`)) return;
+    try { await api('/api/cars/' + c.id, { method: 'DELETE' }); toast('Удалено'); load(); }
+    catch (err) { toast(err.message); }
+  }
+};
+
+const FIELDS = ['brand', 'model', 'year', 'price', 'currency', 'mileage', 'status', 'engine', 'fuel', 'transmission', 'drive', 'country', 'color', 'location', 'description'];
+
+function openForm(car) {
+  const f = $('#carForm');
+  editing = car ? car.id : null;
+  $('#formTitle').textContent = car ? `Изменить: ${car.brand} ${car.model}` : 'Новая машина';
+  f.reset();
+  for (const k of FIELDS) if (car && car[k] != null) f[k].value = car[k];
+  photos = car ? (car.photos || []).map(name => ({ name })) : [];
+  $('#formErr').textContent = '';
+  renderPhotos();
+  f.classList.remove('hidden');
+  f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function closeForm() { $('#carForm').classList.add('hidden'); editing = null; photos = []; }
+$('#newBtn').onclick = () => openForm(null);
+$('#cancelBtn').onclick = closeForm;
+
+function renderPhotos() {
+  $('#photoGrid').innerHTML = photos.map((p, i) => `
+    <div class="ph ${i === 0 ? 'first' : ''}">
+      <img src="${p.dataUrl || API + '/photos/' + p.name}" alt="">
+      <button type="button" class="main" data-main="${i}">★ Сделать главным</button>
+      <button type="button" class="x" data-rm="${i}" aria-label="Убрать фото">✕</button>
+    </div>`).join('') + (photos.length < 20 ? `<label class="add-ph" for="photoInput">+ Добавить фото<br>с телефона или компьютера</label>` : '');
+}
+$('#photoGrid').onclick = e => {
+  const rm = e.target.closest('[data-rm]'), mn = e.target.closest('[data-main]');
+  if (rm) { photos.splice(+rm.dataset.rm, 1); renderPhotos(); }
+  if (mn) { const [p] = photos.splice(+mn.dataset.main, 1); photos.unshift(p); renderPhotos(); }
+};
+
+// уменьшаем фото в браузере: до 1600 px, JPEG — грузится быстро даже по мобильному интернету
+function shrink(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      resolve(c.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Не удалось открыть фото ' + file.name)); };
+    img.src = url;
+  });
+}
+$('#photoInput').onchange = async e => {
+  const files = [...e.target.files].slice(0, 20 - photos.length);
+  e.target.value = '';
+  for (const file of files) {
+    try { photos.push({ dataUrl: await shrink(file) }); renderPhotos(); }
+    catch (err) { toast(err.message); }
+  }
+};
+
+$('#carForm').onsubmit = async e => {
+  e.preventDefault();
+  const f = e.target, btn = $('#saveBtn');
+  const body = {};
+  for (const k of FIELDS) body[k] = f[k].value;
+  body.photos = photos.map(p => p.name || p.dataUrl); // в порядке на экране, первое — главное
+  $('#formErr').textContent = ''; btn.disabled = true; btn.textContent = 'Сохраняем…';
+  try {
+    if (editing) await api('/api/cars/' + editing, { method: 'PUT', body: JSON.stringify(body) });
+    else await api('/api/cars', { method: 'POST', body: JSON.stringify(body) });
+    toast(editing ? 'Изменения сохранены' : 'Машина добавлена на сайт');
+    closeForm(); load();
+  } catch (err) {
+    $('#formErr').textContent = err.message === 'Failed to fetch' ? 'Нет связи с сервером. Проверьте интернет и попробуйте ещё раз.' : err.message;
+  } finally { btn.disabled = false; btn.textContent = 'Сохранить'; }
+};
+
+if (token) { show('app'); load(); } else show('login');
+})();
+</script>
+</body>
+</html>
