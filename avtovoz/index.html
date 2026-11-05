@@ -81,6 +81,12 @@ h1,h2,h3{color:var(--color-platinum);font-weight:var(--font-weight-medium)}
 .nav__links a:hover::after{right:0}
 @media (max-width:960px){.nav__links{display:none}}
 @media (max-width:440px){.nav .btn--sm span{display:none}}
+.nav__right{display:flex;align-items:center;gap:10px}
+.nav-cab{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 14px;border-radius:var(--radius-small);
+  box-shadow:inset 0 0 0 1px var(--line);color:var(--color-silver-mist);font:400 12px/1 var(--font-matter);letter-spacing:.12em;text-transform:uppercase;transition:color .3s,background .3s}
+.nav-cab:hover{color:var(--color-platinum);background:var(--color-liquid-kelp)}
+.nav-cab svg{width:16px;height:16px;flex:none}
+@media (max-width:600px){.nav-cab span{display:none}.nav-cab{padding:0 12px}}
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate}
@@ -400,10 +406,16 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
       <a href="#guarantees">Гарантии</a>
       <a href="#contact">Контакты</a>
     </nav>
+    <div class="nav__right">
+    <a href="admin/" class="nav-cab" aria-label="Кабинет">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><circle cx="8" cy="5.5" r="2.8"/><path d="M2.5 14c.6-2.8 2.8-4.3 5.5-4.3s4.9 1.5 5.5 4.3"/></svg>
+      <span>Кабинет</span>
+    </a>
     <a href="tel:+996777777737" class="btn btn--sm" aria-label="Позвонить: +996 777 777 737">
       <span>+996 777 777 737</span>
       <svg width="10" height="10"><use href="#arr"/></svg>
     </a>
+    </div>
   </div>
 </header>
 
@@ -760,7 +772,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         <p style="margin-top:20px;max-width:360px">Перевозка автомобилей автовозами по Кыргызстану, России, Беларуси и ближнему зарубежью — более 10 лет.</p>
       </div>
       <div><span class="label">Направления</span><ul><li>Бишкек → Москва</li><li>Бишкек → Санкт‑Петербург</li><li>Бишкек → Минск</li><li>Бишкек → Ош → Манас</li></ul></div>
-      <div><span class="label">Разделы</span><ul><li><a href="#about">О компании</a></li><li><a href="#cars">Авто в наличии</a></li><li><a href="#fleet">Автопарк</a></li><li><a href="#guarantees">Гарантии</a></li><li><a href="#tasks">Наши задачи</a></li></ul></div>
+      <div><span class="label">Разделы</span><ul><li><a href="#about">О компании</a></li><li><a href="#cars">Авто в наличии</a></li><li><a href="#fleet">Автопарк</a></li><li><a href="#guarantees">Гарантии</a></li><li><a href="#tasks">Наши задачи</a></li><li><a href="admin/">Кабинет</a></li></ul></div>
       <div><span class="label">Контакты</span><ul><li><a href="tel:+996777777737">+996 777 777 737</a></li><li><a href="https://wa.me/996777777737" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:damka-1984@mail.ru">damka-1984@mail.ru</a></li></ul></div>
     </div>
     <div class="foot__big" aria-hidden="true">Автовоз‑312</div>
