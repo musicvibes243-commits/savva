@@ -12,7 +12,8 @@ services:
     image: caddy:2.8-alpine
     restart: unless-stopped
     ports:
-      - "80:80"
+      # порт 80 на этом сервере занят nginx — работаем только через 443,
+      # сертификат Caddy получает через TLS-ALPN (тоже порт 443)
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
