@@ -70,6 +70,27 @@ textarea{min-height:110px;resize:vertical}
 .badge.sold{color:#fad1ff}
 @media (max-width:560px){.item{grid-template-columns:72px 1fr}.item img,.item .noimg{width:72px;height:56px}.item .acts{grid-column:1/-1;justify-content:flex-start}}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:28px 0 16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:24px 0 0;border-bottom:1px solid var(--line)}
+.tab{border:0;background:none;cursor:pointer;color:var(--color-silver-mist);font:500 14px/1 var(--font-matter);padding:14px 14px 13px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:#fff;border-bottom-color:#cbfffc}
+.pane.hidden{display:none}
+.hint{font-size:14px;margin:10px 0 0;max-width:720px}
+.rt{display:grid;grid-template-columns:1fr 1fr 150px 110px 1.4fr auto;gap:8px;align-items:end;background:var(--color-liquid-kelp);border-radius:12px;padding:12px}
+.rt label.f{font-size:12px}
+.rt .ctl{display:flex;gap:4px;align-items:center}
+.rt .ctl button{width:36px;height:44px;border:0;border-radius:6px;cursor:pointer;background:var(--color-liquid-deep);color:#fff;font-size:15px}
+.rt .ctl button.del{color:#fad1ff}
+.rt .vis{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-liquid-mist);white-space:nowrap;height:44px;padding:0 6px}
+.rt .vis input{width:18px;height:18px}
+.rt.off{opacity:.55}
+@media (max-width:900px){.rt{grid-template-columns:1fr 1fr}.rt .wide{grid-column:1/-1}.rt .ctl{grid-column:1/-1;justify-content:flex-end}}
+.extra{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end}
+.extra button{height:44px;width:44px;border:0;border-radius:6px;cursor:pointer;background:var(--color-liquid-deep);color:#fad1ff}
+@media (max-width:600px){.extra{grid-template-columns:1fr 1fr}.extra button{grid-column:1/-1;width:100%}}
+.switch{display:flex;align-items:center;gap:10px;font-size:15px;color:#fff;cursor:pointer}
+.switch input{width:22px;height:22px}
+.preview-ann{margin-top:16px;padding:12px 16px;border-radius:8px;background:var(--gradient-aurora-gradient);color:#012624;font-size:14px;text-align:center}
+.savebar{position:sticky;bottom:0;padding:14px 0;background:linear-gradient(transparent,var(--color-liquid-abyss) 30%);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#cbfffc;color:#012624;padding:12px 18px;border-radius:8px;font-weight:500;z-index:50;transition:opacity .3s}
 </style>
 </head>
@@ -88,7 +109,7 @@ textarea{min-height:110px;resize:vertical}
 <section class="login" id="loginView">
   <form id="loginForm" class="card">
     <h1>Вход в кабинет</h1>
-    <p>Здесь вы добавляете автомобили в раздел «Авто в наличии».</p>
+    <p>Здесь вы добавляете автомобили, меняете маршруты и цены, контакты и объявление на сайте.</p>
     <label class="f">Логин<input name="login" autocomplete="username" required></label>
     <label class="f">Пароль<input name="password" type="password" autocomplete="current-password" required></label>
     <div class="err" id="loginErr"></div>
@@ -98,6 +119,14 @@ textarea{min-height:110px;resize:vertical}
 
 <!-- КАБИНЕТ -->
 <main class="wrap hidden" id="appView">
+  <nav class="tabs" id="tabs">
+    <button class="tab on" data-tab="cars">Машины</button>
+    <button class="tab" data-tab="routes">Маршруты и цены</button>
+    <button class="tab" data-tab="contacts">Контакты</button>
+    <button class="tab" data-tab="ann">Объявление</button>
+  </nav>
+
+  <section class="pane" id="pane-cars">
   <div class="toolbar">
     <div><span class="label">Авто в наличии</span><h1 id="countTitle">Машины</h1></div>
     <button class="btn" id="newBtn">+ Добавить машину</button>
@@ -138,6 +167,48 @@ textarea{min-height:110px;resize:vertical}
 
   <div class="list" id="list"></div>
   <p id="empty" class="hidden" style="padding:40px 0;text-align:center">Пока нет ни одной машины. Нажмите «Добавить машину».</p>
+  </section>
+
+  <!-- МАРШРУТЫ И ЦЕНЫ -->
+  <section class="pane hidden" id="pane-routes">
+    <div class="toolbar">
+      <div><span class="label">На сайте: карточки маршрутов и прайс‑лист</span><h1>Маршруты и цены</h1>
+        <p class="hint">Цена — «от». Если цену не указать, на сайте будет «по запросу». Прайс‑лист появится на сайте, когда хотя бы у одного маршрута будет цена. Порядок меняется стрелками ↑ ↓.</p></div>
+      <button class="btn" id="addRoute">+ Добавить маршрут</button>
+    </div>
+    <div class="list" id="routeList"></div>
+    <div class="savebar"><button class="btn" id="saveRoutes">Сохранить маршруты</button><span class="err" id="routesErr"></span></div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section class="pane hidden" id="pane-contacts">
+    <div class="toolbar"><div><span class="label">Меняются на всём сайте сразу</span><h1>Контакты</h1></div></div>
+    <form id="contactsForm" class="card">
+      <div class="grid">
+        <label class="f">Основной телефон *<input name="phone" required placeholder="+996 777 777 737"></label>
+        <label class="f">WhatsApp<input name="whatsapp" placeholder="+996 777 777 737"></label>
+        <label class="f">Почта<input name="email" type="email" placeholder="mail@example.com"></label>
+        <label class="f">Telegram (без @)<input name="telegram" placeholder="avtovoz312"></label>
+        <label class="f">Instagram (без @)<input name="instagram" placeholder="avtovoz312"></label>
+      </div>
+      <div class="label" style="margin:24px 0 10px">Дополнительные контакты (руководитель, менеджер…)</div>
+      <div class="list" id="extraList"></div>
+      <button type="button" class="btn btn--ghost btn--sm" id="addExtra" style="margin-top:10px">+ Добавить контакт</button>
+      <div class="savebar"><button class="btn" type="submit">Сохранить контакты</button><span class="err" id="contactsErr"></span></div>
+    </form>
+  </section>
+
+  <!-- ОБЪЯВЛЕНИЕ -->
+  <section class="pane hidden" id="pane-ann">
+    <div class="toolbar"><div><span class="label">Полоска вверху сайта</span><h1>Объявление</h1>
+      <p class="hint">Например: «Ближайшая отправка Бишкек → Москва — 20 ноября, осталось 2 места». Выключите галочку, когда объявление станет неактуальным.</p></div></div>
+    <form id="annForm" class="card">
+      <label class="switch"><input type="checkbox" name="enabled"> Показывать объявление на сайте</label>
+      <label class="f" style="margin-top:18px">Текст (до 200 символов)<textarea name="text" maxlength="200" style="min-height:80px"></textarea></label>
+      <div class="preview-ann" id="annPreview">Так объявление будет выглядеть на сайте</div>
+      <div class="savebar"><button class="btn" type="submit">Сохранить объявление</button><span class="err" id="annErr"></span></div>
+    </form>
+  </section>
 </main>
 
 <div class="toast hidden" id="toast"></div>
@@ -191,7 +262,7 @@ $('#loginForm').onsubmit = async e => {
   try {
     const r = await api('/api/login', { method: 'POST', body: JSON.stringify({ login: f.login.value.trim(), password: f.password.value }) });
     token = r.token; try { localStorage.setItem('avtovoz_token', token); } catch {}
-    f.reset(); show('app'); load();
+    f.reset(); show('app'); load(); loadSite(); restoreTab();
   } catch (err) {
     $('#loginErr').textContent = err.message === 'Failed to fetch' ? 'Нет связи с сервером. Проверьте интернет.' : err.message;
   } finally { btn.disabled = false; }
@@ -308,7 +379,124 @@ $('#carForm').onsubmit = async e => {
   } finally { btn.disabled = false; btn.textContent = 'Сохранить'; }
 };
 
-if (token) { show('app'); load(); } else show('login');
+
+// ---------- вкладки ----------
+$('#tabs').onclick = e => {
+  const b = e.target.closest('[data-tab]'); if (!b) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t === b));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('hidden', p.id !== 'pane-' + b.dataset.tab));
+  try { sessionStorage.setItem('avtovoz_tab', b.dataset.tab); } catch {}
+};
+function restoreTab() {
+  let t = null; try { t = sessionStorage.getItem('avtovoz_tab'); } catch {}
+  const b = t && document.querySelector(`.tab[data-tab="${t}"]`); if (b) b.click();
+}
+
+// ---------- настройки сайта ----------
+let site = null;
+let routes = [];
+async function loadSite() {
+  try { site = await api('/api/site'); } catch (err) { toast(err.message); return; }
+  routes = site.routes.map(r => ({ ...r }));
+  renderRoutes(); fillContacts(); fillAnn();
+}
+async function saveSite(part, errEl, okMsg) {
+  $(errEl).textContent = '';
+  try { site = await api('/api/site', { method: 'PUT', body: JSON.stringify(part) }); toast(okMsg); return true; }
+  catch (err) { $(errEl).textContent = err.message === 'Failed to fetch' ? 'Нет связи с сервером. Попробуйте ещё раз.' : err.message; return false; }
+}
+
+// маршруты
+const cur = c => `<select data-k="currency"><option value="USD"${c === 'USD' ? ' selected' : ''}>$</option><option value="RUB"${c === 'RUB' ? ' selected' : ''}>₽</option><option value="KGS"${c === 'KGS' ? ' selected' : ''}>сом</option></select>`;
+function renderRoutes() {
+  $('#routeList').innerHTML = routes.length ? routes.map((r, i) => `
+    <div class="rt ${r.visible ? '' : 'off'}" data-i="${i}">
+      <label class="f">Откуда<input data-k="from" value="${esc(r.from)}" placeholder="Бишкек"></label>
+      <label class="f">Куда<input data-k="to" value="${esc(r.to)}" placeholder="Москва"></label>
+      <label class="f">Цена от<span class="row2" style="grid-template-columns:1fr 64px"><input data-k="price" inputmode="numeric" value="${r.price ?? ''}" placeholder="—">${cur(r.currency)}</span></label>
+      <label class="f">Срок, дней<input data-k="days" value="${esc(r.days)}" placeholder="напр. 7–10"></label>
+      <label class="f wide">Примечание<input data-k="note" value="${esc(r.note)}" placeholder="необязательно"></label>
+      <div class="ctl">
+        <label class="vis"><input type="checkbox" data-k="visible" ${r.visible ? 'checked' : ''}> на сайте</label>
+        <button type="button" data-act="up" aria-label="Выше">↑</button>
+        <button type="button" data-act="down" aria-label="Ниже">↓</button>
+        <button type="button" data-act="del" class="del" aria-label="Удалить">✕</button>
+      </div>
+    </div>`).join('') : '<p style="padding:24px 0">Маршрутов нет. Нажмите «Добавить маршрут».</p>';
+}
+$('#routeList').addEventListener('input', e => {
+  const row = e.target.closest('[data-i]'), k = e.target.dataset.k; if (!row || !k) return;
+  const r = routes[+row.dataset.i];
+  r[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+  if (k === 'visible') row.classList.toggle('off', !r.visible);
+});
+$('#routeList').addEventListener('change', e => { if (e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+$('#routeList').addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const i = +b.closest('[data-i]').dataset.i;
+  if (b.dataset.act === 'up' && i > 0) [routes[i - 1], routes[i]] = [routes[i], routes[i - 1]];
+  if (b.dataset.act === 'down' && i < routes.length - 1) [routes[i + 1], routes[i]] = [routes[i], routes[i + 1]];
+  if (b.dataset.act === 'del') { if (!confirm(`Удалить маршрут ${routes[i].from} → ${routes[i].to}?`)) return; routes.splice(i, 1); }
+  renderRoutes();
+});
+$('#addRoute').onclick = () => {
+  routes.push({ id: '', from: 'Бишкек', to: '', price: '', currency: 'USD', days: '', note: '', visible: true });
+  renderRoutes();
+  const rows = document.querySelectorAll('#routeList .rt'); const last = rows[rows.length - 1];
+  last.scrollIntoView({ behavior: 'smooth', block: 'center' }); last.querySelector('[data-k="to"]').focus();
+};
+$('#saveRoutes').onclick = async () => {
+  const btn = $('#saveRoutes'); btn.disabled = true;
+  if (await saveSite({ routes }, '#routesErr', 'Маршруты сохранены — уже на сайте')) { routes = site.routes.map(r => ({ ...r })); renderRoutes(); }
+  btn.disabled = false;
+};
+
+// контакты
+let extra = [];
+function renderExtra() {
+  $('#extraList').innerHTML = extra.map((x, i) => `
+    <div class="extra" data-i="${i}">
+      <label class="f">Должность<input data-k="role" value="${esc(x.role)}" placeholder="Руководитель"></label>
+      <label class="f">Имя<input data-k="name" value="${esc(x.name)}" placeholder="Айбек"></label>
+      <label class="f">Телефон<input data-k="phone" value="${esc(x.phone)}" placeholder="+996 …"></label>
+      <button type="button" data-rm="${i}" aria-label="Удалить контакт">✕</button>
+    </div>`).join('');
+}
+$('#extraList').addEventListener('input', e => { const row = e.target.closest('[data-i]'); if (row) extra[+row.dataset.i][e.target.dataset.k] = e.target.value; });
+$('#extraList').addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (b) { extra.splice(+b.dataset.rm, 1); renderExtra(); } });
+$('#addExtra').onclick = () => { extra.push({ role: '', name: '', phone: '' }); renderExtra(); };
+function fillContacts() {
+  const f = $('#contactsForm'), c = site.contacts;
+  for (const k of ['phone', 'whatsapp', 'email', 'telegram', 'instagram']) f[k].value = c[k] || '';
+  extra = (c.extra || []).map(x => ({ ...x })); renderExtra();
+}
+$('#contactsForm').onsubmit = async e => {
+  e.preventDefault(); const f = e.target, btn = f.querySelector('[type=submit]'); btn.disabled = true;
+  const contacts = { extra };
+  for (const k of ['phone', 'whatsapp', 'email', 'telegram', 'instagram']) contacts[k] = f[k].value;
+  if (await saveSite({ contacts }, '#contactsErr', 'Контакты сохранены — уже на сайте')) fillContacts();
+  btn.disabled = false;
+};
+
+// объявление
+function fillAnn() {
+  const f = $('#annForm'); f.enabled.checked = !!site.announcement.enabled; f.text.value = site.announcement.text || ''; previewAnn();
+}
+function previewAnn() {
+  const f = $('#annForm');
+  $('#annPreview').textContent = f.text.value.trim() || 'Так объявление будет выглядеть на сайте';
+  $('#annPreview').style.opacity = f.enabled.checked ? 1 : .4;
+}
+$('#annForm').addEventListener('input', previewAnn);
+$('#annForm').onsubmit = async e => {
+  e.preventDefault(); const f = e.target, btn = f.querySelector('[type=submit]');
+  if (f.enabled.checked && !f.text.value.trim()) { $('#annErr').textContent = 'Напишите текст объявления'; return; }
+  btn.disabled = true;
+  await saveSite({ announcement: { enabled: f.enabled.checked, text: f.text.value } }, '#annErr', f.enabled.checked ? 'Объявление показано на сайте' : 'Объявление скрыто');
+  btn.disabled = false;
+};
+
+if (token) { show('app'); load(); loadSite(); restoreTab(); } else show('login');
 })();
 </script>
 </body>

@@ -23,6 +23,7 @@ const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(__dirname, 'data
 const PHOTO_DIR = path.join(DATA_DIR, 'photos');
 const CARS_FILE = path.join(DATA_DIR, 'cars.json');
 const SESSIONS_FILE = path.join(DATA_DIR, 'sessions.json');
+const SITE_FILE = path.join(DATA_DIR, 'site.json');
 const ADMIN_LOGIN = process.env.ADMIN_LOGIN || '';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'https://avtovoz312.ru,https://www.avtovoz312.ru')
@@ -46,6 +47,57 @@ function readJson(file, fallback) {
 }
 let cars = readJson(CARS_FILE, []);
 let sessions = readJson(SESSIONS_FILE, {});
+
+// ---------- настройки сайта: маршруты и цены, контакты, объявление ----------
+const DEFAULT_SITE = {
+  routes: [
+    { id: 'r1', from: 'Бишкек', to: 'Москва', price: null, currency: 'USD', days: '', note: '', visible: true },
+    { id: 'r2', from: 'Бишкек', to: 'Санкт‑Петербург', price: null, currency: 'USD', days: '', note: '', visible: true },
+    { id: 'r3', from: 'Бишкек', to: 'Минск', price: null, currency: 'USD', days: '', note: '', visible: true },
+    { id: 'r4', from: 'Бишкек', to: 'Ош → Манас', price: null, currency: 'USD', days: '', note: 'Перевозка по Кыргызстану', visible: true },
+  ],
+  contacts: {
+    phone: '+996 777 777 737', whatsapp: '+996 777 777 737', email: 'damka-1984@mail.ru',
+    telegram: '', instagram: '', extra: [],
+  },
+  announcement: { enabled: false, text: '' },
+};
+let site = { ...DEFAULT_SITE, ...readJson(SITE_FILE, {}) };
+
+const str = (v, max) => String(v ?? '').trim().slice(0, max);
+const num = v => { const n = Number(String(v ?? '').replace(/[\s,]/g, '')); return String(v ?? '').trim() !== '' && Number.isFinite(n) && n >= 0 ? Math.round(n) : null; };
+
+function cleanRoutes(list) {
+  if (!Array.isArray(list)) throw httpError(400, 'Неверный список маршрутов');
+  if (list.length > 50) throw httpError(400, 'Не больше 50 маршрутов');
+  return list.map(r => {
+    const route = {
+      id: /^[a-z0-9]{1,24}$/.test(r.id) ? r.id : crypto.randomBytes(5).toString('hex'),
+      from: str(r.from, 60), to: str(r.to, 80), price: num(r.price),
+      currency: CURRENCIES.includes(r.currency) ? r.currency : 'USD',
+      days: str(r.days, 30), note: str(r.note, 200), visible: r.visible !== false,
+    };
+    if (!route.from || !route.to) throw httpError(400, 'У каждого маршрута укажите «откуда» и «куда»');
+    return route;
+  });
+}
+function cleanContacts(c) {
+  if (!c || typeof c !== 'object') throw httpError(400, 'Неверные контакты');
+  const extra = Array.isArray(c.extra) ? c.extra.slice(0, 10).map(x => ({
+    role: str(x.role, 60), name: str(x.name, 60), phone: str(x.phone, 30),
+  })).filter(x => x.name || x.phone) : [];
+  const out = {
+    phone: str(c.phone, 30), whatsapp: str(c.whatsapp, 30), email: str(c.email, 80),
+    telegram: str(c.telegram, 60).replace(/^@/, ''), instagram: str(c.instagram, 60).replace(/^@/, ''), extra,
+  };
+  if (!out.phone) throw httpError(400, 'Укажите основной телефон');
+  if (out.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(out.email)) throw httpError(400, 'Проверьте почту');
+  return out;
+}
+function cleanAnnouncement(a) {
+  if (!a || typeof a !== 'object') throw httpError(400, 'Неверное объявление');
+  return { enabled: !!a.enabled, text: str(a.text, 200) };
+}
 
 let writing = Promise.resolve();
 function persist(file, data) {
@@ -225,6 +277,22 @@ async function handle(req, res) {
     const m = /^Bearer ([a-f0-9]{64})$/.exec(req.headers.authorization || '');
     if (m && sessions[m[1]]) { delete sessions[m[1]]; persist(SESSIONS_FILE, sessions); }
     return send(res, 200, { ok: true });
+  }
+
+  // GET /api/site — маршруты, контакты, объявление (публично)
+  if (req.method === 'GET' && parts[1] === 'site' && parts.length === 2) return send(res, 200, site);
+
+  // PUT /api/site — изменить одну или несколько частей: { routes?, contacts?, announcement? }
+  if (req.method === 'PUT' && parts[1] === 'site' && parts.length === 2) {
+    if (!isAuthed(req)) throw httpError(401, 'Нужно войти в кабинет');
+    const body = await readBody(req);
+    const next = { ...site };
+    if ('routes' in body) next.routes = cleanRoutes(body.routes);
+    if ('contacts' in body) next.contacts = cleanContacts(body.contacts);
+    if ('announcement' in body) next.announcement = cleanAnnouncement(body.announcement);
+    site = next;
+    await persist(SITE_FILE, site);
+    return send(res, 200, site);
   }
 
   if (parts[1] !== 'cars') throw httpError(404, 'Не найдено');

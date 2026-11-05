@@ -313,6 +313,33 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
 @media (prefers-reduced-motion:reduce){.ch{opacity:1;transform:none;filter:none}.vf i{opacity:.8;transform:none}}
 
 .hidden{display:none!important}
+/* announcement */
+.ann{background:var(--gradient-aurora-gradient);color:#012624;font-size:14px;line-height:1.35}
+.ann .wrap{display:flex;align-items:center;justify-content:center;gap:12px;min-height:40px;padding-top:8px;padding-bottom:8px;text-align:center}
+.ann button{flex:none;border:0;background:rgba(1,38,36,.12);color:#012624;width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:13px}
+/* price list */
+.price-tbl{width:100%;border-collapse:collapse}
+.price-tbl th{font:500 10px/1.4 var(--font-matter);letter-spacing:.15em;text-transform:uppercase;color:var(--color-slate-deep);text-align:left;padding:0 16px 14px}
+.price-tbl td{padding:22px 16px;border-top:1px solid var(--line);vertical-align:middle}
+.price-tbl tr:hover td{background:rgba(0,55,52,.45)}
+.price-tbl .r{color:var(--color-platinum);font-size:var(--text-subheading);letter-spacing:-.02em;font-weight:500}
+.price-tbl .n{display:block;font-size:13px;color:var(--color-silver-mist);font-weight:400;letter-spacing:0;margin-top:4px}
+.price-tbl .p{color:var(--color-lavender-phosphor);font-size:clamp(22px,2.2vw,30px);letter-spacing:-.03em;font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+.price-tbl .p.q{color:var(--color-silver-mist);font-size:15px;letter-spacing:0;font-weight:400}
+.price-tbl .d{white-space:nowrap}
+.price-tbl .a{text-align:right;width:1%}
+@media (max-width:720px){
+  .price-tbl thead{display:none}
+  .price-tbl tr{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:18px 0;border-top:1px solid var(--line)}
+  .price-tbl td{border:0;padding:0}
+  .price-tbl .r{grid-column:1/-1}
+  .price-tbl .a{grid-column:1/-1;text-align:left;width:auto;margin-top:8px}
+}
+.price-foot{margin-top:24px;font-size:14px}
+/* extra contacts */
+.cta__extra{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;margin-top:4px}
+.cta__extra a,.cta__extra span{color:var(--color-liquid-mist);font-size:15px}
+.cta__extra b{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--color-slate-deep);font-weight:400;margin-bottom:4px}
 /* ---------- cars in stock ---------- */
 .cars-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
 .chip{border:0;cursor:pointer;padding:10px 14px;border-radius:var(--radius-small);background:transparent;color:var(--color-silver-mist);
@@ -389,6 +416,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
 
 <!-- NAV -->
 <header class="nav" id="nav">
+  <div class="ann hidden" id="ann" role="status"><div class="wrap"><span id="annText"></span><button type="button" id="annClose" aria-label="Скрыть объявление">✕</button></div></div>
   <div class="wrap nav__in">
     <a href="#top" class="logo" aria-label="Автовоз-312 — на главную">
       <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
@@ -521,7 +549,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
       <h2 class="h-lg split" data-split>Популярные направления</h2>
     </div>
     <div class="explore">
-      <div class="rows">
+      <div class="rows" id="routeRows">
         <a href="#contact" class="row rv">
           <div class="row__top">
             <h3 class="h-md">Бишкек → Москва</h3>
@@ -561,6 +589,22 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         <svg viewBox="0 0 500 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true" id="mapSvg"></svg>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- PRICE LIST -->
+<section class="sec hidden" id="prices" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Прайс‑лист</span>
+      <h2 class="h-lg">Цены на перевозку</h2>
+      <p class="lead">Цены указаны «от» — точную стоимость рассчитаем под ваш автомобиль.</p>
+    </div>
+    <table class="price-tbl">
+      <thead><tr><th>Маршрут</th><th>Срок</th><th>Цена</th><th></th></tr></thead>
+      <tbody id="priceRows"></tbody>
+    </table>
+    <p class="price-foot">Пакет Drive и договор на перевозку входят в стоимость.</p>
   </div>
 </section>
 
@@ -756,6 +800,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         <a href="https://wa.me/996777777737" class="btn btn--ghost" target="_blank" rel="noopener">WhatsApp</a>
         <a href="mailto:damka-1984@mail.ru" class="btn btn--ghost">Написать</a>
       </div>
+      <div class="cta__extra hidden" id="ctaExtra"></div>
     </div>
   </div>
 </section>
@@ -771,9 +816,9 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         </a>
         <p style="margin-top:20px;max-width:360px">Перевозка автомобилей автовозами по Кыргызстану, России, Беларуси и ближнему зарубежью — более 10 лет.</p>
       </div>
-      <div><span class="label">Направления</span><ul><li>Бишкек → Москва</li><li>Бишкек → Санкт‑Петербург</li><li>Бишкек → Минск</li><li>Бишкек → Ош → Манас</li></ul></div>
+      <div><span class="label">Направления</span><ul id="footRoutes"><li>Бишкек → Москва</li><li>Бишкек → Санкт‑Петербург</li><li>Бишкек → Минск</li><li>Бишкек → Ош → Манас</li></ul></div>
       <div><span class="label">Разделы</span><ul><li><a href="#about">О компании</a></li><li><a href="#cars">Авто в наличии</a></li><li><a href="#fleet">Автопарк</a></li><li><a href="#guarantees">Гарантии</a></li><li><a href="#tasks">Наши задачи</a></li><li><a href="admin/">Кабинет</a></li></ul></div>
-      <div><span class="label">Контакты</span><ul><li><a href="tel:+996777777737">+996 777 777 737</a></li><li><a href="https://wa.me/996777777737" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:damka-1984@mail.ru">damka-1984@mail.ru</a></li></ul></div>
+      <div><span class="label">Контакты</span><ul id="footContacts"><li><a href="tel:+996777777737">+996 777 777 737</a></li><li><a href="https://wa.me/996777777737" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:damka-1984@mail.ru">damka-1984@mail.ru</a></li></ul></div>
     </div>
     <div class="foot__big" aria-hidden="true">Автовоз‑312</div>
     <div class="foot__bottom">
@@ -1072,6 +1117,102 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
   }, 2400);
 })();
 
+/* ---------- settings from the cabinet: routes & prices, contacts, announcement ---------- */
+(function siteSettings() {
+  const API = window.AVTOVOZ_API;
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const CUR = { USD: '$', RUB: '₽', KGS: 'сом' };
+  const digits = v => String(v || '').replace(/\D/g, '');
+  const OLD_PHONE = '+996 777 777 737', OLD_MAIL = 'damka-1984@mail.ru';
+  const arrow = '<svg width="10" height="10"><use href="#arr"/></svg>';
+  let wa = '996777777737';
+  const waLink = text => 'https://wa.me/' + wa + (text ? '?text=' + encodeURIComponent(text) : '');
+
+  function applyContacts(c) {
+    if (!c) return;
+    if (c.phone) {
+      const tel = 'tel:+' + digits(c.phone);
+      $$('a[href^="tel:"]').forEach(a => {
+        a.href = tel;
+        if (a.getAttribute('aria-label')) a.setAttribute('aria-label', 'Позвонить: ' + c.phone);
+        a.querySelectorAll('*').forEach(n => { if (n.children.length === 0 && n.textContent.trim() === OLD_PHONE) n.textContent = c.phone; });
+        if (a.children.length === 0 && a.textContent.trim() === OLD_PHONE) a.textContent = c.phone;
+      });
+    }
+    if (c.whatsapp) {
+      wa = digits(c.whatsapp); window.AVTOVOZ_WA = wa;
+      $$('a[href*="wa.me/"]').forEach(a => { a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + wa); });
+    }
+    $$('a[href^="mailto:"]').forEach(a => {
+      if (!c.email) { if (a.closest('li')) a.closest('li').remove(); else a.remove(); return; }
+      a.href = 'mailto:' + c.email; if (a.textContent.trim() === OLD_MAIL) a.textContent = c.email;
+    });
+    // extra contacts, Telegram, Instagram
+    const items = [];
+    (c.extra || []).forEach(x => items.push({ label: [x.role, x.name].filter(Boolean).join(' · '), text: x.phone || x.name, href: x.phone ? 'tel:+' + digits(x.phone) : '' }));
+    if (c.telegram) items.push({ label: 'Telegram', text: '@' + c.telegram, href: 'https://t.me/' + encodeURIComponent(c.telegram), ext: true });
+    if (c.instagram) items.push({ label: 'Instagram', text: '@' + c.instagram, href: 'https://instagram.com/' + encodeURIComponent(c.instagram), ext: true });
+    const box = $('#ctaExtra'), foot = $('#footContacts');
+    if (items.length) {
+      box.innerHTML = items.map(it => `<div><b>${esc(it.label)}</b>${it.href ? `<a href="${esc(it.href)}"${it.ext ? ' target="_blank" rel="noopener"' : ''}>${esc(it.text)}</a>` : `<span>${esc(it.text)}</span>`}</div>`).join('');
+      box.classList.remove('hidden');
+      items.forEach(it => {
+        const li = document.createElement('li');
+        li.innerHTML = it.href ? `<a href="${esc(it.href)}"${it.ext ? ' target="_blank" rel="noopener"' : ''}>${esc(it.label)}: ${esc(it.text)}</a>` : `${esc(it.label)}: ${esc(it.text)}`;
+        foot.appendChild(li);
+      });
+    }
+  }
+
+  const priceText = r => r.price != null ? 'от ' + r.price.toLocaleString('ru-RU') + ' ' + CUR[r.currency] : '';
+  const daysText = r => r.days ? (/[а-яa-z]/i.test(r.days) ? r.days : r.days + ' дн.') : '';
+
+  function applyRoutes(list) {
+    const routes = (list || []).filter(r => r.visible);
+    if (!routes.length) return;
+    // cards
+    const rows = $('#routeRows');
+    rows.innerHTML = routes.map((r, i) => `
+        <a href="#contact" class="row rv is-in"${i ? ` data-d="${Math.min(i, 4)}"` : ''}>
+          <div class="row__top">
+            <h3 class="h-md">${esc(r.from)} → ${esc(r.to)}</h3>
+            <span class="arrow-btn" aria-hidden="true">${arrow}</span>
+          </div>
+          <p>${esc(r.note || 'Перевозка автомобилей на многоярусном автовозе.')}</p>
+          <span class="label label--xs">${[daysText(r) && 'Срок ' + daysText(r), priceText(r) || 'Цена по запросу'].filter(Boolean).map(esc).join(' · ')}</span>
+        </a>`).join('');
+    $$('.row', rows).forEach(r => r.addEventListener('pointermove', e => {
+      const b = r.getBoundingClientRect(); r.style.setProperty('--mx', e.clientX - b.left + 'px'); r.style.setProperty('--my', e.clientY - b.top + 'px');
+    }));
+    // footer
+    $('#footRoutes').innerHTML = routes.map(r => `<li>${esc(r.from)} → ${esc(r.to)}</li>`).join('');
+    // price list — only when at least one price is set
+    if (routes.some(r => r.price != null)) {
+      $('#priceRows').innerHTML = routes.map(r => `
+        <tr>
+          <td class="r">${esc(r.from)} → ${esc(r.to)}${r.note ? `<span class="n">${esc(r.note)}</span>` : ''}</td>
+          <td class="d">${esc(daysText(r) || '—')}</td>
+          <td class="p ${r.price == null ? 'q' : ''}">${esc(priceText(r) || 'по запросу')}</td>
+          <td class="a"><a class="btn btn--sm" target="_blank" rel="noopener" href="${esc(waLink(`Здравствуйте! Хочу рассчитать перевозку ${r.from} → ${r.to} (сайт avtovoz312.ru)`))}">Уточнить ${arrow}</a></td>
+        </tr>`).join('');
+      $('#prices').classList.remove('hidden');
+    }
+  }
+
+  function applyAnnouncement(a) {
+    if (!a || !a.enabled || !a.text) return;
+    let closed = null; try { closed = sessionStorage.getItem('avtovoz_ann_closed'); } catch {}
+    if (closed === a.text) return;
+    $('#annText').textContent = a.text;
+    $('#ann').classList.remove('hidden');
+    $('#annClose').onclick = () => { $('#ann').classList.add('hidden'); try { sessionStorage.setItem('avtovoz_ann_closed', a.text); } catch {} };
+  }
+
+  fetch(API + '/api/site').then(r => r.ok ? r.json() : Promise.reject())
+    .then(d => { applyContacts(d.contacts); applyRoutes(d.routes); applyAnnouncement(d.announcement); })
+    .catch(() => {}); // нет связи с сервером — остаётся то, что написано на странице
+})();
+
 /* ---------- cars in stock ---------- */
 (function carsInStock() {
   const API = window.AVTOVOZ_API, grid = $('#carsGrid'), empty = $('#carsEmpty'), filter = $('#carsFilter');
@@ -1134,7 +1275,7 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
     const many = (c.photos || []).length > 1;
     $('#cmPrev').style.display = $('#cmNext').style.display = many ? '' : 'none';
     $('#cmThumbs').style.display = many ? '' : 'none';
-    $('#cmWa').href = 'https://wa.me/996777777737?text=' + encodeURIComponent(`Здравствуйте! Интересует ${c.brand} ${c.model}${c.year ? ' ' + c.year : ''} (${price(c)}) с сайта avtovoz312.ru`);
+    $('#cmWa').href = 'https://wa.me/' + (window.AVTOVOZ_WA || '996777777737') + '?text=' + encodeURIComponent(`Здравствуйте! Интересует ${c.brand} ${c.model}${c.year ? ' ' + c.year : ''} (${price(c)}) с сайта avtovoz312.ru`);
     showPhoto(0);
     modal.classList.add('open'); document.body.style.overflow = 'hidden';
   }
