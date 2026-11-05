@@ -135,7 +135,8 @@ textarea{min-height:110px;resize:vertical}
   <form id="carForm" class="card hidden" style="margin-bottom:28px">
     <h2 id="formTitle" style="margin-bottom:18px">Новая машина</h2>
     <div class="grid">
-      <label class="f">Марка *<input name="brand" required placeholder="Chery"></label>
+      <label class="f">Марка *<input name="brand" required list="brandList" autocomplete="off" placeholder="Впишите любую марку">
+        <datalist id="brandList"><option value="Chery"><option value="Haval"><option value="Geely"><option value="Changan"><option value="BYD"><option value="Exeed"><option value="Jetour"><option value="Li Auto"><option value="Zeekr"><option value="Toyota"><option value="Lexus"><option value="Hyundai"><option value="Kia"><option value="Chevrolet"><option value="Mercedes-Benz"><option value="BMW"><option value="Volkswagen"></datalist></label>
       <label class="f">Модель *<input name="model" required placeholder="Tiggo 7 Pro"></label>
       <label class="f">Год<input name="year" inputmode="numeric" placeholder="2024"></label>
       <label class="f">Цена<span class="row2"><input name="price" inputmode="numeric" placeholder="25000">
@@ -148,7 +149,8 @@ textarea{min-height:110px;resize:vertical}
       <label class="f">Топливо<select name="fuel"><option value="">—</option><option>Бензин</option><option>Дизель</option><option>Гибрид</option><option>Электро</option><option>Газ / бензин</option></select></label>
       <label class="f">Коробка<select name="transmission"><option value="">—</option><option>Автомат</option><option>Робот</option><option>Вариатор</option><option>Механика</option></select></label>
       <label class="f">Привод<select name="drive"><option value="">—</option><option>Передний</option><option>Задний</option><option>Полный</option></select></label>
-      <label class="f">Страна<select name="country"><option value="">—</option><option>Китай</option><option>Корея</option><option>Япония</option><option>Европа</option><option>США</option><option>Россия</option></select></label>
+      <label class="f">Страна<input name="country" list="countryList" autocomplete="off" placeholder="Впишите или выберите">
+        <datalist id="countryList"><option value="Китай"><option value="Корея"><option value="Япония"><option value="Кыргызстан"><option value="Узбекистан"><option value="Казахстан"><option value="Россия"><option value="Беларусь"><option value="Европа"><option value="США"><option value="ОАЭ"></datalist></label>
       <label class="f">Цвет<input name="color" placeholder="Белый"></label>
       <label class="f span3">Где находится<input name="location" placeholder="Бишкек"></label>
       <label class="f span3">Описание<textarea name="description" placeholder="Комплектация, состояние, что входит в цену…"></textarea></label>
