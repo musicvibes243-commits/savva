@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tokens.css">
+<script src="config.js"></script>
 <style>
 :root{
   /* Matter — платный шрифт; Inter (с кириллицей) — задокументированная замена */
@@ -305,6 +306,60 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
 }
 @media (prefers-reduced-motion:reduce){.ch{opacity:1;transform:none;filter:none}.vf i{opacity:.8;transform:none}}
 
+.hidden{display:none!important}
+/* ---------- cars in stock ---------- */
+.cars-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.chip{border:0;cursor:pointer;padding:10px 14px;border-radius:var(--radius-small);background:transparent;color:var(--color-silver-mist);
+  box-shadow:inset 0 0 0 1px var(--line);font:500 12px/1 var(--font-matter);letter-spacing:.12em;text-transform:uppercase;transition:background .3s,color .3s}
+.chip:hover{color:var(--color-platinum)}
+.chip.on{background:var(--color-liquid-kelp);color:var(--color-platinum);box-shadow:none}
+.cars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--element-gap)}
+@media (max-width:1000px){.cars-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.cars-grid{grid-template-columns:1fr}}
+.ucar{background:var(--color-liquid-kelp);border-radius:var(--radius-cards);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;
+  border:0;text-align:left;color:inherit;font:inherit;padding:0;transition:transform .5s var(--ease)}
+.ucar:hover{transform:translateY(-4px)}
+.ucar__img{position:relative;aspect-ratio:4/3;background:var(--color-liquid-deep);overflow:hidden}
+.ucar__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease)}
+.ucar:hover .ucar__img img{transform:scale(1.05)}
+.ucar__img .noimg{position:absolute;inset:0;display:grid;place-items:center}
+.ucar__st{position:absolute;left:14px;top:14px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:6px 9px;border-radius:var(--radius-small);
+  background:rgba(1,29,28,.82);color:var(--color-liquid-mist);backdrop-filter:blur(6px)}
+.ucar__st.sold{color:var(--color-lavender-phosphor)}
+.ucar__n{position:absolute;right:14px;top:14px;font-size:10px;letter-spacing:.12em;padding:6px 9px;border-radius:var(--radius-small);background:rgba(1,29,28,.82);color:var(--color-liquid-mist)}
+.ucar__body{padding:24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.ucar__title{color:var(--color-platinum);font-size:var(--text-subheading);line-height:1.2;letter-spacing:-.02em;font-weight:500}
+.ucar__price{font-size:clamp(26px,2.4vw,32px);line-height:1;letter-spacing:-.03em;color:var(--color-lavender-phosphor);font-weight:500;font-variant-numeric:tabular-nums}
+.ucar__specs{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin-top:auto}
+.ucar.is-sold{opacity:.6}
+.cars-empty{padding:56px 24px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius-cards)}
+.cars-empty p{max-width:460px;margin:12px auto 24px}
+/* modal */
+.cm{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(1,29,28,.82);backdrop-filter:blur(10px);
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.cm.open{opacity:1;pointer-events:auto}
+.cm__box{background:var(--color-liquid-kelp);border-radius:var(--radius-cards);width:min(1100px,100%);max-height:calc(100svh - 32px);overflow:auto;
+  display:grid;grid-template-columns:1.3fr 1fr;transform:translateY(24px);transition:transform .5s var(--ease)}
+.cm.open .cm__box{transform:none}
+@media (max-width:860px){.cm__box{grid-template-columns:1fr}}
+.cm__gal{background:var(--color-liquid-deep);display:flex;flex-direction:column;min-width:0}
+.cm__main{position:relative;aspect-ratio:4/3;overflow:hidden}
+.cm__main img{width:100%;height:100%;object-fit:contain;display:block}
+.cm__nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:var(--radius-small);border:0;cursor:pointer;
+  background:rgba(1,29,28,.75);color:#fff;font-size:20px}
+.cm__nav.prev{left:12px}.cm__nav.next{right:12px}
+.cm__thumbs{display:flex;gap:6px;padding:8px;overflow-x:auto}
+.cm__thumbs img{width:72px;height:54px;object-fit:cover;border-radius:4px;cursor:pointer;opacity:.5;flex:none}
+.cm__thumbs img.on{opacity:1;outline:1px solid var(--color-liquid-mist)}
+.cm__info{padding:32px;display:flex;flex-direction:column;gap:18px;position:relative}
+.cm__close{position:absolute;right:16px;top:16px;width:36px;height:36px;border-radius:var(--radius-small);border:0;cursor:pointer;background:rgba(3,81,75,.5);color:#fff;font-size:18px}
+.cm__specs{display:grid;grid-template-columns:1fr 1fr;column-gap:20px}
+.cm__specs div{border-top:1px solid var(--line);padding:12px 0;display:flex;flex-direction:column;gap:4px}
+.cm__specs span{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--color-slate-deep)}
+.cm__specs b{color:var(--color-platinum);font-weight:500}
+.cm__desc{white-space:pre-line}
+.cm__btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+
 .cursor{position:fixed;left:0;top:0;width:340px;height:340px;margin:-170px 0 0 -170px;border-radius:50%;pointer-events:none;z-index:1;
   background:radial-gradient(circle,rgba(0,130,124,.12),transparent 60%);opacity:0;transition:opacity .4s;mix-blend-mode:screen}
 @media (hover:none){.cursor{display:none}}
@@ -340,6 +395,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
     <nav class="nav__links" aria-label="Основная навигация">
       <a href="#about">О компании</a>
       <a href="#routes">Маршруты</a>
+      <a href="#cars">Авто в наличии</a>
       <a href="#fleet">Автопарк</a>
       <a href="#guarantees">Гарантии</a>
       <a href="#contact">Контакты</a>
@@ -503,6 +559,49 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
     </div>
   </div>
 </section>
+
+<!-- CARS IN STOCK -->
+<section class="sec" id="cars" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label rv">Авто в наличии</span>
+      <h2 class="h-lg split" data-split>Автомобили в&nbsp;продаже</h2>
+      <p class="lead rv" data-d="1">Наличие обновляется каждый день. Нажмите на машину, чтобы посмотреть фото и характеристики.</p>
+    </div>
+    <div class="cars-filter rv" id="carsFilter"></div>
+    <div class="cars-grid" id="carsGrid"></div>
+    <div class="cars-empty hidden" id="carsEmpty">
+      <span class="label">Скоро</span>
+      <p>Здесь появятся автомобили в наличии. А пока уточните наличие и цены по телефону или в WhatsApp.</p>
+      <a href="https://wa.me/996777777737" class="btn" target="_blank" rel="noopener">Написать в WhatsApp <svg width="12" height="12"><use href="#arr"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<div class="cm" id="carModal" role="dialog" aria-modal="true" aria-label="Автомобиль">
+  <div class="cm__box">
+    <div class="cm__gal">
+      <div class="cm__main">
+        <img id="cmImg" alt="">
+        <button class="cm__nav prev" id="cmPrev" aria-label="Предыдущее фото">‹</button>
+        <button class="cm__nav next" id="cmNext" aria-label="Следующее фото">›</button>
+      </div>
+      <div class="cm__thumbs" id="cmThumbs"></div>
+    </div>
+    <div class="cm__info">
+      <button class="cm__close" id="cmClose" aria-label="Закрыть">✕</button>
+      <span class="label" id="cmStatus"></span>
+      <h3 class="h-md" id="cmTitle"></h3>
+      <div class="ucar__price" id="cmPrice"></div>
+      <div class="cm__specs" id="cmSpecs"></div>
+      <p class="cm__desc" id="cmDesc"></p>
+      <div class="cm__btns">
+        <a class="btn" id="cmWa" target="_blank" rel="noopener">Узнать в WhatsApp <svg width="12" height="12"><use href="#arr"/></svg></a>
+        <a class="btn btn--ghost" href="tel:+996777777737">Позвонить</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- KINETIC -->
 <section class="kinetic" aria-label="Москва, Бишкек, Ош">
@@ -669,7 +768,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
         <p style="margin-top:20px;max-width:360px">Перевозка автомобилей автовозами по Кыргызстану, России, Беларуси и ближнему зарубежью — более 10 лет.</p>
       </div>
       <div><span class="label">Направления</span><ul><li>Москва → Бишкек, Ош</li><li>Санкт‑Петербург → Бишкек, Ош</li><li>Беларусь → Кыргызстан</li><li>Бишкек → Ош → Манас</li><li>Москва → Санкт‑Петербург → Минск</li><li>Обратные направления</li></ul></div>
-      <div><span class="label">Разделы</span><ul><li><a href="#about">О компании</a></li><li><a href="#fleet">Автопарк</a></li><li><a href="#guarantees">Гарантии</a></li><li><a href="#tasks">Наши задачи</a></li></ul></div>
+      <div><span class="label">Разделы</span><ul><li><a href="#about">О компании</a></li><li><a href="#cars">Авто в наличии</a></li><li><a href="#fleet">Автопарк</a></li><li><a href="#guarantees">Гарантии</a></li><li><a href="#tasks">Наши задачи</a></li></ul></div>
       <div><span class="label">Контакты</span><ul><li><a href="tel:+996777777737">+996 777 777 737</a></li><li><a href="https://wa.me/996777777737" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:damka-1984@mail.ru">damka-1984@mail.ru</a></li></ul></div>
     </div>
     <div class="foot__big" aria-hidden="true">Автовоз‑312</div>
@@ -967,6 +1066,97 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
     nx.classList.remove('off'); void nx.offsetWidth; nx.classList.add('on');
     setTimeout(() => cur.classList.remove('off'), 800);
   }, 2400);
+})();
+
+/* ---------- cars in stock ---------- */
+(function carsInStock() {
+  const API = window.AVTOVOZ_API, grid = $('#carsGrid'), empty = $('#carsEmpty'), filter = $('#carsFilter');
+  const STATUS = { in_stock: 'В наличии', on_way: 'В пути', reserved: 'Забронирован', sold: 'Продан' };
+  const CUR = { USD: '$', RUB: '₽', KGS: 'сом' };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const price = c => c.price ? c.price.toLocaleString('ru-RU') + ' ' + CUR[c.currency] : 'Цена по запросу';
+  const photo = n => API + '/photos/' + encodeURIComponent(n);
+  let cars = [], country = 'Все';
+
+  function showEmpty() { grid.innerHTML = ''; filter.innerHTML = ''; empty.classList.remove('hidden'); }
+
+  function render() {
+    const list = country === 'Все' ? cars : cars.filter(c => c.country === country);
+    grid.innerHTML = list.map(c => `
+      <button class="ucar ${c.status === 'sold' ? 'is-sold' : ''}" data-id="${esc(c.id)}">
+        <div class="ucar__img">
+          ${c.photos && c.photos[0] ? `<img src="${photo(c.photos[0])}" alt="${esc(c.brand + ' ' + c.model)}" loading="lazy">` : '<div class="noimg label">Фото скоро</div>'}
+          <span class="ucar__st ${c.status === 'sold' ? 'sold' : ''}">${STATUS[c.status] || ''}</span>
+          ${c.photos && c.photos.length > 1 ? `<span class="ucar__n">${c.photos.length} фото</span>` : ''}
+        </div>
+        <div class="ucar__body">
+          <div class="ucar__title">${esc(c.brand)} ${esc(c.model)}${c.year ? ', ' + c.year : ''}</div>
+          <div class="ucar__price">${price(c)}</div>
+          <div class="ucar__specs">${[c.mileage != null ? c.mileage.toLocaleString('ru-RU') + ' км' : '', c.engine, c.transmission, c.drive && c.drive + ' привод', c.location]
+            .filter(Boolean).map(v => `<span>${esc(v)}</span>`).join('')}</div>
+        </div>
+      </button>`).join('');
+  }
+
+  function renderFilter() {
+    const countries = [...new Set(cars.map(c => c.country).filter(Boolean))];
+    filter.innerHTML = countries.length > 1
+      ? ['Все', ...countries].map(c => `<button class="chip ${c === country ? 'on' : ''}" data-c="${esc(c)}">${esc(c)}</button>`).join('')
+      : '';
+  }
+  filter.addEventListener('click', e => {
+    const b = e.target.closest('[data-c]'); if (!b) return;
+    country = b.dataset.c; renderFilter(); render();
+  });
+
+  // modal
+  const modal = $('#carModal'); let cur = null, idx = 0;
+  function showPhoto(i) {
+    if (!cur.photos.length) { $('#cmImg').removeAttribute('src'); return; }
+    idx = (i + cur.photos.length) % cur.photos.length;
+    $('#cmImg').src = photo(cur.photos[idx]);
+    $$('#cmThumbs img').forEach((t, k) => t.classList.toggle('on', k === idx));
+  }
+  function open(c) {
+    cur = c;
+    $('#cmStatus').textContent = STATUS[c.status] || '';
+    $('#cmTitle').textContent = `${c.brand} ${c.model}${c.year ? ', ' + c.year : ''}`;
+    $('#cmPrice').textContent = price(c);
+    const specs = [['Год', c.year], ['Пробег', c.mileage != null ? c.mileage.toLocaleString('ru-RU') + ' км' : ''], ['Двигатель', c.engine], ['Топливо', c.fuel],
+      ['Коробка', c.transmission], ['Привод', c.drive], ['Страна', c.country], ['Цвет', c.color], ['Где находится', c.location]].filter(r => r[1]);
+    $('#cmSpecs').innerHTML = specs.map(([k, v]) => `<div><span>${k}</span><b>${esc(v)}</b></div>`).join('');
+    $('#cmDesc').textContent = c.description || '';
+    $('#cmThumbs').innerHTML = (c.photos || []).map((n, k) => `<img src="${photo(n)}" data-k="${k}" alt="">`).join('');
+    const many = (c.photos || []).length > 1;
+    $('#cmPrev').style.display = $('#cmNext').style.display = many ? '' : 'none';
+    $('#cmThumbs').style.display = many ? '' : 'none';
+    $('#cmWa').href = 'https://wa.me/996777777737?text=' + encodeURIComponent(`Здравствуйте! Интересует ${c.brand} ${c.model}${c.year ? ' ' + c.year : ''} (${price(c)}) с сайта avtovoz312.ru`);
+    showPhoto(0);
+    modal.classList.add('open'); document.body.style.overflow = 'hidden';
+  }
+  function close() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+  grid.addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (b) open(cars.find(c => c.id === b.dataset.id)); });
+  $('#cmClose').onclick = close;
+  modal.addEventListener('click', e => { if (e.target === modal) close(); });
+  $('#cmPrev').onclick = () => showPhoto(idx - 1);
+  $('#cmNext').onclick = () => showPhoto(idx + 1);
+  $('#cmThumbs').addEventListener('click', e => { const t = e.target.closest('[data-k]'); if (t) showPhoto(+t.dataset.k); });
+  addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') showPhoto(idx - 1); if (e.key === 'ArrowRight') showPhoto(idx + 1);
+  });
+  let sx = null;
+  $('#cmImg').addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  $('#cmImg').addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) showPhoto(idx + (dx < 0 ? 1 : -1)); sx = null; });
+
+  fetch(API + '/api/cars').then(r => r.ok ? r.json() : Promise.reject())
+    .then(d => {
+      // сначала в наличии / в пути / бронь, проданные — в конце
+      cars = (d.cars || []).sort((a, b) => (a.status === 'sold') - (b.status === 'sold'));
+      if (!cars.length) return showEmpty();
+      empty.classList.add('hidden'); renderFilter(); render();
+    })
+    .catch(showEmpty);
 })();
 
 /* ---------- truck: wheels + cars ---------- */

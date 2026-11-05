@@ -1,0 +1,26 @@
+# Каталог «Авто в наличии» на сервере: API + Caddy (сам выпускает https-сертификат).
+#   cd /opt/savva/backend && docker compose up -d --build
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./data:/data          # машины и фото — хранятся на диске сервера
+
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+
+volumes:
+  caddy_data:
+  caddy_config:
