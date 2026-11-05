@@ -1,0 +1,4 @@
+# В образ попадает только сайт автовоза и конфиг nginx
+*
+!avtovoz/
+!deploy/avtovoz-nginx.conf
