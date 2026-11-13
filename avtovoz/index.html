@@ -693,7 +693,7 @@ footer{background:var(--color-liquid-deep);margin-top:clamp(96px,12vw,var(--spac
               <!-- wheels -->
               <g id="wheels"></g>
             </g></g>
-            <g id="cars"></g>
+            <g id="truckCars"></g>
           </svg>
         </div>
       </div>
@@ -1318,7 +1318,7 @@ function whenVisible(c, cb) { new IntersectionObserver(([e]) => cb(e.isIntersect
   const carPath = 'M4 -6 V-16 Q6 -22 18 -24 L46 -27 L68 -42 Q76 -46 92 -46 H112 Q124 -46 132 -38 L142 -26 Q150 -23 150 -14 V-6 Z';
   const winPath = 'M54 -27 L72 -39 Q78 -42 90 -42 H96 V-27 Z M100 -42 H111 Q120 -42 127 -35 L134 -27 H100 Z';
   const slots = [[38, 120], [200, 120], [362, 120], [524, 120], [38, 200], [200, 200], [362, 200], [705, 88]]; // 8 cars
-  const cg = $('#cars');
+  const cg = $("#truckCars");
   slots.forEach(([x, y], i) => {
     const outer = el('g', { class: 'rig' }, cg);           // follows rig drive-in
     const bob = el('g', { class: 'bob' }, outer);
